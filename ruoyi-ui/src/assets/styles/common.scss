@@ -1,0 +1,234 @@
+.block {
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+  
+.inlineBlock {
+  display: block;
+}
+  
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+//main-container全局样式
+.app-container {
+  padding: 20px 32px;
+}
+
+//宽高百分百
+.am-page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+//文本超出显示省略号
+.text-truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+//模块
+.am-mt{
+  margin-top: $gap;
+}
+
+.am-mb{
+  margin-bottom: $gap;
+}
+
+.am-ml{
+  margin-left: $gap;
+}
+
+.am-mr{
+  margin-right: $gap;
+}
+
+.am-mt-lg {
+  margin-top: $gap-l;
+}
+
+.am-mb-lg {
+  margin-bottom: $gap-l;
+}
+
+.am-ml-lg {
+  margin-top: $gap-l;
+}
+
+.am-mr-lg {
+  margin-top: $gap-l;
+}
+
+.am-mx-lg {
+  margin-left: $gap-l;
+  margin-right: $gap-l;
+}
+
+.am-my-lg {
+  margin-top: $gap-l;
+  margin-bottom: $gap-l;
+}
+
+.am-p {
+  padding-top: $gap;
+  padding-bottom: $gap;
+  padding-left: $gap-l;
+  padding-right: $gap-l;
+}
+
+.am-pt {
+  padding-top: $gap;
+}
+
+.am-pb {
+  padding-bottom: $gap;
+}
+
+.am-pl {
+  padding-top: $gap;
+}
+
+.am-pr {
+  padding-top: $gap;
+}
+
+.am-px {
+  padding-left: $gap;
+  padding-right: $gap;
+}
+
+.am-px-lg {
+  padding-left: $gap-l;
+  padding-right: $gap-l;
+}
+
+.am-py {
+  padding-top: $gap;
+  padding-bottom: $gap;
+}
+
+//flex布局
+.am-flex {
+    display: flex;
+}
+
+.am-flex-wrap {
+    flex-wrap: wrap;
+}
+
+.am-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+//水平轴中心对齐
+.am-flex-align-center {
+    display: flex;
+    align-items: center;
+}
+
+//水平垂直居中
+.am-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+//flex高度自适应，不能添加width
+.am-flex-auto {
+    height: 100%;
+    flex: auto;
+    overflow: hidden;
+}
+
+//内容无法伸缩，不换行
+.am-flex-no-shrink {
+    flex-shrink: 0;
+}
+
+//水平方向左右两侧布局
+.am-flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+//未修改
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
+
+.pagination-container {
+  margin-top: 30px;
+}
+  
+.text-center {
+  text-align: center
+}
+  
+.sub-navbar {
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+  width: 100%;
+  text-align: right;
+  padding-right: 20px;
+  transition: 600ms ease position;
+  background: linear-gradient(90deg, rgba(32, 182, 249, 1) 0%, rgba(32, 182, 249, 1) 0%, rgba(33, 120, 241, 1) 100%, rgba(33, 120, 241, 1) 100%);
+
+  .subtitle {
+    font-size: 20px;
+    color: #fff;
+  }
+
+  &.draft {
+    background: #d0d0d0;
+  }
+
+  &.deleted {
+    background: #d0d0d0;
+  }
+}
+  
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
+}
+  
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+  
+  //refine vue-multiselect plugin
+.multiselect {
+  line-height: 16px;
+}
+
+.multiselect--active {
+  z-index: 1000 !important;
+}
