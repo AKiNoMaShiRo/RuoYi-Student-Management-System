@@ -21,6 +21,8 @@ $subMenuHover:#001528;
 
 $sideBarWidth: 200px;
 
+$border-color: #ebebeb;
+
 $gap: 12px;
 $gap-l: 16px;
 
@@ -35,6 +37,7 @@ $gap-l: 16px;
   subMenuBg: $subMenuBg;
   subMenuHover: $subMenuHover;
   sideBarWidth: $sideBarWidth;
+  border-color: $border-color;
   gap: $gap;
   gap-l: $gap-l;
 }

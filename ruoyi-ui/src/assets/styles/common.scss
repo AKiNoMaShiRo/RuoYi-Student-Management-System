@@ -26,6 +26,14 @@
   padding: 20px 32px;
 }
 
+.am-title {
+  padding-top: $gap;
+  padding-bottom: $gap;
+  padding-right: $gap-l;
+  font-size: 16px;
+  color: #2d3e53;
+}
+
 //宽高百分百
 .am-page {
   width: 100%;
@@ -40,7 +48,33 @@
   overflow: hidden;
 }
 
-//模块
+.am-block {
+  display: block;
+}
+
+//模块边框
+.am-border {
+  border: 1px solid $border-color;
+}
+.am-bd {
+  box-shadow: inset 0 0 0 1px $border-color;
+}
+.am-bd-t {
+  box-shadow: inset 0 1px 0 0 $border-color;
+}
+.am-bd-r {
+  z-index: 1;
+  box-shadow: 1px 0 0 0 $border-color;
+}
+.am-bd-b {
+  box-shadow: inset 0 -1px 0 0 $border-color;
+}
+.am-bd-l {
+  z-index: 1;
+  box-shadow: -1px 0 0 0 $border-color;
+}
+
+//模块内外边距
 .am-mt{
   margin-top: $gap;
 }
@@ -55,6 +89,16 @@
 
 .am-mr{
   margin-right: $gap;
+}
+
+.am-mx{
+  margin-right: $gap;
+  margin-left: $gap;
+}
+
+.am-my{
+  margin-top: $gap;
+  margin-bottom: $gap;
 }
 
 .am-mt-lg {
@@ -121,6 +165,11 @@
   padding-bottom: $gap;
 }
 
+.am-py-lg {
+  padding-top: $gap-l;
+  padding-bottom: $gap-l;
+}
+
 //flex布局
 .am-flex {
     display: flex;
@@ -164,6 +213,11 @@
 .am-flex-between {
     display: flex;
     justify-content: space-between;
+}
+
+.am-flex-end{
+  display: flex;
+  justify-content: flex-end;
 }
 
 //未修改

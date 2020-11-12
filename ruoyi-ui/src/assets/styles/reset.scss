@@ -89,9 +89,9 @@ aside {
         }
         .am-textarea-sb{
           .el-textarea__inner {
-            width: 924px;
+            width: 764px;
             @media screen and (max-width: 1395px) {
-              width: 552px;
+              width: 472px;
             }
             @media screen and (max-width: 825px) {
               width: 180px;
@@ -118,6 +118,28 @@ aside {
         .el-textarea {
           width: 472px;
         }
+      }
+    }
+  }
+}
+
+//去除表格底部线条
+.el-table::before, .el-table__fixed::before{
+  bottom: auto;
+}
+
+//分页器
+.element-pager {
+  position: relative;
+  text-align: right;
+  .el-pagination.is-background {
+    padding: 0;
+    .el-pagination__sizes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      .el-select .el-input {
+        margin: 0;
       }
     }
   }

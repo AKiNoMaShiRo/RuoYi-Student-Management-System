@@ -116,7 +116,12 @@
               <el-input v-model="formData.usedName"></el-input>
             </el-form-item>
             <el-form-item label="籍贯" prop="nativePlace" label-width="180px">
-              <el-cascader v-model="formData.nativePlace" :options="regionData"></el-cascader>
+              <el-cascader
+                v-model="formData.nativePlace"
+                :options="regionData"
+                :props="{ expandTrigger: 'hover' }"
+              >
+              </el-cascader>
             </el-form-item>
             <el-form-item label="医保卡号" prop="healthCard" label-width="180px">
               <el-input v-model="formData.healthCard"></el-input>
@@ -152,7 +157,12 @@
 </template>
 
 <script>
-import { nationOptions, politicsStatusOptions, graduateIntentionTypes, registrationStates } from '../formOption'
+import {
+  nationOptions,
+  politicsStatusOptions,
+  graduateIntentionTypes,
+  registrationStates
+} from '../../../libs/personalInfo'
 import { regionData, CodeToText, TextToCode } from 'element-china-area-data'
 
 export default {
