@@ -1,8 +1,9 @@
 <template>
   <div class="app-container study-saws">
-      <section class="am-px left">
-        <div class="am-title">学业预警查询</div>
-          <el-form ref="sawsForm" label-position="left" label-width="80px" :model="formData" :rules="rules">
+      <section class="am-mr left">
+        <div class="am-px am-title">学业预警查询</div>
+        <div class="am-p">
+          <el-form ref="sawsForm" label-width="80px" :model="formData" :rules="rules">
             <el-form-item label="学号" prop="student_id">
               <el-input v-model="formData.student_id" clearable></el-input>
             </el-form-item>
@@ -10,7 +11,14 @@
               <el-input v-model="formData.name" clearable></el-input>
             </el-form-item>
             <el-form-item label="院系" prop="department">
-              <el-input v-model="formData.department" clearable></el-input>
+              <el-select v-model="formData.department" filterable clearable>
+                <el-option
+                  v-for="(department, index) in departments"
+                  :key="index"
+                  :label="department"
+                  :value="department"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="专业" prop="profession">
               <el-input v-model="formData.profession" clearable></el-input>
@@ -25,50 +33,51 @@
                 <el-option label="三级预警" value="3"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item>
+          </el-form>
+          <div class="am-py am-text-center">
               <el-button disabsled @click="resetForm">重置</el-button>
               <el-button type="primary" @click="submitForm">查询</el-button>
-            </el-form-item>
-          </el-form>
+          </div>
+        </div>
       </section>
-      <section class="am-px right">
-        <div class="am-title">
-          学业预警情况
-        </div>
-        <div class="am-mb am-flex-end">
-          <ol class="alarm-legend am-flex">
-              <li class="am-flex-center"><i></i>一级预警</li>
-              <li class="am-flex-center"><i></i>二级预警</li>
-              <li class="am-flex-center"><i></i>三级预警</li>
-          </ol>
-        </div>
-        <div style="height: 100%;">
-          <el-table v-loading="tableLoading" :data="tableData" height="500px">
-              <el-table-column label="学号" prop="student_id" min-width="120" showOverflowTooltip></el-table-column>
-              <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
-              <el-table-column label="院系" prop="department" min-width="140" showOverflowTooltip></el-table-column>
-              <el-table-column label="专业" prop="profession" min-width="100" showOverflowTooltip></el-table-column>
-              <el-table-column label="班级" prop="class" min-width="60" showOverflowTooltip></el-table-column>
-              <el-table-column label="预警等级" prop="alarm_level" min-width="100" showOverflowTooltip>
-                <template slot-scope="scope">
-                  <span v-if=" scope.row.alarm_level === '一级预警' " class="am-alarm-badge am-alarm-level-1">一级预警</span>
-                  <span v-else-if=" scope.row.alarm_level === '二级预警' " class="am-alarm-badge am-alarm-level-2">二级预警</span>
-                  <span v-else-if=" scope.row.alarm_level === '三级预警' " class="am-alarm-badge am-alarm-level-3">三级预警</span>
-                  <span v-else class="fe-alarm-badge"></span>
-                </template>
-              </el-table-column>
-              <el-table-column label="预警原因" prop="alarm_reason" min-width="120"></el-table-column>
-              <el-table-column label="备注" prop="comment" min-width="100"></el-table-column>
-            <template></template>
-          </el-table>
-          <Pagination
-            :total="total"
-            :page-range="[15, 20, 30]"
-            :current-page="currentPage"
-            :page-size="pageSize"
-            @onPaginationUpdate="handlePaginationUpdate"
-          >
-          </Pagination>
+      <section class="right">
+        <div class="am-px am-title">学业预警情况</div>
+        <div class="am-px">
+          <div class="am-my am-flex-end">
+            <ol class="alarm-legend am-flex">
+                <li class="am-flex-center"><i></i>一级预警</li>
+                <li class="am-flex-center"><i></i>二级预警</li>
+                <li class="am-flex-center"><i></i>三级预警</li>
+            </ol>
+          </div>
+          <div style="height: 100%;">
+            <el-table v-loading="tableLoading" :data="tableData" height="500px">
+                <el-table-column label="学号" prop="student_id" min-width="120" showOverflowTooltip></el-table-column>
+                <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
+                <el-table-column label="院系" prop="department" min-width="140" showOverflowTooltip></el-table-column>
+                <el-table-column label="专业" prop="profession" min-width="100" showOverflowTooltip></el-table-column>
+                <el-table-column label="班级" prop="class" min-width="60" showOverflowTooltip></el-table-column>
+                <el-table-column label="预警等级" prop="alarm_level" min-width="100" showOverflowTooltip>
+                  <template slot-scope="scope">
+                    <span v-if=" scope.row.alarm_level === '一级预警' " class="am-alarm-badge am-alarm-level-1">一级预警</span>
+                    <span v-else-if=" scope.row.alarm_level === '二级预警' " class="am-alarm-badge am-alarm-level-2">二级预警</span>
+                    <span v-else-if=" scope.row.alarm_level === '三级预警' " class="am-alarm-badge am-alarm-level-3">三级预警</span>
+                    <span v-else class="fe-alarm-badge"></span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="预警原因" prop="alarm_reason" min-width="120"></el-table-column>
+                <el-table-column label="备注" prop="comment" min-width="100"></el-table-column>
+              <template></template>
+            </el-table>
+            <Pagination
+              :total="total"
+              :page-range="[15, 20, 30]"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              @onPaginationUpdate="handlePaginationUpdate"
+            >
+            </Pagination>
+          </div>
         </div>
       </section>
   </div>
@@ -76,6 +85,7 @@
 
 <script>
 import Pagination from '@/views/components/Pagination.vue'
+import { DEPARTMENTS } from '@/libs/teachUnit.js'
 
 export default {
   components: {
@@ -83,6 +93,7 @@ export default {
   },
   data () {
     return {
+      departments: DEPARTMENTS,
       total: 100,
       currentPage: 1,
       pageSize: 15,
@@ -126,13 +137,20 @@ export default {
 
 <style lang="scss" scoped>
 .study-saws {
-    display: flex;
-    .left {
-        width: 25%;
-    }
-    .right {
-        width: 75%;
-    }
+  display: flex;
+  .left {
+    min-width: 300px;
+    width: 30%;
+  }
+  .right {
+    width: 70%;
+  }
+}
+.left ::v-deep .el-form {
+  .el-select,
+  .el-input__inner {
+    width: 100%;
+  }
 }
 ul, ol {
   list-style: none;

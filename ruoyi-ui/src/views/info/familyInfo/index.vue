@@ -1,10 +1,10 @@
 <template>
   <div class="app-container info-family">
-    <section class="am-px left" style="height: 100%">
-      <div class="am-title">
-        <span>添加家庭成员信息</span>
-      </div>
-      <el-form ref="infoForm" :model="formData" label-width="80px">
+    <section class="am-px am-no-shrink left">
+      <div class="am-title">添加家庭成员信息</div>
+      <div class="am-px scrollbar-vertical" :style="{'height': formHeight}">
+        <el-scrollbar>
+          <el-form ref="infoForm" label-width="80px" :model="formData" :rules="rules">
             <el-form-item label="称谓" prop="appellation">
               <el-input v-model="formData.appellation"></el-input>
             </el-form-item>
@@ -54,25 +54,26 @@
                   v-model="formData.comment"
                   type="textarea"
                   resize="none"
-                  :rows="3"
+                  :rows="5"
                 >
                 </el-input>
               </div>
             </el-form-item>
-            <el-form-item label=" " label-width="100px" >
-              <el-button disabsled @click="resetForm">重置</el-button>
-              <el-button type="primary" @click="submitForm">提交</el-button>
-            </el-form-item>
-      </el-form>
+          </el-form>
+        </el-scrollbar>
+      </div>
+      <div class="am-py am-text-center">
+        <el-button disabsled @click="resetForm">重置</el-button>
+        <el-button type="primary" @click="submitForm">提交</el-button>
+      </div>
     </section>
     <section class="am-px right">
-      <div class="am-title">
-        <span>家庭成员信息</span>
-      </div>
-      <div style="height: 100%;">
+      <div class="am-title">家庭成员信息</div>
+      <div :style="{'height': tableHeight}">
         <el-table
+          v-loading="tableLoading"
           :data="tableData"
-          height="500px"
+          :height="tableHeight"
         >
           <el-table-column
             v-for="column in tableColumns"
@@ -179,6 +180,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
+import sysSettings from '@/settings.js'
 import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
 export default {
@@ -187,6 +189,7 @@ export default {
     return {
       politicsStatusOptions: politicsStatusOptions,
       healthStates: healthStates,
+      settings: sysSettings,
       dgFromVisible: false,
       formData: {
         appellation: '',
@@ -212,9 +215,10 @@ export default {
         politicsStatus: '',
         comment: ''
       },
+      tableLoading: false,
       tableColumns: Object.freeze([
+        { label: '姓名', prop: 'name', minWidth: '80', fixed: "left" },
         { label: '称谓', prop: 'appellation', minWidth: '80' },
-        { label: '姓名', prop: 'name', minWidth: '80' },
         { label: '身份证', prop: 'identityCard', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
         { label: '单位名称', prop: 'company', minWidth: '120' },
@@ -237,20 +241,40 @@ export default {
           politicsStatus: '12',
           comment: ''
         }
-      ]
+      ],
+      rules: {
+        name: [ { required: true, message: '请输入成员姓名', trigger: 'blur' } ]
+      }
     }
   },
   computed: {
-    ...mapGetters(['sidebar']),
-    isSideBar () {
-      return this.sidebar.open
+    tableHeight () {
+      // 面包屑50 tagsView34 app-container内边距20*2 标题42
+      return this.$store.state.settings.tagsView ? `calc(100vh - 166px)` : `calc(100vh - 136px)`
+    },
+    formHeight () {
+      // 面包屑50 tagsView34 app-container内边距20*2 标题42 按钮36+24
+      return this.$store.state.settings.tagsView ? `calc(100vh - 226px)` : `calc(100vh - 196px)`
     }
+    // ...mapGetters(['sidebar']),
+    // isSideBar () {
+    //   return this.sidebar.open
+    // }
   },
   methods: {
     resetForm () {
       this.$refs.infoForm.resetFields()
     },
     submitForm () {
+      console.log(this.$store.state.settings.tagsView)
+      this.$refs.infoForm.validate( ( valid ) => {
+        if( valid ){
+          this.tableLoading = true
+          setTimeout( () => {
+            this.tableLoading = false
+          }, 1000 )
+        }
+      } )
     },
     handleEdit (row) {
       this.dgFromVisible = true
@@ -283,12 +307,22 @@ export default {
 
 <style lang="scss" scoped>
 .info-family {
-    display: flex;
-    .left {
-        width: 25%;
-    }
-    .right {
-        width: 75%;
-    }
+  display: flex;
+  .left {
+    min-width: 300px;
+    width: 30%;
+  }
+  .right {
+    width: 70%;
+  }
+}
+.left ::v-deep .el-form {
+  .el-select,
+  .el-input__inner {
+    width: 100%;
+  }
+}
+.scrollbar-vertical{
+  overflow: hidden;
 }
 </style>

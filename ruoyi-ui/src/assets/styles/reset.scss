@@ -75,6 +75,13 @@ aside {
   }
 }
 
+//表单样式修改
+.el-form{
+  .el-form-item{
+    margin-bottom: 18px;
+  }
+}
+
 //行内表单样式修改
 .am-inline-form{
   .el-form--inline{
@@ -141,6 +148,25 @@ aside {
       .el-select .el-input {
         margin: 0;
       }
+    }
+  }
+}
+
+.scrollbar-vertical {
+  overflow: hidden;
+  .el-scrollbar {
+    height: 100%;
+  }
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+  }
+  .el-scrollbar__view {
+    max-height: 100%;
+  }
+  .el-scrollbar__bar {
+    width: 4px !important;
+    &.is-horizontal {
+      display: none;
     }
   }
 }
