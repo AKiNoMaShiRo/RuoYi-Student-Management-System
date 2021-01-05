@@ -26,12 +26,16 @@
   padding: 20px 32px;
 }
 
+.am-box {
+  border-radius: 4px;
+  border: 1px solid $border-color;
+  box-shadow: 0 0 4px 1px $border-color;
+}
+
 .am-title {
-  padding-top: $gap;
-  padding-bottom: $gap;
-  padding-right: $gap-l;
   font-size: 16px;
   color: #2d3e53;
+  background-color: $border-color;
 }
 
 //宽高百分百
@@ -52,11 +56,7 @@
   display: block;
 }
 
-//模块
-.am-border {
-  border: 1px solid $border-color;
-}
-
+//模块边框
 .am-bd-b {
   border-top: 0px;
   border-left: 0px;
@@ -135,11 +135,11 @@
 }
 
 .am-pl {
-  padding-top: $gap;
+  padding-left: $gap;
 }
 
 .am-pr {
-  padding-top: $gap;
+  padding-right: $gap;
 }
 
 .am-px {
@@ -168,22 +168,27 @@
 
 //flex布局
 .am-flex {
-    display: flex;
+  display: flex;
 }
 
 .am-flex-wrap {
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.am-flex-nowrap {
+  flex-wrap: nowrap;
 }
 
 .am-flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 //水平轴中心对齐
 .am-flex-align-center {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 //水平垂直居中

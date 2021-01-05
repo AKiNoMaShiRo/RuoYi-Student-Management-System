@@ -79,36 +79,41 @@ aside {
 .el-form{
   .el-form-item{
     margin-bottom: 18px;
+    margin-right: 12px;
   }
 }
 
 //行内表单样式修改
-.am-inline-form{
-  .el-form--inline{
-    .el-form-item, .el-form-item--medium{
-      margin-bottom: $gap-l;
-      margin-right: $gap;
+// .el-form--inline{
+//   .el-form-item
+// }
 
-      .el-form-item__content{
-        width: 180px;
-        .el-date-editor {
-          width: 180px;
-        }
-        .am-textarea-sb{
-          .el-textarea__inner {
-            width: 764px;
-            @media screen and (max-width: 1395px) {
-              width: 472px;
-            }
-            @media screen and (max-width: 825px) {
-              width: 180px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+// .am-inline-form{
+//   .el-form--inline{
+//     .el-form-item, .el-form-item--medium{
+//       margin-bottom: $gap-l;
+//       margin-right: $gap;
+
+//       .el-form-item__content{
+//         width: 180px;
+//         .el-date-editor {
+//           width: 180px;
+//         }
+//         .am-textarea-sb{
+//           .el-textarea__inner {
+//             width: 764px;
+//             @media screen and (max-width: 1395px) {
+//               width: 472px;
+//             }
+//             @media screen and (max-width: 825px) {
+//               width: 180px;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 //对话框表单样式修改
 .am-dialog-form{
@@ -137,6 +142,8 @@ aside {
 
 //分页器
 .element-pager {
+  margin-top: $gap;
+  margin-bottom: $gap;
   position: relative;
   text-align: right;
   .el-pagination.is-background {

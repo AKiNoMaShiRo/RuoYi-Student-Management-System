@@ -4,7 +4,7 @@
       <div class="am-title">添加家庭成员信息</div>
       <div class="am-px scrollbar-vertical" :style="{'height': formHeight}">
         <el-scrollbar>
-          <el-form ref="infoForm" label-width="80px" :model="formData" :rules="rules">
+          <el-form ref="infoForm" label-width="80px" class="am-pr" :model="formData" :rules="rules">
             <el-form-item label="称谓" prop="appellation">
               <el-input v-model="formData.appellation"></el-input>
             </el-form-item>
@@ -107,67 +107,53 @@
       </div>
     </section>
     <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible" class="am-dialog-form">
-      <el-form :model="dialogFormData" inline>
-        <el-row type="flex" justify="space-between">
-          <el-col :span="40">
-            <el-form-item label="称谓" prop="appellation" label-width="100px">
-              <el-input v-model="dialogFormData.appellation"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名" prop="name" label-width="100px">
-              <el-input v-model="dialogFormData.name"></el-input>
-            </el-form-item>
-            <el-form-item label="身份证" prop="identityCard" label-width="100px">
-              <el-input v-model="dialogFormData.identityCard"></el-input>
-            </el-form-item>
-            <el-form-item label="健康状况" prop="health" label-width="100px">
-              <el-select v-model="dialogFormData.health">
-                <el-option
-                  v-for="healthState in healthStates"
-                  :key="healthState.v"
-                  :label="healthState.l"
-                  :value="healthState.v"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="单位名称" prop="company" label-width="100px">
-              <el-input v-model="dialogFormData.company"></el-input>
-            </el-form-item>
-            <el-form-item label="职位" prop="duty" label-width="100px">
-              <el-input v-model="dialogFormData.duty"></el-input>
-            </el-form-item>
-            <el-form-item label="邮编" prop="postCode" label-width="100px">
-              <el-input v-model="dialogFormData.postCode"></el-input>
-            </el-form-item>
-            <el-form-item label="电话号码" prop="phoneNumber" label-width="100px">
-              <el-input v-model="dialogFormData.phoneNumber"></el-input>
-            </el-form-item>
-            <el-form-item label="政治面貌" prop="politicsStatus" label-width="100px">
-              <el-select v-model="dialogFormData.politicsStatus">
-                <el-option
-                  v-for="politicsStatusOption in politicsStatusOptions"
-                  :key="politicsStatusOption.v"
-                  :label="politicsStatusOption.l"
-                  :value="politicsStatusOption.v"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="40">
-            <el-form-item label="备注" prop="comment" label-width="100px">
-              <el-input
-                v-model="dialogFormData.comment"
-                type="textarea"
-                resize="none"
-                :rows="3"
-              >
-              </el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+      <el-form class="am-flex-center am-flex-wrap" :model="dialogFormData" inline>
+        <el-form-item label="称谓" prop="appellation" label-width="100px">
+          <el-input v-model="dialogFormData.appellation"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name" label-width="100px">
+          <el-input v-model="dialogFormData.name"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证" prop="identityCard" label-width="100px">
+          <el-input v-model="dialogFormData.identityCard"></el-input>
+        </el-form-item>
+        <el-form-item label="健康状况" prop="health" label-width="100px">
+          <el-select v-model="dialogFormData.health">
+            <el-option
+              v-for="healthState in healthStates"
+              :key="healthState.v"
+              :label="healthState.l"
+              :value="healthState.v"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="单位名称" prop="company" label-width="100px">
+          <el-input v-model="dialogFormData.company"></el-input>
+        </el-form-item>
+        <el-form-item label="职位" prop="duty" label-width="100px">
+          <el-input v-model="dialogFormData.duty"></el-input>
+        </el-form-item>
+        <el-form-item label="邮编" prop="postCode" label-width="100px">
+          <el-input v-model="dialogFormData.postCode"></el-input>
+        </el-form-item>
+        <el-form-item label="电话号码" prop="phoneNumber" label-width="100px">
+          <el-input v-model="dialogFormData.phoneNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="政治面貌" prop="politicsStatus" label-width="100px">
+          <el-select v-model="dialogFormData.politicsStatus">
+            <el-option
+              v-for="politicsStatusOption in politicsStatusOptions"
+              :key="politicsStatusOption.v"
+              :label="politicsStatusOption.l"
+              :value="politicsStatusOption.v"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" prop="comment" label-width="100px">
+          <el-input v-model="dialogFormData.comment"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" label-width="100px">
         <el-button @click="handleDialogFormCancel">取消</el-button>
@@ -180,7 +166,6 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
-import sysSettings from '@/settings.js'
 import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
 export default {
@@ -189,7 +174,6 @@ export default {
     return {
       politicsStatusOptions: politicsStatusOptions,
       healthStates: healthStates,
-      settings: sysSettings,
       dgFromVisible: false,
       formData: {
         appellation: '',
@@ -266,7 +250,6 @@ export default {
       this.$refs.infoForm.resetFields()
     },
     submitForm () {
-      console.log(this.$store.state.settings.tagsView)
       this.$refs.infoForm.validate( ( valid ) => {
         if( valid ){
           this.tableLoading = true

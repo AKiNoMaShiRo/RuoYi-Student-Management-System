@@ -43,7 +43,7 @@
       <section class="right">
         <div class="am-px am-title">学业预警情况</div>
         <div class="am-px">
-          <div class="am-my am-flex-end">
+          <div class="am-pb am-flex-end">
             <ol class="alarm-legend am-flex">
                 <li class="am-flex-center"><i></i>一级预警</li>
                 <li class="am-flex-center"><i></i>二级预警</li>
@@ -52,7 +52,7 @@
           </div>
           <div style="height: 100%;">
             <el-table v-loading="tableLoading" :data="tableData" height="500px">
-                <el-table-column label="学号" prop="student_id" min-width="120" showOverflowTooltip></el-table-column>
+                <el-table-column label="学号" prop="student_id" min-width="110" showOverflowTooltip></el-table-column>
                 <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
                 <el-table-column label="院系" prop="department" min-width="140" showOverflowTooltip></el-table-column>
                 <el-table-column label="专业" prop="profession" min-width="100" showOverflowTooltip></el-table-column>
@@ -65,8 +65,8 @@
                     <span v-else class="fe-alarm-badge"></span>
                   </template>
                 </el-table-column>
-                <el-table-column label="预警原因" prop="alarm_reason" min-width="120"></el-table-column>
-                <el-table-column label="备注" prop="comment" min-width="100"></el-table-column>
+                <el-table-column label="预警原因" prop="alarm_reason" min-width="100"></el-table-column>
+                <el-table-column label="备注" prop="comment" min-width="80"></el-table-column>
               <template></template>
             </el-table>
             <Pagination
@@ -99,7 +99,7 @@ export default {
       pageSize: 15,
       tableLoading: false,
       tableData: [
-          { student_id: '20171344000', name: '王圣滋', department: '计算机与软件学院', profession: '软件工程', class: '1', alarm_level: '一级预警', alarm_reason: 'unknow', comment: '无'}
+          { student_id: '20171344049', name: '孔允孔允', department: '计算机与软件学院', profession: '软件工程', class: '2', alarm_level: '一级预警', alarm_reason: '略略略', comment: '无'}
       ],
       formData: {
         student_id: '',

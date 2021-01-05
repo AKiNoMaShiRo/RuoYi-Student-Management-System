@@ -2,7 +2,7 @@
   <div v-if="total > pageSize" class="element-pager">
     <el-pagination
       background
-      layout="prev, pager, next, sizes, jumper"
+      layout="total, prev, pager, next, sizes, jumper"
       :total="total"
       :current-page="currentPage"
       :page-sizes="pageRange"
