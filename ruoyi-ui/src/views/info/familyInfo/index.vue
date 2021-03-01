@@ -10,7 +10,7 @@
           <el-form-item label="姓名" prop="name">
             <el-input v-model="formData.name"></el-input>
           </el-form-item>
-          <el-form-item label="身份证" prop="identityCard">
+          <el-form-item label="身份证号" prop="identity_card">
             <el-input v-model="formData.identityCard"></el-input>
           </el-form-item>
           <el-form-item label="健康状况" prop="health">
@@ -30,13 +30,13 @@
           <el-form-item label="职位" prop="duty">
             <el-input v-model="formData.duty"></el-input>
           </el-form-item>
-          <el-form-item label="邮编" prop="postCode">
+          <el-form-item label="邮编" prop="post_code">
             <el-input v-model="formData.postCode"></el-input>
           </el-form-item>
-          <el-form-item label="电话号码" prop="phoneNumber">
+          <el-form-item label="电话号码" prop="phone_number">
             <el-input v-model="formData.phoneNumber"></el-input>
           </el-form-item>
-          <el-form-item label="政治面貌" prop="politicsStatus">
+          <el-form-item label="政治面貌" prop="politics_status">
             <el-select v-model="formData.politicsStatus">
               <el-option
                 v-for="politicsStatusOption in politicsStatusOptions"
