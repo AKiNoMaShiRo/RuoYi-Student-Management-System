@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <section class="am-box am-mb-lg">
-      <div class="am-title am-p">临时请假申请</div>
+    <section class="am-box am-mb">
+      <div class="am-p am-title am-bd-b">临时请假申请</div>
       <div class="am-p">
         <el-form
           ref="tempForm"
@@ -9,8 +9,8 @@
           :model="formData"
           label-position="right"
           label-width="80px"
+          inline
         >
-          <div class="am-flex-wrap am-page">
             <el-form-item label="姓名" prop="name">
               <el-input v-model="formData.name" clearable></el-input>
             </el-form-item>
@@ -42,16 +42,15 @@
             <el-form-item label="任课老师" prop="teacher">
               <el-input v-model="formData.teacher" clearable></el-input>
             </el-form-item>
-          </div>
+          <el-form-item label=" ">
+            <el-button size="small" disabsled @click="handleResetForm">重置</el-button>
+            <el-button size="small" type="primary" @click="handleSubmitForm">提交</el-button>
+          </el-form-item>
         </el-form>
-        <div class="am-flex-center">
-          <el-button disabsled @click="handleResetForm">重置</el-button>
-          <el-button type="primary" @click="handleSubmitForm">提交</el-button>
-        </div>
       </div>
     </section>
     <section class="am-box">
-      <div class="am-title am-p">历史请假记录</div>
+      <div class="am-p am-title am-bd-b">历史请假记录</div>
     </section>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
-  <div class="app-container study-saws">
-      <section class="am-mr left">
-        <div class="am-px am-title">学业预警查询</div>
+  <div class="app-container">
+      <section class="am-box am-mb">
+        <div class="am-p am-title am-bd-b">学业预警查询</div>
         <div class="am-p">
-          <el-form ref="sawsForm" label-width="80px" :model="formData" :rules="rules">
+          <el-form ref="sawsForm" label-width="80px" :model="formData" :rules="rules" inline>
             <el-form-item label="学号" prop="student_id">
               <el-input v-model="formData.student_id" clearable></el-input>
             </el-form-item>
@@ -33,16 +33,16 @@
                 <el-option label="三级预警" value="3"></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label=" ">
+                <el-button size="small" disabsled @click="resetForm">重置</el-button>
+                <el-button size="small" type="primary" @click="submitForm">查询</el-button>
+            </el-form-item>
           </el-form>
-          <div class="am-py am-text-center">
-              <el-button disabsled @click="resetForm">重置</el-button>
-              <el-button type="primary" @click="submitForm">查询</el-button>
-          </div>
         </div>
       </section>
-      <section class="right">
-        <div class="am-px am-title">学业预警情况</div>
-        <div class="am-px">
+      <section class="am-box">
+        <div class="am-p am-title am-bd-b">学业预警情况</div>
+        <div class="am-p">
           <div class="am-pb am-flex-end">
             <ol class="alarm-legend am-flex">
                 <li class="am-flex-center"><i></i>一级预警</li>
@@ -51,7 +51,7 @@
             </ol>
           </div>
           <div style="height: 100%;">
-            <el-table v-loading="tableLoading" :data="tableData" height="500px">
+            <el-table v-loading="tableLoading" :data="tableData" height="300px">
                 <el-table-column label="学号" prop="student_id" min-width="110" showOverflowTooltip></el-table-column>
                 <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
                 <el-table-column label="院系" prop="department" min-width="140" showOverflowTooltip></el-table-column>
@@ -136,22 +136,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.study-saws {
-  display: flex;
-  .left {
-    min-width: 300px;
-    width: 30%;
-  }
-  .right {
-    width: 70%;
-  }
-}
-.left ::v-deep .el-form {
-  .el-select,
-  .el-input__inner {
-    width: 100%;
-  }
-}
+// .study-saws {
+//   display: flex;
+//   .left {
+//     min-width: 300px;
+//     width: 30%;
+//   }
+//   .right {
+//     width: 70%;
+//   }
+// }
+// .left ::v-deep .el-form {
+//   .el-select,
+//   .el-input__inner {
+//     width: 100%;
+//   }
+// }
 ul, ol {
   list-style: none;
   margin: 0;

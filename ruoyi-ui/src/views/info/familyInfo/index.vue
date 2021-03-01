@@ -1,79 +1,74 @@
 <template>
-  <div class="app-container info-family">
-    <section class="am-px am-no-shrink left">
-      <div class="am-title">添加家庭成员信息</div>
-      <div class="am-px scrollbar-vertical" :style="{'height': formHeight}">
-        <el-scrollbar>
-          <el-form ref="infoForm" label-width="80px" class="am-pr" :model="formData" :rules="rules">
-            <el-form-item label="称谓" prop="appellation">
-              <el-input v-model="formData.appellation"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="formData.name"></el-input>
-            </el-form-item>
-            <el-form-item label="身份证" prop="identityCard">
-              <el-input v-model="formData.identityCard"></el-input>
-            </el-form-item>
-            <el-form-item label="健康状况" prop="health">
-              <el-select v-model="formData.health">
-                <el-option
-                  v-for="healthState in healthStates"
-                  :key="healthState.v"
-                  :label="healthState.l"
-                  :value="healthState.v"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="单位名称" prop="company">
-              <el-input v-model="formData.company"></el-input>
-            </el-form-item>
-            <el-form-item label="职位" prop="duty">
-              <el-input v-model="formData.duty"></el-input>
-            </el-form-item>
-            <el-form-item label="邮编" prop="postCode">
-              <el-input v-model="formData.postCode"></el-input>
-            </el-form-item>
-            <el-form-item label="电话号码" prop="phoneNumber">
-              <el-input v-model="formData.phoneNumber"></el-input>
-            </el-form-item>
-            <el-form-item label="政治面貌" prop="politicsStatus">
-              <el-select v-model="formData.politicsStatus">
-                <el-option
-                  v-for="politicsStatusOption in politicsStatusOptions"
-                  :key="politicsStatusOption.v"
-                  :label="politicsStatusOption.l"
+  <div class="app-container">
+    <section class="am-box am-mb">
+      <div class="am-title am-p am-bd-b">添加家庭成员信息</div>
+      <div class="am-p">
+        <el-form ref="infoForm" label-width="80px" :model="formData" :rules="rules" inline>
+          <el-form-item label="称谓" prop="appellation">
+            <el-input v-model="formData.appellation"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" prop="name">
+            <el-input v-model="formData.name"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证" prop="identityCard">
+            <el-input v-model="formData.identityCard"></el-input>
+          </el-form-item>
+          <el-form-item label="健康状况" prop="health">
+            <el-select v-model="formData.health">
+              <el-option
+                v-for="healthState in healthStates"
+                :key="healthState.v"
+                :label="healthState.l"
+                :value="healthState.v"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="单位名称" prop="company">
+            <el-input v-model="formData.company"></el-input>
+          </el-form-item>
+          <el-form-item label="职位" prop="duty">
+            <el-input v-model="formData.duty"></el-input>
+          </el-form-item>
+          <el-form-item label="邮编" prop="postCode">
+            <el-input v-model="formData.postCode"></el-input>
+          </el-form-item>
+          <el-form-item label="电话号码" prop="phoneNumber">
+            <el-input v-model="formData.phoneNumber"></el-input>
+          </el-form-item>
+          <el-form-item label="政治面貌" prop="politicsStatus">
+            <el-select v-model="formData.politicsStatus">
+              <el-option
+                v-for="politicsStatusOption in politicsStatusOptions"
+                :key="politicsStatusOption.v"
+                :label="politicsStatusOption.l"
                   :value="politicsStatusOption.v"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="备注" prop="comment">
-              <div class="am-textarea-sb">
-                <el-input
-                  v-model="formData.comment"
-                  type="textarea"
-                  resize="none"
-                  :rows="5"
-                >
-                </el-input>
-              </div>
-            </el-form-item>
-          </el-form>
-        </el-scrollbar>
-      </div>
-      <div class="am-py am-text-center">
-        <el-button disabsled @click="resetForm">重置</el-button>
-        <el-button type="primary" @click="submitForm">提交</el-button>
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注" prop="comment">
+            <el-input
+              v-model="formData.comment"
+              type="textarea"
+              resize="none"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item label=" ">
+            <el-button size="mini" disabsled @click="resetForm">重置</el-button>
+            <el-button size="mini" type="primary" @click="submitForm">提交</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </section>
-    <section class="am-px right">
-      <div class="am-title">家庭成员信息</div>
-      <div :style="{'height': tableHeight}">
+    <section class="am-box">
+      <div class="am-title am-p am-bd-b">家庭成员信息</div>
+      <div class="am-p">
         <el-table
           v-loading="tableLoading"
           :data="tableData"
-          :height="tableHeight"
+          height="300px"
         >
           <el-table-column
             v-for="column in tableColumns"
@@ -232,14 +227,14 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
-      // 面包屑50 tagsView34 app-container内边距20*2 标题42
-      return this.$store.state.settings.tagsView ? `calc(100vh - 166px)` : `calc(100vh - 136px)`
-    },
-    formHeight () {
-      // 面包屑50 tagsView34 app-container内边距20*2 标题42 按钮36+24
-      return this.$store.state.settings.tagsView ? `calc(100vh - 226px)` : `calc(100vh - 196px)`
-    }
+    // tableHeight () {
+    //   // 面包屑50 tagsView34 app-container内边距20*2 标题42
+    //   return this.$store.state.settings.tagsView ? `calc(100vh - 166px)` : `calc(100vh - 136px)`
+    // },
+    // formHeight () {
+    //   // 面包屑50 tagsView34 app-container内边距20*2 标题42 按钮36+24
+    //   return this.$store.state.settings.tagsView ? `calc(100vh - 226px)` : `calc(100vh - 196px)`
+    // }
     // ...mapGetters(['sidebar']),
     // isSideBar () {
     //   return this.sidebar.open
@@ -289,23 +284,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.info-family {
-  display: flex;
-  .left {
-    min-width: 300px;
-    width: 30%;
-  }
-  .right {
-    width: 70%;
-  }
-}
-.left ::v-deep .el-form {
-  .el-select,
-  .el-input__inner {
-    width: 100%;
-  }
-}
-.scrollbar-vertical{
-  overflow: hidden;
-}
+
 </style>
