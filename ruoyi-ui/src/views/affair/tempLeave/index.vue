@@ -12,13 +12,13 @@
           inline
         >
             <el-form-item label="姓名" prop="name">
-              <el-input v-model="formData.name" clearable></el-input>
+              <el-input size="small" v-model="formData.name" clearable></el-input>
             </el-form-item>
             <el-form-item label="学号" prop="student_id">
-              <el-input v-model="formData.student_id" clearable></el-input>
+              <el-input size="small" v-model="formData.student_id" clearable></el-input>
             </el-form-item>
             <el-form-item label="学院" prop="department">
-              <el-select v-model="formData.department" clearable>
+              <el-select size="small" v-model="formData.department" clearable>
                 <el-option
                   v-for="(department, index) in departments"
                   :key="index"
@@ -28,19 +28,19 @@
               </el-select>
             </el-form-item>
             <el-form-item label="年级" prop="grade">
-              <el-input v-model="formData.grade" clearable></el-input>
+              <el-input size="small" v-model="formData.grade" clearable></el-input>
             </el-form-item>
             <el-form-item label="专业" prop="profession">
-              <el-input v-model="formData.profession" clearable></el-input>
+              <el-input size="small" v-model="formData.profession" clearable></el-input>
             </el-form-item>
             <el-form-item label="请假原因" prop="reason">
-              <el-input v-model="formData.reason" clearable></el-input>
+              <el-input size="small" v-model="formData.reason" clearable></el-input>
             </el-form-item>
             <el-form-item label="请假时段" prop="time_range">
-              <el-input v-model="formData.time_range" clearable></el-input>
+              <el-input size="small" v-model="formData.time_range" clearable></el-input>
             </el-form-item>
             <el-form-item label="任课老师" prop="teacher">
-              <el-input v-model="formData.teacher" clearable></el-input>
+              <el-input size="small" v-model="formData.teacher" clearable></el-input>
             </el-form-item>
           <el-form-item label=" ">
             <el-button size="small" disabsled @click="handleResetForm">重置</el-button>

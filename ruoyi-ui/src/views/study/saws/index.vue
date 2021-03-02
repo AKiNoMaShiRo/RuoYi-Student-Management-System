@@ -5,13 +5,13 @@
         <div class="am-p">
           <el-form ref="sawsForm" label-width="80px" :model="formData" :rules="rules" inline>
             <el-form-item label="学号" prop="student_id">
-              <el-input v-model="formData.student_id" clearable></el-input>
+              <el-input size="small" v-model="formData.student_id" clearable></el-input>
             </el-form-item>
             <el-form-item label="姓名" prop="name">
-              <el-input v-model="formData.name" clearable></el-input>
+              <el-input size="small" v-model="formData.name" clearable></el-input>
             </el-form-item>
             <el-form-item label="院系" prop="department">
-              <el-select v-model="formData.department" filterable clearable>
+              <el-select size="small" v-model="formData.department" filterable clearable>
                 <el-option
                   v-for="(department, index) in departments"
                   :key="index"
@@ -21,13 +21,13 @@
               </el-select>
             </el-form-item>
             <el-form-item label="专业" prop="profession">
-              <el-input v-model="formData.profession" clearable></el-input>
+              <el-input size="small" v-model="formData.profession" clearable></el-input>
             </el-form-item>
             <el-form-item label="班级" prop="class">
-              <el-input v-model.number="formData.class" clearable></el-input>
+              <el-input size="small" v-model.number="formData.class" clearable></el-input>
             </el-form-item>
             <el-form-item label="预警等级" prop="alarm_level">
-              <el-select v-model="formData.alarm_level" clearable>
+              <el-select size="small" v-model="formData.alarm_level" clearable>
                 <el-option label="一级预警" value="1"></el-option>
                 <el-option label="二级预警" value="2"></el-option>
                 <el-option label="三级预警" value="3"></el-option>

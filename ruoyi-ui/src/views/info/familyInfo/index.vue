@@ -5,16 +5,16 @@
       <div class="am-p">
         <el-form ref="infoForm" label-width="80px" :model="formData" :rules="rules" inline>
           <el-form-item label="称谓" prop="appellation">
-            <el-input v-model="formData.appellation"></el-input>
+            <el-input size="small" v-model="formData.appellation"></el-input>
           </el-form-item>
           <el-form-item label="姓名" prop="name">
-            <el-input v-model="formData.name"></el-input>
+            <el-input size="small" v-model="formData.name"></el-input>
           </el-form-item>
           <el-form-item label="身份证号" prop="identity_card">
-            <el-input v-model="formData.identityCard"></el-input>
+            <el-input size="small" v-model="formData.identity_card"></el-input>
           </el-form-item>
           <el-form-item label="健康状况" prop="health">
-            <el-select v-model="formData.health">
+            <el-select size="small" v-model="formData.health">
               <el-option
                 v-for="healthState in healthStates"
                 :key="healthState.v"
@@ -25,19 +25,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="单位名称" prop="company">
-            <el-input v-model="formData.company"></el-input>
+            <el-input size="small" v-model="formData.company"></el-input>
           </el-form-item>
           <el-form-item label="职位" prop="duty">
-            <el-input v-model="formData.duty"></el-input>
+            <el-input size="small" v-model="formData.duty"></el-input>
           </el-form-item>
           <el-form-item label="邮编" prop="post_code">
-            <el-input v-model="formData.postCode"></el-input>
+            <el-input size="small" v-model="formData.post_code"></el-input>
           </el-form-item>
           <el-form-item label="电话号码" prop="phone_number">
-            <el-input v-model="formData.phoneNumber"></el-input>
+            <el-input size="small" v-model="formData.phone_number"></el-input>
           </el-form-item>
           <el-form-item label="政治面貌" prop="politics_status">
-            <el-select v-model="formData.politicsStatus">
+            <el-select size="small" v-model="formData.politics_status">
               <el-option
                 v-for="politicsStatusOption in politicsStatusOptions"
                 :key="politicsStatusOption.v"
@@ -47,13 +47,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="备注" prop="comment">
-            <el-input
-              v-model="formData.comment"
-              type="textarea"
-              resize="none"
-            >
-            </el-input>
+          <el-form-item label="备注" prop="remark">
+            <el-input size="small" v-model="formData.remark"></el-input>
           </el-form-item>
           <el-form-item label=" ">
             <el-button size="mini" disabsled @click="resetForm">重置</el-button>
@@ -68,7 +63,7 @@
         <el-table
           v-loading="tableLoading"
           :data="tableData"
-          height="300px"
+          height="320px"
         >
           <el-table-column
             v-for="column in tableColumns"
@@ -109,8 +104,8 @@
         <el-form-item label="姓名" prop="name" label-width="100px">
           <el-input v-model="dialogFormData.name"></el-input>
         </el-form-item>
-        <el-form-item label="身份证" prop="identityCard" label-width="100px">
-          <el-input v-model="dialogFormData.identityCard"></el-input>
+        <el-form-item label="身份证" prop="identity_card" label-width="100px">
+          <el-input v-model="dialogFormData.identity_card"></el-input>
         </el-form-item>
         <el-form-item label="健康状况" prop="health" label-width="100px">
           <el-select v-model="dialogFormData.health">
@@ -129,14 +124,14 @@
         <el-form-item label="职位" prop="duty" label-width="100px">
           <el-input v-model="dialogFormData.duty"></el-input>
         </el-form-item>
-        <el-form-item label="邮编" prop="postCode" label-width="100px">
-          <el-input v-model="dialogFormData.postCode"></el-input>
+        <el-form-item label="邮编" prop="post_code" label-width="100px">
+          <el-input v-model="dialogFormData.post_code"></el-input>
         </el-form-item>
-        <el-form-item label="电话号码" prop="phoneNumber" label-width="100px">
-          <el-input v-model="dialogFormData.phoneNumber"></el-input>
+        <el-form-item label="电话号码" prop="phone_number" label-width="100px">
+          <el-input v-model="dialogFormData.phone_number"></el-input>
         </el-form-item>
-        <el-form-item label="政治面貌" prop="politicsStatus" label-width="100px">
-          <el-select v-model="dialogFormData.politicsStatus">
+        <el-form-item label="政治面貌" prop="politics_status" label-width="100px">
+          <el-select v-model="dialogFormData.politics_status">
             <el-option
               v-for="politicsStatusOption in politicsStatusOptions"
               :key="politicsStatusOption.v"
@@ -146,8 +141,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注" prop="comment" label-width="100px">
-          <el-input v-model="dialogFormData.comment"></el-input>
+        <el-form-item label="备注" prop="remark" label-width="100px">
+          <el-input v-model="dialogFormData.remark"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" label-width="100px">
@@ -173,52 +168,52 @@ export default {
       formData: {
         appellation: '',
         name: '',
-        identityCard: '',
+        identity_card: '',
         health: '',
         company: '',
         duty: '',
-        postCode: '',
-        phoneNumber: '',
-        politicsStatus: '',
-        comment: ''
+        post_code: '',
+        phone_number: '',
+        politics_status: '',
+        remark: ''
       },
       dialogFormData: {
         appellation: '',
         name: '',
-        identityCard: '',
+        identity_card: '',
         health: '',
         company: '',
         duty: '',
-        postCode: '',
-        phoneNumber: '',
-        politicsStatus: '',
-        comment: ''
+        post_code: '',
+        phone_number: '',
+        politics_status: '',
+        remark: ''
       },
       tableLoading: false,
       tableColumns: Object.freeze([
         { label: '姓名', prop: 'name', minWidth: '80', fixed: "left" },
         { label: '称谓', prop: 'appellation', minWidth: '80' },
-        { label: '身份证', prop: 'identityCard', minWidth: '120' },
+        { label: '身份证', prop: 'identity_card', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
         { label: '单位名称', prop: 'company', minWidth: '120' },
         { label: '职务', prop: 'duty', minWidth: '80' },
-        { label: '邮编', prop: 'postCode', minWidth: '70' },
-        { label: '电话号码', prop: 'phoneNumber', minWidth: '120' },
-        { label: '政治面貌', prop: 'politicsStatus', minWidth: '120' },
-        { label: '备注', prop: 'comment', minWidth: '140' },
+        { label: '邮编', prop: 'post_code', minWidth: '70' },
+        { label: '电话号码', prop: 'phone_number', minWidth: '120' },
+        { label: '政治面貌', prop: 'politics_status', minWidth: '120' },
+        { label: '备注', prop: 'remark', minWidth: '140' },
       ]),
       tableData: [
         {
           appellation: '母亲',
           name: '黄玉珍',
-          identityCard: '330823196409273645',
+          identity_card: '330823196409273645',
           health: '1',
           company: '',
           duty: '',
-          postCode: '324100',
-          phoneNumber: '18457052062',
-          politicsStatus: '12',
-          comment: ''
+          post_code: '324100',
+          phone_number: '18457052062',
+          politics_status: '12',
+          remark: ''
         }
       ],
       rules: {
@@ -273,7 +268,7 @@ export default {
         return '--'
       } else if ( prop === 'health' ) {
         return healthStates[Number(val)-1].l
-      } else if ( prop === 'politicsStatus' ){
+      } else if ( prop === 'politics_status' ){
         return politicsStatusOptions[Number(val)-1].l
       } else {
         return val
