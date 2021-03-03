@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.StuInfoMapper">
+
+    <resultMap type="StuInfo" id="StuInfoResult">
+        <id     property="studentId"            column="student_id"/>
+        <result property="department"           column="department"/>
+        <result property="profession"           column="profession"/>
+        <result property="grade"                column="grade"/>
+        <result property="classNum"             column="class_num"/>
+        <result property="name"                 column="name"/>
+        <result property="graduIntention"       column="gradu_intention"/>
+        <result property="registration"         column="registration"/>
+        <result property="teacher"              column="teacher"/>
+        <result property="phoneNumber"          column="phone_number"/>
+        <result property="email"                column="email"/>
+        <result property="qq"                   column="qq"/>
+        <result property="weChat"               column="we_chat"/>
+        <result property="birthday"             column="birthday"/>
+        <result property="nation"               column="nation"/>
+        <result property="politicsStatus"       column="politics_status"/>
+        <result property="joinTime"             column="join_time"/>
+        <result property="studentOrigin"        column="student_origin"/>
+        <result property="familyAddress"        column="family_address"/>
+        <result property="familyPhoneNumber"    column="family_phone_number"/>
+        <result property="familyContacts"       column="family_contacts"/>
+        <result property="familyPostcode"       column="family_postcode"/>
+        <result property="graduSchool"          column="gradu_school"/>
+        <result property="graduSchoolPostcode"  column="gradu_school_postcode"/>
+        <result property="usedName"             column="used_name"/>
+        <result property="nativePlace"          column="native_place"/>
+        <result property="healthCard"           column="health_card"/>
+        <result property="cet4"                 column="cet4"/>
+        <result property="cet6"                 column="cet6"/>
+        <result property="englishName"          column="english_name"/>
+        <result property="reportItem"           column="report_item"/>
+    </resultMap>
+
+    <sql id="selectStuInfoVo">
+        select s.student_id, s.name, s.gradu_intention, s.registration, s.teacher, s.phone_number, s.email,
+               s.qq, s.we_chat, s.birthday, s.nation, s.politics_status, s.join_time, s.student_origin,
+               s.family_address, s.family_phone_number, s.family_contacts, s.family_postcode, s.gradu_school,
+               s.gradu_school_postcode, s.used_name, s.native_place, s.health_card, s.cet4, s.cet6,
+               s.english_name, s.report_item, c.department,c.profession, c.grade, c.class_num
+        from stu_info s inner join class_info c
+        on s.class_id = c.class_id
+    </sql>
+
+    <select id="selectStuById" parameterType="String" resultMap="StuInfoResult">
+        <include refid="selectStuInfoVo"></include>
+        where s.student_id = #{studentId}
+    </select>
+
+</mapper>
