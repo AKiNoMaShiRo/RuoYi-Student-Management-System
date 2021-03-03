@@ -6,8 +6,8 @@ create table stu_info (
   class_id				int(4)			not null				   comment '班级ID',
   student_id			varchar(20)		not null				   comment '学号',
   name					varchar(30)		not null				   comment '姓名',
-  gradu_intention		int(4)			default null			   comment '毕业意向调查',
-  registration			int(4)			default null			   comment '是否已缴费注册',
+  gradu_intention		varchar(20)		default null			   comment '毕业意向调查',
+  registration			varchar(20)		default null			   comment '是否已缴费注册',
   teacher				varchar(30)		default null			   comment '导师姓名',
   phone_number			varchar(20)		default null			   comment '手机号码',
   email					varchar(50)		default null			   comment '电子邮箱',
@@ -15,7 +15,7 @@ create table stu_info (
   we_chat				varchar(30)		default null			   comment '微信',
   birthday				datetime								   comment '出生日期',
   nation				varchar(20)		default null			   comment '民族',
-  politics_status		int(4)			default null			   comment '政治面貌',
+  politics_status		varchar(20)		default null			   comment '政治面貌',
   join_time				datetime								   comment '加入时间',
   student_origin		varchar(20)		default null			   comment '生源地区',
   family_address		varchar(50)		default null			   comment '家庭地址',
@@ -30,7 +30,7 @@ create table stu_info (
   cet4					int(4)			default null			   comment '四级成绩',
   cet6					int(4)			default null			   comment '六级成绩',
   english_name			varchar(30)		default null			   comment '英文名',
-  report_item			int(4)			default null		   	   comment '信息上报项目',
+  report_item			varchar(20)		default null		   	   comment '信息上报项目',
   
   primary key (student_id)
 ) engine=innodb comment = '学生信息表';

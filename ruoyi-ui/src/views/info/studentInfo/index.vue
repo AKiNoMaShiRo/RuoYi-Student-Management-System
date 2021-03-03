@@ -26,7 +26,7 @@
         <el-row type="flex" justify="space-between">
           <el-col :span="30" :xs="30">
             <el-form-item label="毕业意向调查" prop="graduate_intention">
-              <el-select v-model="formData.graduateIntention">
+              <el-select v-model="formData.graduateIntention" clearable>
                 <el-option
                   v-for="graduateIntentionType in graduateIntentionTypes"
                   :key="graduateIntentionType.v"
@@ -37,7 +37,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="是否已缴费注册" prop="registration">
-              <el-select v-model="formData.registration">
+              <el-select v-model="formData.registration" clearable>
                 <el-option
                   v-for="registrationState in registrationStates"
                   :key="registrationState.v"
@@ -48,25 +48,25 @@
               </el-select>
             </el-form-item>
             <el-form-item label="导师姓名" prop="teacher">
-              <el-input v-model="formData.teacher"></el-input>
+              <el-input v-model="formData.teacher" clearable></el-input>
             </el-form-item>
             <el-form-item label="手机号码" prop="phone_number">
-              <el-input v-model="formData.phoneNumber"></el-input>
+              <el-input v-model="formData.phoneNumber" clearable></el-input>
             </el-form-item>
             <el-form-item label="电子邮箱" prop="email">
-              <el-input v-model="formData.email"></el-input>
+              <el-input v-model="formData.email" clearable></el-input>
             </el-form-item>
             <el-form-item label="QQ" prop="qq">
-              <el-input v-model="formData.QQ"></el-input>
+              <el-input v-model="formData.QQ" clearable></el-input>
             </el-form-item>
             <el-form-item label="微信" prop="we_chat">
-              <el-input v-model="formData.weChat"></el-input>
+              <el-input v-model="formData.weChat" clearable></el-input>
             </el-form-item>
             <el-form-item label="出生日期" prop="birthday">
-              <el-date-picker v-model="formData.birthday" type="date"></el-date-picker>
+              <el-date-picker v-model="formData.birthday" type="date" clearable></el-date-picker>
             </el-form-item>
             <el-form-item label="民族" prop="nation">
-              <el-select v-model="formData.nation">
+              <el-select v-model="formData.nation" clearable>
                 <el-option
                   v-for="(nation, index) in nationNames"
                   :key="index"
@@ -77,7 +77,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="政治面貌" prop="politics_status">
-              <el-select v-model="formData.politicsStatus">
+              <el-select v-model="formData.politicsStatus" clearable>
                 <el-option
                   v-for="politicsStatusOption in politicsStatusOptions"
                   :key="politicsStatusOption.v"
@@ -88,57 +88,58 @@
               </el-select>
             </el-form-item>
             <el-form-item label="加入时间" prop="join_time">
-              <el-date-picker v-model="formData.joinTime" type="month"></el-date-picker>
+              <el-date-picker v-model="formData.joinTime" type="month" clearable></el-date-picker>
             </el-form-item>
             <el-form-item label="生源地区" prop="student_origin">
-              <el-cascader v-model="formData.studentOrigin" :options="regionData" @change="handleChange">
+              <el-cascader v-model="formData.studentOrigin" :options="regionData" @change="handleChange" clearable>
               </el-cascader>
             </el-form-item>
             <el-form-item label="家庭地址" prop="family_address">
-              <el-input v-model="formData.familyAddress"></el-input>
+              <el-input v-model="formData.familyAddress" clearable></el-input>
             </el-form-item>
             <el-form-item label="家庭电话" prop="family_phone_number">
-              <el-input v-model="formData.familyPhoneNumber"></el-input>
+              <el-input v-model="formData.familyPhoneNumber" clearable></el-input>
             </el-form-item>
             <el-form-item label="家庭联系人" prop="family_contacts">
-              <el-input v-model="formData.familyContacts"></el-input>
+              <el-input v-model="formData.familyContacts" clearable></el-input>
             </el-form-item>
             <el-form-item label="家庭邮编" prop="family_postcode">
-              <el-input v-model="formData.familyPostcode"></el-input>
+              <el-input v-model="formData.familyPostcode" clearable></el-input>
             </el-form-item>
             <el-form-item label="毕业中学" prop="graduate_school">
-              <el-input v-model="formData.graduateSchool"></el-input>
+              <el-input v-model="formData.graduateSchool" clearable></el-input>
             </el-form-item>
             <el-form-item label="中学邮编" prop="graduate_school_postcode">
-              <el-input v-model="formData.graduateSchoolPostcode"></el-input>
+              <el-input v-model="formData.graduateSchoolPostcode" clearable></el-input>
             </el-form-item>
             <el-form-item label="曾用名" prop="used_name">
-              <el-input v-model="formData.usedName"></el-input>
+              <el-input v-model="formData.usedName" clearable></el-input>
             </el-form-item>
             <el-form-item label="籍贯" prop="native_place">
               <el-cascader
                 v-model="formData.nativePlace"
                 :options="regionData"
                 :props="{ expandTrigger: 'hover' }"
+                clearable
               >
               </el-cascader>
             </el-form-item>
             <el-form-item label="医保卡号" prop="health_card">
-              <el-input v-model="formData.healthCard"></el-input>
+              <el-input v-model="formData.healthCard" clearable></el-input>
             </el-form-item>
             <el-form-item label="四级成绩" prop="cet4">
-              <el-input v-model="formData.cet4"></el-input>
+              <el-input v-model="formData.cet4" clearable></el-input>
             </el-form-item>
             <el-form-item label="六级成绩" prop="cet6">
-              <el-input v-model="formData.cet6"></el-input>
+              <el-input v-model="formData.cet6" clearable></el-input>
             </el-form-item>
             <el-form-item label="英文名" prop="english_name">
-              <el-input v-model="formData.englishName"></el-input>
+              <el-input v-model="formData.englishName" clearable></el-input>
             </el-form-item>
             <el-form-item label="信息上报项目" prop="report_item">
-              <el-select v-model="formData.reportItem">
-                <el-option label="建档立卡学生" value="1"></el-option>
-                <el-option label="非建档立卡学生" value="2"></el-option>
+              <el-select v-model="formData.reportItem" v-bind="formData.reportItem" clearable>
+                <el-option label="建档立卡学生" value="yes"></el-option>
+                <el-option label="非建档立卡学生" value="no"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -163,7 +164,8 @@ import {
   graduateIntentionTypes,
   registrationStates
 } from '../../../libs/personalInfo'
-import { regionData, CodeToText, TextToCode } from 'element-china-area-data'
+import { regionData } from 'element-china-area-data'
+import { getStuInfo } from '@/api/info/stuInfo'
 
 export default {
   name: 'StudentInfo',
@@ -175,10 +177,10 @@ export default {
       registrationStates: registrationStates,
       regionData: regionData,
       formData: {
-        department: '计算机与软件学院',
-        class: '17软工2班',
-        number: '20171344054',
-        name: '王圣滋',
+        department: '',
+        class: '',
+        number: '',
+        name: '',
         graduateIntention: '',
         registration: '',
         teacher: '',
@@ -207,9 +209,22 @@ export default {
       }
     }
   },
+  created () {
+    getStuInfo('20171344054').then(res => {
+      this.formData = {}
+      if(res && res.data){
+        this.formData = res.data
+      }
+    })
+  },
   methods: {
     resetForm () {
-      this.$refs.infoForm.resetFields()
+      getStuInfo('20171344054').then(res => {
+      this.formData = {}
+      if(res && res.data){
+        this.formData = res.data
+      }
+    })
     },
     submitForm () {
     },

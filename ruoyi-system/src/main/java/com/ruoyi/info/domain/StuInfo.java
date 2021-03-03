@@ -34,11 +34,11 @@ public class StuInfo extends BaseEntity {
 
     /** 毕业意向调查 */
     @Excel(name = "毕业意向调查")
-    private int graduIntention;
+    private String graduIntention;
 
     /** 是否已缴费注册 */
     @Excel(name = "是否已缴费注册")
-    private int registration;
+    private String registration;
 
     /** 导师姓名 */
     @Excel(name = "导师姓名")
@@ -70,7 +70,7 @@ public class StuInfo extends BaseEntity {
 
     /** 政治面貌 */
     @Excel(name = "政治面貌")
-    private int politicsStatus;
+    private String politicsStatus;
 
     /** 加入时间 */
     @Excel(name = "加入时间", dateFormat = "yyyy-MM-dd")
@@ -129,7 +129,7 @@ public class StuInfo extends BaseEntity {
 
     /** 信息上报项目 */
     @Excel(name = "信息上报项目")
-    private int reportItem;
+    private String reportItem;
 
     public String getStudentId() {
         return studentId;
@@ -179,19 +179,19 @@ public class StuInfo extends BaseEntity {
         this.name = name;
     }
 
-    public int getGraduIntention() {
+    public String getGraduIntention() {
         return graduIntention;
     }
 
-    public void setGraduIntention(int graduIntention) {
+    public void setGraduIntention(String graduIntention) {
         this.graduIntention = graduIntention;
     }
 
-    public int getRegistration() {
+    public String getRegistration() {
         return registration;
     }
 
-    public void setRegistration(int registration) {
+    public void setRegistration(String registration) {
         this.registration = registration;
     }
 
@@ -251,11 +251,11 @@ public class StuInfo extends BaseEntity {
         this.nation = nation;
     }
 
-    public int getPoliticsStatus() {
+    public String getPoliticsStatus() {
         return politicsStatus;
     }
 
-    public void setPoliticsStatus(int politicsStatus) {
+    public void setPoliticsStatus(String politicsStatus) {
         this.politicsStatus = politicsStatus;
     }
 
@@ -371,11 +371,11 @@ public class StuInfo extends BaseEntity {
         this.englishName = englishName;
     }
 
-    public int getReportItem() {
+    public String getReportItem() {
         return reportItem;
     }
 
-    public void setReportItem(int reportItem) {
+    public void setReportItem(String reportItem) {
         this.reportItem = reportItem;
     }
 

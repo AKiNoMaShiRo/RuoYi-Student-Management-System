@@ -25,7 +25,7 @@ public class StuInfoController extends BaseController {
     private IStuInfoService stuInfoService;
 
     @ApiOperation("根据学号查询学生信息")
-    @GetMapping(value = { "/{studentId}"})
+    @GetMapping(value = { "/queryById/{studentId}"})
     public AjaxResult getInfo(@PathVariable(value = "studentId")String studentId){
         AjaxResult ajaxResult = AjaxResult.success();
         if(StringUtils.isNotNull(studentId)){
@@ -35,7 +35,7 @@ public class StuInfoController extends BaseController {
     }
 
     @ApiOperation("修改学生信息")
-    @PostMapping
+    @PostMapping("/edit")
     public AjaxResult editInfo(@Validated @RequestBody StuInfo stuInfo){
         return toAjax(stuInfoService.updateStu(stuInfo));
     }
