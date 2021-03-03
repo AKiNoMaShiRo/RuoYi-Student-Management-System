@@ -3,6 +3,8 @@ package com.ruoyi.info.domain;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.util.Date;
+
 public class StuInfo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -59,8 +61,8 @@ public class StuInfo extends BaseEntity {
     private String weChat;
 
     /** 出生日期 */
-    @Excel(name = "出生日期")
-    private String birthday;
+    @Excel(name = "出生日期", dateFormat = "yyyy-MM-dd")
+    private Date birthday;
 
     /** 民族 */
     @Excel(name = "民族")
@@ -71,8 +73,8 @@ public class StuInfo extends BaseEntity {
     private int politicsStatus;
 
     /** 加入时间 */
-    @Excel(name = "加入时间")
-    private String joinTime;
+    @Excel(name = "加入时间", dateFormat = "yyyy-MM-dd")
+    private Date joinTime;
 
     /** 生源地区 */
     @Excel(name = "生源地区")
@@ -233,11 +235,11 @@ public class StuInfo extends BaseEntity {
         this.weChat = weChat;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -257,11 +259,11 @@ public class StuInfo extends BaseEntity {
         this.politicsStatus = politicsStatus;
     }
 
-    public String getJoinTime() {
+    public Date getJoinTime() {
         return joinTime;
     }
 
-    public void setJoinTime(String joinTime) {
+    public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
     }
 

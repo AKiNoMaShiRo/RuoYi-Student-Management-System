@@ -52,5 +52,37 @@
         <include refid="selectStuInfoVo"></include>
         where s.student_id = #{studentId}
     </select>
+    
+    <update id="updateStu" parameterType="StuInfo">
+        update stu_info
+        <set>
+            <if test="graduIntention != null">gradu_intention = #{graduIntention},</if>
+            <if test="registration != null">registration = #{registration},</if>
+            <if test="teacher != null and teacher != ''">teacher = #{teacher},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="qq != null and qq != ''">qq = #{qq},</if>
+            <if test="weChat != null and weChat != ''">we_chat = #{weChat},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="nation != null and nation != ''">nation = #{nation},</if>
+            <if test="politicsStatus != null">politics_status = #{politicsStatus},</if>
+            <if test="joinTime != null">join_time = #{joinTime},</if>
+            <if test="studentOrigin != null and studentOrigin != ''">student_origin = #{studentOrigin},</if>
+            <if test="familyAddress != null and familyAddress != ''">family_address = #{familyAddress},</if>
+            <if test="familyPhoneNumber != null and familyPhoneNumber != ''">family_phone_number = #{familyPhoneNumber},</if>
+            <if test="familyContacts != null and familyContacts != ''">family_contacts = #{familyContacts},</if>
+            <if test="familyPostcode != null and familyPostcode != ''">family_postcode = #{familyPostcode},</if>
+            <if test="graduSchool != null and graduSchool != ''">gradu_school = #{graduSchool},</if>
+            <if test="graduSchoolPostcode != null and graduSchoolPostcode != ''">gradu_school_postcode = #{graduSchoolPostcode},</if>
+            <if test="usedName != null and usedName != ''">used_name = #{usedName},</if>
+            <if test="nativePlace != null and nativePlace != ''">native_place = #{nativePlace},</if>
+            <if test="healthCard != null and healthCard != ''">health_card = #{healthCard},</if>
+            <if test="cet4 != null">cet4 = #{cet4},</if>
+            <if test="cet6 != null">cet6 = #{cet6},</if>
+            <if test="englishName != null and englishName != ''">english_name = #{englishName},</if>
+            <if test="reportItem != null">report_item = #{reportItem},</if>
+        </set>
+        where student_id = #{studentId}
+    </update>
 
 </mapper>

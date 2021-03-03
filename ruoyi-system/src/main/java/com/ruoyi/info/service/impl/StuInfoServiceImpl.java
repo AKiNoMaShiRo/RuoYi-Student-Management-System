@@ -1,5 +1,6 @@
 package com.ruoyi.info.service.impl;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.info.domain.StuInfo;
 import com.ruoyi.info.mapper.StuInfoMapper;
 import com.ruoyi.info.service.IStuInfoService;
@@ -26,5 +27,16 @@ public class StuInfoServiceImpl implements IStuInfoService {
     @Override
     public StuInfo selectStuById(String studentId){
         return infoMapper.selectStuById(studentId);
+    }
+
+    /**
+     * 修改学生信息
+     *
+     * @param user 学生信息
+     * @return 结果
+     */
+    @Override
+    public int updateStu(StuInfo user){
+        return  infoMapper.updateStu(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.ruoyi.info.service;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.info.domain.StuInfo;
 
 /**
@@ -15,4 +16,12 @@ public interface IStuInfoService {
      * @return 学生信息
      */
     public StuInfo selectStuById(String studentId);
+
+    /**
+     * 修改学生信息
+     *
+     * @param user 学生信息
+     * @return 结果
+     */
+    public int updateStu(StuInfo user);
 }
