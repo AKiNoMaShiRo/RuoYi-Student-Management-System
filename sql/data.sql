@@ -1,6 +1,6 @@
-INSERT INTO stu_info VALUES (2, '20171344054', '王圣滋', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', 520, 455, '', 'no');
-INSERT INTO stu_info VALUES (2, '20171344049', '勾怡璇', 1, 'payed', '', '', '', '', '', NULL, NULL, 'qz', NULL, '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
-INSERT INTO stu_info VALUES (1, '20171344042', '寇雅楠', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
+INSERT INTO stu_info VALUES (2, '20171344054', '王圣滋', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 520, 455, '', 'no');
+INSERT INTO stu_info VALUES (2, '20171344049', '勾怡璇', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
+INSERT INTO stu_info VALUES (1, '20171344042', '寇雅楠', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
 
 INSERT INTO class_info VALUES (1, '计算机与软件学院', '软件工程', 17, 1, 1);
 INSERT INTO class_info VALUES (2, '计算机与软件学院', '软件工程', 17, 2, 1);

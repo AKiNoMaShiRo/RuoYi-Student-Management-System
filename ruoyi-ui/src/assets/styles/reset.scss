@@ -79,8 +79,11 @@ aside {
 //表单样式修改
 .el-form{
   .el-form-item{
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     margin-right: 12px;
+    .el-input {
+      width: 180px;
+    }
   }
 }
 

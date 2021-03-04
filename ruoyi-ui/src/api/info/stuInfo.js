@@ -13,6 +13,6 @@ export function editStuInfo(params){
     return request({
         url: '/info/stu/edit',
         method: 'post',
-        params: params
+        data: params
     })
 }

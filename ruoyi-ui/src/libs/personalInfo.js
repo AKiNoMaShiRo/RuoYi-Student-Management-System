@@ -14,7 +14,7 @@ export const politicsStatusOptions = [
     { l:'九三学社社员', v: 'jsxssy' },
     { l:'台盟盟员', v: 'tmmy' },
     { l:'无党派民主人士', v: 'wdpmzrs' },
-    { l:'群众', v: 'gqty' },
+    { l:'群众', v: 'qz' },
 ]
 
 export const healthStates = [

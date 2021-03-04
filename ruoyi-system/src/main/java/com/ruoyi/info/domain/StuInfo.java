@@ -76,9 +76,17 @@ public class StuInfo extends BaseEntity {
     @Excel(name = "加入时间", dateFormat = "yyyy-MM-dd")
     private Date joinTime;
 
-    /** 生源地区 */
-    @Excel(name = "生源地区")
-    private String studentOrigin;
+    /** 生源地区-省 */
+    @Excel(name = "生源地区-省")
+    private String studentOriginP;
+
+    /** 生源地区-市 */
+    @Excel(name = "生源地区-市")
+    private String studentOriginC;
+
+    /** 生源地区-区 */
+    @Excel(name = "生源地区-区")
+    private String studentOriginA;
 
     /** 家庭地址 */
     @Excel(name = "家庭地址")
@@ -108,9 +116,17 @@ public class StuInfo extends BaseEntity {
     @Excel(name = "曾用名")
     private String usedName;
 
-    /** 籍贯 */
-    @Excel(name = "籍贯")
-    private String nativePlace;
+    /** 籍贯-省 */
+    @Excel(name = "籍贯-省")
+    private String nativePlaceP;
+
+    /** 籍贯-市 */
+    @Excel(name = "籍贯-市")
+    private String nativePlaceC;
+
+    /** 籍贯-区 */
+    @Excel(name = "籍贯-区")
+    private String nativePlaceA;
 
     /** 医保卡号 */
     @Excel(name = "医保卡号")
@@ -267,12 +283,28 @@ public class StuInfo extends BaseEntity {
         this.joinTime = joinTime;
     }
 
-    public String getStudentOrigin() {
-        return studentOrigin;
+    public String getStudentOriginP() {
+        return studentOriginP;
     }
 
-    public void setStudentOrigin(String studentOrigin) {
-        this.studentOrigin = studentOrigin;
+    public void setStudentOriginP(String studentOriginP) {
+        this.studentOriginP = studentOriginP;
+    }
+
+    public String getStudentOriginC() {
+        return studentOriginC;
+    }
+
+    public void setStudentOriginC(String studentOriginC) {
+        this.studentOriginC = studentOriginC;
+    }
+
+    public String getStudentOriginA() {
+        return studentOriginA;
+    }
+
+    public void setStudentOriginA(String studentOriginA) {
+        this.studentOriginA = studentOriginA;
     }
 
     public String getFamilyAddress() {
@@ -331,12 +363,28 @@ public class StuInfo extends BaseEntity {
         this.usedName = usedName;
     }
 
-    public String getNativePlace() {
-        return nativePlace;
+    public String getNativePlaceP() {
+        return nativePlaceP;
     }
 
-    public void setNativePlace(String nativePlace) {
-        this.nativePlace = nativePlace;
+    public void setNativePlaceP(String nativePlaceP) {
+        this.nativePlaceP = nativePlaceP;
+    }
+
+    public String getNativePlaceC() {
+        return nativePlaceC;
+    }
+
+    public void setNativePlaceC(String nativePlaceC) {
+        this.nativePlaceC = nativePlaceC;
+    }
+
+    public String getNativePlaceA() {
+        return nativePlaceA;
+    }
+
+    public void setNativePlaceA(String nativePlaceA) {
+        this.nativePlaceA = nativePlaceA;
     }
 
     public String getHealthCard() {
@@ -399,7 +447,9 @@ public class StuInfo extends BaseEntity {
                 ", nation='" + nation + '\'' +
                 ", politicsStatus=" + politicsStatus +
                 ", joinTime='" + joinTime + '\'' +
-                ", studentOrigin='" + studentOrigin + '\'' +
+                ", studentOriginP='" + studentOriginP + '\'' +
+                ", studentOriginC='" + studentOriginC + '\'' +
+                ", studentOriginA='" + studentOriginA + '\'' +
                 ", familyAddress='" + familyAddress + '\'' +
                 ", familyPhoneNumber='" + familyPhoneNumber + '\'' +
                 ", familyContacts='" + familyContacts + '\'' +
@@ -407,7 +457,9 @@ public class StuInfo extends BaseEntity {
                 ", graduSchool='" + graduSchool + '\'' +
                 ", graduSchoolPostcode='" + graduSchoolPostcode + '\'' +
                 ", usedName='" + usedName + '\'' +
-                ", nativePlace='" + nativePlace + '\'' +
+                ", nativePlaceP='" + nativePlaceP + '\'' +
+                ", nativePlaceC='" + nativePlaceC + '\'' +
+                ", nativePlaceA='" + nativePlaceA + '\'' +
                 ", healthCard='" + healthCard + '\'' +
                 ", cet4=" + cet4 +
                 ", cet6=" + cet6 +

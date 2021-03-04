@@ -22,7 +22,9 @@
         <result property="nation"               column="nation"/>
         <result property="politicsStatus"       column="politics_status"/>
         <result property="joinTime"             column="join_time"/>
-        <result property="studentOrigin"        column="student_origin"/>
+        <result property="studentOriginP"        column="student_origin_p"/>
+        <result property="studentOriginC"        column="student_origin_c"/>
+        <result property="studentOriginA"        column="student_origin_a"/>
         <result property="familyAddress"        column="family_address"/>
         <result property="familyPhoneNumber"    column="family_phone_number"/>
         <result property="familyContacts"       column="family_contacts"/>
@@ -30,7 +32,9 @@
         <result property="graduSchool"          column="gradu_school"/>
         <result property="graduSchoolPostcode"  column="gradu_school_postcode"/>
         <result property="usedName"             column="used_name"/>
-        <result property="nativePlace"          column="native_place"/>
+        <result property="nativePlaceP"          column="native_place_p"/>
+        <result property="nativePlaceC"          column="native_place_c"/>
+        <result property="nativePlaceA"          column="native_place_a"/>
         <result property="healthCard"           column="health_card"/>
         <result property="cet4"                 column="cet4"/>
         <result property="cet6"                 column="cet6"/>
@@ -40,10 +44,11 @@
 
     <sql id="selectStuInfoVo">
         select s.student_id, s.name, s.gradu_intention, s.registration, s.teacher, s.phone_number, s.email,
-               s.qq, s.we_chat, s.birthday, s.nation, s.politics_status, s.join_time, s.student_origin,
-               s.family_address, s.family_phone_number, s.family_contacts, s.family_postcode, s.gradu_school,
-               s.gradu_school_postcode, s.used_name, s.native_place, s.health_card, s.cet4, s.cet6,
-               s.english_name, s.report_item, c.department,c.profession, c.grade, c.class_num
+               s.qq, s.we_chat, s.birthday, s.nation, s.politics_status, s.join_time, s.student_origin_p,
+               s.student_origin_c, s.student_origin_a, s.family_address, s.family_phone_number,
+               s.family_contacts, s.family_postcode, s.gradu_school, s.gradu_school_postcode, s.used_name,
+               s.native_place_p, s.native_place_a, s.native_place_c, s.health_card, s.cet4, s.cet6, s.english_name,
+               s.report_item, c.department, c.profession, c.grade, c.class_num
         from stu_info s inner join class_info c
         on s.class_id = c.class_id
     </sql>
@@ -58,28 +63,32 @@
         <set>
             <if test="graduIntention != null">gradu_intention = #{graduIntention},</if>
             <if test="registration != null">registration = #{registration},</if>
-            <if test="teacher != null and teacher != ''">teacher = #{teacher},</if>
-            <if test="phoneNumber != null and phoneNumber != ''">phone_number = #{phoneNumber},</if>
-            <if test="email != null and email != ''">email = #{email},</if>
-            <if test="qq != null and qq != ''">qq = #{qq},</if>
-            <if test="weChat != null and weChat != ''">we_chat = #{weChat},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="qq != null">qq = #{qq},</if>
+            <if test="weChat != null">we_chat = #{weChat},</if>
             <if test="birthday != null">birthday = #{birthday},</if>
-            <if test="nation != null and nation != ''">nation = #{nation},</if>
+            <if test="nation != null">nation = #{nation},</if>
             <if test="politicsStatus != null">politics_status = #{politicsStatus},</if>
             <if test="joinTime != null">join_time = #{joinTime},</if>
-            <if test="studentOrigin != null and studentOrigin != ''">student_origin = #{studentOrigin},</if>
-            <if test="familyAddress != null and familyAddress != ''">family_address = #{familyAddress},</if>
-            <if test="familyPhoneNumber != null and familyPhoneNumber != ''">family_phone_number = #{familyPhoneNumber},</if>
-            <if test="familyContacts != null and familyContacts != ''">family_contacts = #{familyContacts},</if>
-            <if test="familyPostcode != null and familyPostcode != ''">family_postcode = #{familyPostcode},</if>
-            <if test="graduSchool != null and graduSchool != ''">gradu_school = #{graduSchool},</if>
-            <if test="graduSchoolPostcode != null and graduSchoolPostcode != ''">gradu_school_postcode = #{graduSchoolPostcode},</if>
-            <if test="usedName != null and usedName != ''">used_name = #{usedName},</if>
-            <if test="nativePlace != null and nativePlace != ''">native_place = #{nativePlace},</if>
-            <if test="healthCard != null and healthCard != ''">health_card = #{healthCard},</if>
+            <if test="studentOriginP != null">student_origin_p = #{studentOriginP},</if>
+            <if test="studentOriginC != null">student_origin_c = #{studentOriginC},</if>
+            <if test="studentOriginA != null">student_origin_a = #{studentOriginA},</if>
+            <if test="familyAddress != null">family_address = #{familyAddress},</if>
+            <if test="familyPhoneNumber != null">family_phone_number = #{familyPhoneNumber},</if>
+            <if test="familyContacts != null">family_contacts = #{familyContacts},</if>
+            <if test="familyPostcode != null">family_postcode = #{familyPostcode},</if>
+            <if test="graduSchool != null">gradu_school = #{graduSchool},</if>
+            <if test="graduSchoolPostcode != null">gradu_school_postcode = #{graduSchoolPostcode},</if>
+            <if test="usedName != null">used_name = #{usedName},</if>
+            <if test="nativePlaceP != null">native_place_p = #{nativePlaceP},</if>
+            <if test="nativePlaceC != null">native_place_c = #{nativePlaceC},</if>
+            <if test="nativePlaceA != null">native_place_a = #{nativePlaceA},</if>
+            <if test="healthCard != null">health_card = #{healthCard},</if>
             <if test="cet4 != null">cet4 = #{cet4},</if>
             <if test="cet6 != null">cet6 = #{cet6},</if>
-            <if test="englishName != null and englishName != ''">english_name = #{englishName},</if>
+            <if test="englishName != null">english_name = #{englishName},</if>
             <if test="reportItem != null">report_item = #{reportItem},</if>
         </set>
         where student_id = #{studentId}
