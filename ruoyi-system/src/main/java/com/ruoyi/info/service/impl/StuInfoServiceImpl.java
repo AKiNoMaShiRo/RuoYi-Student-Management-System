@@ -32,11 +32,11 @@ public class StuInfoServiceImpl implements IStuInfoService {
     /**
      * 修改学生信息
      *
-     * @param user 学生信息
+     * @param stuInfo 学生信息
      * @return 结果
      */
     @Override
-    public int updateStu(StuInfo user){
-        return  infoMapper.updateStu(user);
+    public int updateStu(StuInfo stuInfo){
+        return  infoMapper.updateStu(stuInfo);
     }
 }

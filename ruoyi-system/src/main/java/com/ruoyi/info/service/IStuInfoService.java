@@ -20,8 +20,8 @@ public interface IStuInfoService {
     /**
      * 修改学生信息
      *
-     * @param user 学生信息
+     * @param stuInfo 学生信息
      * @return 结果
      */
-    public int updateStu(StuInfo user);
+    public int updateStu(StuInfo stuInfo);
 }

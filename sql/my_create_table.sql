@@ -75,12 +75,12 @@ create table stu_family_info (
   appellation		varchar(30)		default null			   comment '称谓',
   name				varchar(30)		not null				   comment '姓名',
   identity_card		varchar(20)		default null			   comment '身份证号',
-  health			int(4)			default null			   comment '健康状况',
+  health			varchar(20)		default null			   comment '健康状况',
   company			varchar(50)		default null			   comment '单位名称',
   duty				varchar(30)		default null			   comment '职位',
   post_code			varchar(10)		default null			   comment '邮编',
   phone_number		varchar(20)		default null			   comment '电话号码',
-  politics_status	int(4)			default null			   comment '政治面貌',
+  politics_status	varchar(20)		default null			   comment '政治面貌',
   remark			varchar(255)	default null			   comment '备注',
 
   primary key (member_id)
@@ -91,15 +91,16 @@ create table stu_family_info (
 -- ----------------------------
 drop table if exists temp_leave;
 create table temp_leave (
-  leave_id			varchar(20)     not null auto_increment    comment '请假单ID',
+  leave_id			bigint(20)      not null auto_increment    comment '请假单ID',
   student_id		varchar(20)		not null				   comment '学号',
   reason			varchar(500)	not null				   comment '请假原因',
   start_time		datetime		not null				   comment '请假开始时间',
   end_time			datetime		not null				   comment '请假结束时间',
   teacher			varchar(30)		not null				   comment '任课老师',
+  status			int(4)			not null				   comment '申请表状态',
 
   primary key (leave_id)
-) engine=innodb comment = '临时请假申请表';
+) engine=innodb auto_increment=1000 comment = '临时请假申请表';
 
 -- ----------------------------
 -- 6、学业预警信息表

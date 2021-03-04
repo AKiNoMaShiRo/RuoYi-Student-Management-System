@@ -96,19 +96,19 @@
         </el-table>
       </div>
     </section>
-    <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible" class="am-dialog-form">
+    <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible">
       <el-form class="am-flex-center am-flex-wrap" :model="dialogFormData" inline>
         <el-form-item label="称谓" prop="appellation" label-width="100px">
-          <el-input v-model="dialogFormData.appellation"></el-input>
+          <el-input size="small" v-model="dialogFormData.appellation"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="name" label-width="100px">
-          <el-input v-model="dialogFormData.name"></el-input>
+          <el-input size="small" v-model="dialogFormData.name"></el-input>
         </el-form-item>
-        <el-form-item label="身份证" prop="identity_card" label-width="100px">
-          <el-input v-model="dialogFormData.identity_card"></el-input>
+        <el-form-item label="身份证" prop="identityCard" label-width="100px">
+          <el-input size="small" v-model="dialogFormData.identityCard"></el-input>
         </el-form-item>
         <el-form-item label="健康状况" prop="health" label-width="100px">
-          <el-select v-model="dialogFormData.health">
+          <el-select size="small" v-model="dialogFormData.health">
             <el-option
               v-for="healthState in healthStates"
               :key="healthState.v"
@@ -119,19 +119,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="单位名称" prop="company" label-width="100px">
-          <el-input v-model="dialogFormData.company"></el-input>
+          <el-input size="small" v-model="dialogFormData.company"></el-input>
         </el-form-item>
         <el-form-item label="职位" prop="duty" label-width="100px">
-          <el-input v-model="dialogFormData.duty"></el-input>
+          <el-input size="small" v-model="dialogFormData.duty"></el-input>
         </el-form-item>
-        <el-form-item label="邮编" prop="post_code" label-width="100px">
-          <el-input v-model="dialogFormData.post_code"></el-input>
+        <el-form-item label="邮编" prop="postCode" label-width="100px">
+          <el-input size="small" v-model="dialogFormData.postCode"></el-input>
         </el-form-item>
-        <el-form-item label="电话号码" prop="phone_number" label-width="100px">
-          <el-input v-model="dialogFormData.phone_number"></el-input>
+        <el-form-item label="电话号码" prop="phoneNumber" label-width="100px">
+          <el-input size="small" v-model="dialogFormData.phoneNumber"></el-input>
         </el-form-item>
-        <el-form-item label="政治面貌" prop="politics_status" label-width="100px">
-          <el-select v-model="dialogFormData.politics_status">
+        <el-form-item label="政治面貌" prop="politicsStatus" label-width="100px">
+          <el-select size="small" v-model="dialogFormData.politicsStatus">
             <el-option
               v-for="politicsStatusOption in politicsStatusOptions"
               :key="politicsStatusOption.v"
@@ -142,21 +142,22 @@
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="remark" label-width="100px">
-          <el-input v-model="dialogFormData.remark"></el-input>
+          <el-input size="small" v-model="dialogFormData.remark"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" label-width="100px">
-        <el-button @click="handleDialogFormCancel">取消</el-button>
-        <el-button type="primary" @click="handleDialogFormConform">确定</el-button>
+        <el-button size="small" @click="handleDialogFormCancel">取消</el-button>
+        <el-button size="small" type="primary" @click="handleDialogFormConform">修改</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
-import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
+import { getFamilyInfo, editFamilyInfo } from '@/api/info/familyInfo'
+// import { mapGetters, mapState } from "vuex";
+// import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
 export default {
   name: 'FamilyInfo',
@@ -168,53 +169,54 @@ export default {
       formData: {
         appellation: '',
         name: '',
-        identity_card: '',
+        identityCard: '',
         health: '',
         company: '',
         duty: '',
-        post_code: '',
-        phone_number: '',
-        politics_status: '',
+        postCode: '',
+        phoneNumber: '',
+        politicsStatus: '',
         remark: ''
       },
       dialogFormData: {
+        memberId: '',
         appellation: '',
         name: '',
-        identity_card: '',
+        identityCard: '',
         health: '',
         company: '',
         duty: '',
-        post_code: '',
-        phone_number: '',
-        politics_status: '',
+        postCode: '',
+        phoneNumber: '',
+        politicsStatus: '',
         remark: ''
       },
       tableLoading: false,
       tableColumns: Object.freeze([
         { label: '姓名', prop: 'name', minWidth: '80', fixed: "left" },
         { label: '称谓', prop: 'appellation', minWidth: '80' },
-        { label: '身份证', prop: 'identity_card', minWidth: '120' },
+        { label: '身份证', prop: 'identityCard', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
         { label: '单位名称', prop: 'company', minWidth: '120' },
         { label: '职务', prop: 'duty', minWidth: '80' },
-        { label: '邮编', prop: 'post_code', minWidth: '70' },
-        { label: '电话号码', prop: 'phone_number', minWidth: '120' },
-        { label: '政治面貌', prop: 'politics_status', minWidth: '120' },
+        { label: '邮编', prop: 'postCode', minWidth: '70' },
+        { label: '电话号码', prop: 'phoneNumber', minWidth: '120' },
+        { label: '政治面貌', prop: 'politicsStatus', minWidth: '120' },
         { label: '备注', prop: 'remark', minWidth: '140' },
       ]),
       tableData: [
-        {
-          appellation: '母亲',
-          name: '黄玉珍',
-          identity_card: '330823196409273645',
-          health: '1',
-          company: '',
-          duty: '',
-          post_code: '324100',
-          phone_number: '18457052062',
-          politics_status: '12',
-          remark: ''
-        }
+        // {
+        //   appellation: '母亲',
+        //   name: '黄玉珍',
+        //   identity_card: '330823196409273645',
+        //   health: '1',
+        //   company: '',
+        //   duty: '',
+        //   post_code: '324100',
+        //   phone_number: '18457052062',
+        //   politics_status: '12',
+        //   remark: ''
+        // }
       ],
       rules: {
         name: [ { required: true, message: '请输入成员姓名', trigger: 'blur' } ]
@@ -235,13 +237,23 @@ export default {
     //   return this.sidebar.open
     // }
   },
+  created () {
+    getFamilyInfo('20171344054').then(res => {
+      this.tableData = []
+      if (res.data && res.data.length !== 0) {
+        this.tableData = res.data
+      }
+      console.log('tableData')
+      console.log(this.tableData)
+    })
+  },
   methods: {
     resetForm () {
       this.$refs.infoForm.resetFields()
     },
     submitForm () {
       this.$refs.infoForm.validate( ( valid ) => {
-        if( valid ){
+        if (valid) {
           this.tableLoading = true
           setTimeout( () => {
             this.tableLoading = false
@@ -249,17 +261,34 @@ export default {
         }
       } )
     },
+    // 表格编辑按钮
     handleEdit (row) {
       this.dgFromVisible = true
-      this.dialogFormData = row
+      for (let key in this.dialogFormData){
+        this.dialogFormData[key] = row[key]
+      }
+      console.log('row')
+      console.log(row)
     },
+    // 表格删除按钮
     handleDelete (row) {
     },
+    // 对话框取消按钮
     handleDialogFormCancel () {
       this.dgFromVisible = false
     },
+    // 对话框确认按钮
     handleDialogFormConform () {
-      this.dgFromVisible = false
+      editFamilyInfo(this.dialogFormData).then(res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('修改失败');
+        }
+        this.dgFromVisible = false
+      }).catch( () => {
+        this.dgFromVisible = false
+      })
     }
   },
   filters: {
@@ -267,9 +296,21 @@ export default {
       if( val === '' ){
         return '--'
       } else if ( prop === 'health' ) {
-        return healthStates[Number(val)-1].l
+        let res = ''
+        healthStates.forEach(item => {
+          if (item.v === val) {
+            res = item.l
+          }
+        })
+        return res
       } else if ( prop === 'politics_status' ){
-        return politicsStatusOptions[Number(val)-1].l
+        let res = ''
+        politicsStatusOptions.forEach(item => {
+          if (item.v === val) {
+            res = item.l
+          }
+        })
+        return res
       } else {
         return val
       }

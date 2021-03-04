@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.FamilyInfoMapper">
+
+    <resultMap id="FamilyInfoResult" type="FamilyInfo">
+        <id         property="memberId"         column="member_id"/>
+        <result     property="relativeStu"      column="relative_stu"/>
+        <result     property="appellation"      column="appellation"/>
+        <result     property="name"             column="name"/>
+        <result     property="identityCard"     column="identity_card"/>
+        <result     property="health"           column="health"/>
+        <result     property="company"          column="company"/>
+        <result     property="duty"             column="duty"/>
+        <result     property="postCode"         column="post_code"/>
+        <result     property="phoneNumber"      column="phone_number"/>
+        <result     property="politicsStatus"   column="politics_status"/>
+        <result     property="remark"           column="remark"/>
+    </resultMap>
+    
+    <sql id="familyInfoVo">
+        select *
+        from stu_family_info sfi
+    </sql>
+
+    <select id="selectFamilyById" parameterType="String" resultMap="FamilyInfoResult">
+        <include refid="familyInfoVo"></include>
+        where sfi.relative_stu = #{studentId}
+        order by sfi.member_id
+    </select>
+
+    <update id="updateFamily" parameterType="FamilyInfo">
+        update stu_family_info
+        <set>
+            <if test="appellation != null">appellation = #{appellation},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="identityCard != null">identity_card = #{identityCard},</if>
+            <if test="health != null">health = #{health},</if>
+            <if test="company != null">company = #{company},</if>
+            <if test="duty != null">duty = #{duty},</if>
+            <if test="postCode != null">post_code = #{postCode},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="politicsStatus != null">politics_status = #{politicsStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where member_id = #{memberId}
+    </update>
+
+    <insert id="insertFamily" parameterType="FamilyInfo" useGeneratedKeys="true" keyProperty="memberId">
+        insert into stu_family_info(
+            <if test="memberId != null and memberId !=0">member_id,</if>
+            <if test="relativeStu != null and relativeStu !=''">relative_stu,</if>
+            <if test="appellation != null">appellation,</if>
+            <if test="name != null">name,</if>
+            <if test="identityCard != null">identit_card,</if>
+            <if test="health != null">health,</if>
+            <if test="company != null">company,</if>
+            <if test="duty != null">duty,</if>
+            <if test="postCode != null">post_code,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="politicsStatus != null">politics_status,</if>
+            <if test="remark != null">remark,</if>
+        ) values (
+            <if test="memberId != null and memberId !=0">#{memberId},</if>
+            <if test="relativeStu != null and relativeStu !=''">#{memberId},</if>
+            <if test="appellation != null">#{appellation},</if>
+            <if test="name != null">#{name},</if>
+            <if test="identityCard != null">#{identityCard},</if>
+            <if test="health != null">#{health},</if>
+            <if test="company != null">#{company},</if>
+            <if test="duty != null">#{duty},</if>
+            <if test="postCode != null">#{postCode},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="politicsStatus != null">#{politicsStatus},</if>
+            <if test="remark != null">#{remark}</if>
+        )
+    </insert>
+
+</mapper>
