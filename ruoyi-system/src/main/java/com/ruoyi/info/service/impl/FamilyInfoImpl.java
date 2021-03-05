@@ -46,4 +46,15 @@ public class FamilyInfoImpl implements IFamilyInfoService {
         int rows = familyInfoMapper.insertFamily(familyInfo);
         return rows;
     }
+
+    /**
+     * 删除家庭成员信息
+     *
+     * @param memberId 家庭成员ID
+     * @return 结果
+     */
+    public int deleteFamily(Long memberId){
+        int rows = familyInfoMapper.deleteFamily(memberId);
+        return rows;
+    }
 }

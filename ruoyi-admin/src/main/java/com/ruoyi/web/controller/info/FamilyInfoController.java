@@ -44,4 +44,11 @@ public class FamilyInfoController extends BaseController {
     public AjaxResult addInfo(@Validated @RequestBody FamilyInfo familyInfo){
         return toAjax(familyInfoService.insertFamily(familyInfo));
     }
+
+    @ApiOperation("删除家庭成员信息")
+    @DeleteMapping("/delete/{memberId}")
+    public AjaxResult deleteInfo(@PathVariable Long memberId){
+        return toAjax(familyInfoService.deleteFamily(memberId));
+    };
+
 }

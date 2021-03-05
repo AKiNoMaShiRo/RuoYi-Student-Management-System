@@ -33,4 +33,12 @@ public interface IFamilyInfoService {
      * @return 结果
      */
     public int insertFamily(FamilyInfo familyInfo);
+
+    /**
+     * 新增家庭成员信息
+     *
+     * @param memberId 家庭成员ID
+     * @return 结果
+     */
+    public int deleteFamily(Long memberId);
 }

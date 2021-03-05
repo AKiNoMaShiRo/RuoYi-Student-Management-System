@@ -81,16 +81,46 @@
                 type="text"
                 icon="el-icon-edit"
                 size="mini"
+                style="margin-right: 6px;"
                 @click="handleEdit(scope.row)"
               >
               编辑</el-button>
-              <el-button
-                type="text"
-                icon="el-icon-delete"
-                size="mini"
-                @click="handleDelete(scope.row)"
+              <el-popconfirm
+                confirm-button-text='删除'
+                cancel-button-text='取消'
+                icon="el-icon-info"
+                icon-color="red"
+                title="确定删除该成员信息？"
+                @onConfirm="handleDelete(scope.row)"
               >
-              删除</el-button>
+                <el-button
+                    type="text"
+                    icon="el-icon-delete"
+                    size="mini"
+                    slot="reference"
+                  >
+                  删除</el-button>
+              </el-popconfirm>
+              <!-- <el-popover
+                placement="top"
+                trigger="manual"
+                style="display: inline-block; margin-left: 10px;"
+                :value="deleteId === scope.row.memberId"
+              >
+                <p>确定删除该成员信息？</p>
+                <div style="text-align: right; margin: 0">
+                  <el-button size="mini" type="text" @click="deleteId = 0">取消</el-button>
+                  <el-button type="primary" size="mini" @click="handleDelete(scope.row)">确定</el-button>
+                </div>
+                <el-button
+                  type="text"
+                  icon="el-icon-delete"
+                  size="mini"
+                  slot="reference"
+                  @click="deleteId = scope.row.memberId"
+                >
+                删除</el-button>
+              </el-popover> -->
             </template>
           </el-table-column>
         </el-table>
@@ -155,7 +185,7 @@
 
 <script>
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
-import { getFamilyInfo, editFamilyInfo } from '@/api/info/familyInfo'
+import { getFamilyInfo, editFamilyInfo, deleteFamilyInfo } from '@/api/info/familyInfo'
 // import { mapGetters, mapState } from "vuex";
 // import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
@@ -166,6 +196,7 @@ export default {
       politicsStatusOptions: politicsStatusOptions,
       healthStates: healthStates,
       dgFromVisible: false,
+      deleteId: 0,
       formData: {
         appellation: '',
         name: '',
@@ -197,7 +228,7 @@ export default {
         { label: '称谓', prop: 'appellation', minWidth: '80' },
         { label: '身份证', prop: 'identityCard', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
-        { label: '单位名称', prop: 'company', minWidth: '120' },
+        { label: '单位名称', prop: 'company', minWidth: '110' },
         { label: '职务', prop: 'duty', minWidth: '80' },
         { label: '邮编', prop: 'postCode', minWidth: '70' },
         { label: '电话号码', prop: 'phoneNumber', minWidth: '120' },
@@ -238,16 +269,17 @@ export default {
     // }
   },
   created () {
-    getFamilyInfo('20171344054').then(res => {
-      this.tableData = []
-      if (res.data && res.data.length !== 0) {
-        this.tableData = res.data
-      }
-      console.log('tableData')
-      console.log(this.tableData)
-    })
+    this.getInfo()
   },
   methods: {
+    getInfo () {
+      getFamilyInfo('20171344054').then(res => {
+        this.tableData = []
+        if (res.data && res.data.length !== 0) {
+          this.tableData = res.data
+        }
+      })
+    },
     resetForm () {
       this.$refs.infoForm.resetFields()
     },
@@ -267,11 +299,18 @@ export default {
       for (let key in this.dialogFormData){
         this.dialogFormData[key] = row[key]
       }
-      console.log('row')
-      console.log(row)
     },
     // 表格删除按钮
     handleDelete (row) {
+      console.log(row)
+      deleteFamilyInfo(row.memberId).then(res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('删除成功')
+          this.getInfo()
+        } else {
+          this.$message.error('删除失败')
+        }
+      })
     },
     // 对话框取消按钮
     handleDialogFormCancel () {
@@ -293,7 +332,7 @@ export default {
   },
   filters: {
     dataFormatter ( val, prop ) {
-      if( val === '' ){
+      if( val === '' || val === null ){
         return '--'
       } else if ( prop === 'health' ) {
         let res = ''
@@ -303,7 +342,7 @@ export default {
           }
         })
         return res
-      } else if ( prop === 'politics_status' ){
+      } else if ( prop === 'politicsStatus' ){
         let res = ''
         politicsStatusOptions.forEach(item => {
           if (item.v === val) {

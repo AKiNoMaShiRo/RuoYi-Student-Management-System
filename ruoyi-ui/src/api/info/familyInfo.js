@@ -4,7 +4,7 @@ import request from '@/utils/request'
 export function getFamilyInfo(stuId){
     return request({
         url: '/info/family/list/queryById/' + stuId,
-        method: 'get',
+        method: 'get'
     })
 }
 
@@ -14,5 +14,13 @@ export function editFamilyInfo(params){
         url: '/info/family/edit',
         method: 'post',
         data: params
+    })
+}
+
+//    修改家庭成员信息
+export function deleteFamilyInfo(memberId){
+    return request({
+        url: '/info/family/delete/' + memberId,
+        method: 'delete'
     })
 }

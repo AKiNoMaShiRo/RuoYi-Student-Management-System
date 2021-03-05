@@ -28,4 +28,12 @@ public interface FamilyInfoMapper {
      * @return 结果
      */
     public int insertFamily(FamilyInfo familyInfo);
+
+    /**
+     * 新增家庭成员信息
+     *
+     * @param familyInfo 家庭成员信息
+     * @return 结果
+     */
+    public int deleteFamily(Long memberId);
 }
