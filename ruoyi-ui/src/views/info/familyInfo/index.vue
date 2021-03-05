@@ -7,8 +7,8 @@
           <el-form-item label="称谓" prop="appellation">
             <el-input size="small" v-model="formData.appellation"></el-input>
           </el-form-item>
-          <el-form-item label="姓名" prop="name">
-            <el-input size="small" v-model="formData.name"></el-input>
+          <el-form-item label="姓名" prop="memberName">
+            <el-input size="small" v-model="formData.memberName"></el-input>
           </el-form-item>
           <el-form-item label="身份证号" prop="identity_card">
             <el-input size="small" v-model="formData.identity_card"></el-input>
@@ -131,8 +131,8 @@
         <el-form-item label="称谓" prop="appellation" label-width="100px">
           <el-input size="small" v-model="dialogFormData.appellation"></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="name" label-width="100px">
-          <el-input size="small" v-model="dialogFormData.name"></el-input>
+        <el-form-item label="姓名" prop="memberName" label-width="100px">
+          <el-input size="small" v-model="dialogFormData.memberName"></el-input>
         </el-form-item>
         <el-form-item label="身份证" prop="identityCard" label-width="100px">
           <el-input size="small" v-model="dialogFormData.identityCard"></el-input>
@@ -199,7 +199,7 @@ export default {
       deleteId: 0,
       formData: {
         appellation: '',
-        name: '',
+        memberName: '',
         identityCard: '',
         health: '',
         company: '',
@@ -212,7 +212,7 @@ export default {
       dialogFormData: {
         memberId: '',
         appellation: '',
-        name: '',
+        memberName: '',
         identityCard: '',
         health: '',
         company: '',
@@ -224,7 +224,7 @@ export default {
       },
       tableLoading: false,
       tableColumns: Object.freeze([
-        { label: '姓名', prop: 'name', minWidth: '80', fixed: "left" },
+        { label: '姓名', prop: 'memberName', minWidth: '80', fixed: "left" },
         { label: '称谓', prop: 'appellation', minWidth: '80' },
         { label: '身份证', prop: 'identityCard', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
@@ -238,7 +238,7 @@ export default {
       tableData: [
         // {
         //   appellation: '母亲',
-        //   name: '黄玉珍',
+        //   memberName: '黄玉珍',
         //   identity_card: '330823196409273645',
         //   health: '1',
         //   company: '',
@@ -321,6 +321,7 @@ export default {
       editFamilyInfo(this.dialogFormData).then(res => {
         if (res.msg === '操作成功') {
           this.$message.success('修改成功')
+          this.getInfo()
         } else {
           this.$message.error('修改失败');
         }

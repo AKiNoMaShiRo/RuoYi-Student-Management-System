@@ -20,7 +20,7 @@ public class FamilyInfo extends BaseEntity {
 
     /** 姓名 */
     @Excel(name = "姓名")
-    private String name;
+    private String memberName;
 
     /** 身份证号 */
     @Excel(name = "身份证号")
@@ -78,12 +78,12 @@ public class FamilyInfo extends BaseEntity {
         this.appellation = appellation;
     }
 
-    public String getName() {
-        return name;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
     public String getIdentityCard() {
@@ -158,7 +158,7 @@ public class FamilyInfo extends BaseEntity {
                 "memberId=" + memberId +
                 ", relativeStu='" + relativeStu + '\'' +
                 ", appellation='" + appellation + '\'' +
-                ", name='" + name + '\'' +
+                ", memberName='" + memberName + '\'' +
                 ", identityCard='" + identityCard + '\'' +
                 ", health='" + health + '\'' +
                 ", company='" + company + '\'' +

@@ -8,7 +8,7 @@
         <id         property="memberId"         column="member_id"/>
         <result     property="relativeStu"      column="relative_stu"/>
         <result     property="appellation"      column="appellation"/>
-        <result     property="name"             column="name"/>
+        <result     property="memberName"       column="member_name"/>
         <result     property="identityCard"     column="identity_card"/>
         <result     property="health"           column="health"/>
         <result     property="company"          column="company"/>
@@ -34,7 +34,7 @@
         update stu_family_info
         <set>
             <if test="appellation != null">appellation = #{appellation},</if>
-            <if test="name != null">name = #{name},</if>
+            <if test="memberName != null">member_name = #{memberName},</if>
             <if test="identityCard != null">identity_card = #{identityCard},</if>
             <if test="health != null">health = #{health},</if>
             <if test="company != null">company = #{company},</if>
@@ -52,7 +52,7 @@
             <if test="memberId != null and memberId !=0">member_id,</if>
             <if test="relativeStu != null and relativeStu !=''">relative_stu,</if>
             <if test="appellation != null">appellation,</if>
-            <if test="name != null">name,</if>
+            <if test="memberName != null">member_name,</if>
             <if test="identityCard != null">identit_card,</if>
             <if test="health != null">health,</if>
             <if test="company != null">company,</if>
@@ -65,7 +65,7 @@
             <if test="memberId != null and memberId !=0">#{memberId},</if>
             <if test="relativeStu != null and relativeStu !=''">#{memberId},</if>
             <if test="appellation != null">#{appellation},</if>
-            <if test="name != null">#{name},</if>
+            <if test="memberName != null">#{memberName},</if>
             <if test="identityCard != null">#{identityCard},</if>
             <if test="health != null">#{health},</if>
             <if test="company != null">#{company},</if>
