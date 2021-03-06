@@ -87,8 +87,8 @@
               >
               编辑</el-button>
               <el-popconfirm
-                confirm-button-text='删除'
-                cancel-button-text='取消'
+                confirm-button-text="删除"
+                cancel-button-text="取消"
                 icon="el-icon-info"
                 icon-color="red"
                 title="确定删除该成员信息？"
@@ -178,7 +178,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer" label-width="100px">
         <el-button size="small" @click="handleDialogFormCancel">取消</el-button>
-        <el-button size="small" type="primary" @click="handleDialogFormConform">修改</el-button>
+        <el-button size="small" type="primary" @click="handleDialogFormConfirm">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -330,7 +330,7 @@ export default {
       this.dgFromVisible = false
     },
     // 对话框确认按钮
-    handleDialogFormConform () {
+    handleDialogFormConfirm () {
       editFamilyInfo(this.dialogFormData).then(res => {
         if (res.msg === '操作成功') {
           this.$message.success('修改成功')

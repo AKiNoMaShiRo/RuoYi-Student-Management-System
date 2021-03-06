@@ -11,28 +11,6 @@
           label-width="80px"
           inline
         >
-          <!-- <el-form-item label="姓名" prop="name">
-            <el-input size="small" v-model="formData.name" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="学号" prop="student_id">
-            <el-input size="small" v-model="formData.student_id" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="学院" prop="department">
-            <el-select size="small" v-model="formData.department" clearable>
-              <el-option
-                v-for="(department, index) in departments"
-                :key="index"
-                :label="department"
-                :value="department"
-                ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="年级" prop="grade">
-            <el-input size="small" v-model="formData.grade" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="专业" prop="profession">
-            <el-input size="small" v-model="formData.profession" clearable></el-input>
-          </el-form-item> -->
           <el-form-item label="请假原因" prop="reason">
             <el-input size="small" v-model="formData.reason" clearable></el-input>
           </el-form-item>
@@ -76,6 +54,44 @@
               {{ scope.row[column.prop] | dataFormatter(column.prop) }}
             </template> -->
           </el-table-column>
+          <el-table-column label="操作" min-width="140" fixed="right">
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                icon="el-icon-edit"
+                size="mini"
+                style="margin-right: 6px;"
+                :disabled="scope.row.status === 1"
+                @click="handleEdit(scope.row)"
+              >
+              编辑</el-button>
+              <el-button
+                type="text"
+                icon="el-icon-edit-outline"
+                size="mini"
+                style="margin-right: 6px;"
+                @click="handleDeal(scope.row)"
+              >
+              审批</el-button>
+              <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                icon="el-icon-info"
+                icon-color="red"
+                title="确定撤销该申请？"
+              >
+                <el-button
+                  type="text"
+                  icon="el-icon-refresh-left"
+                  size="mini"
+                  style="margin-right: 6px;"
+                  :disabled="scope.row.status === 1"
+                  @click="handleCancel(scope.row)"
+                >
+                撤销</el-button>
+              </el-popconfirm>
+            </template>
+          </el-table-column>
         </el-table>
         <Pagination
           :total="total"
@@ -87,6 +103,16 @@
         </Pagination>
       </div>
     </section>
+    <el-dialog title="临时请假审批" :visible.sync="dgVisible">
+      <el-radio-group v-model="dealResult">
+        <el-radio :label="agree">同意</el-radio>
+        <el-radio :label="disagree">不同意</el-radio>
+      </el-radio-group>
+      <div slot="footer" class="dialog-footer" label-width="100px">
+        <el-button size="small" @click="dgVisible = false">取消</el-button>
+        <el-button size="small" type="primary" @click="handleDialogFormConform">修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -99,8 +125,10 @@ export default {
   components: { Pagination },
   data () {
     return {
-      expandRowKeys: [],    //展开行的数组
       departments: DEPARTMENTS,
+      dgVisible: false,
+      dealResult: '',
+      dealRequest: {},
       total: 0,
       currentPage: 1,
       pageSize: 10,
@@ -135,10 +163,38 @@ export default {
       return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
     }
   },
+  created () {
+    this.getInfo()
+  },
   methods: {
+    getInfo () {
+      this.tableLoading = true
+      getTempLeave('20171344054').then( res => {
+        if (res.data && res.data.length !== 0){
+          this.tableData = res.data
+        } else {
+          this.tableData = []
+        }
+      }).finally( () => {
+        this.tableLoading = false
+      })
+    },
+    //    TODO编辑请假申请
+    handleEdit (row) {},
+    //    TODO辅导员审批请假申请
+    handleDeal (row) {
+      this.dealRequest = row
+      this.dgVisible = true
+    },
+    //    TODO取消请假申请
+    handleCancel (row) {},
+    //    TODO审批对话框确认按钮
+    handleDialogFormConform () {},
+    //    重置请假申请表单
     handleResetForm () {
       this.$refs.tempForm.resetFields()
     },
+    //    提交请假申请表单
     handleSubmitForm () {
       this.$refs.tempForm.validate(valid => {
         if (valid) {
