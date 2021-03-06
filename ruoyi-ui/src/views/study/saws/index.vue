@@ -130,7 +130,10 @@ export default {
           }
         } )
       },
-      handlePaginationUpdate () {}
+      handlePaginationUpdate (param) {
+        this.currentPage = param.currentPage
+        this.pageSize = param.pageSize
+      }
   }
 }
 </script>

@@ -64,6 +64,7 @@
           v-loading="tableLoading"
           :data="tableData"
           height="320px"
+          highlight-current-row
         >
           <el-table-column
             v-for="column in tableColumns"
@@ -287,7 +288,7 @@ export default {
       this.$refs.infoForm.resetFields()
     },
     submitForm () {
-      this.$refs.infoForm.validate( ( valid ) => {
+      this.$refs.infoForm.validate( valid => {
         if (valid) {
           let param = this.formData
           param = Object.assign(param, { relativeStu: '20171344054' })

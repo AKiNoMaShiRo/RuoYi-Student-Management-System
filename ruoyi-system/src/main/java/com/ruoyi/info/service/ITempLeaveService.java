@@ -12,4 +12,12 @@ public interface ITempLeaveService {
      * @return 结果
      */
     public List<TempLeave> selectLeaveById(String studentId);
+
+    /**
+     * 新增请假信息
+     *
+     * @param tempLeave 请假表信息
+     * @return 结果
+     */
+    public int insertTempLeave(TempLeave tempLeave);
 }

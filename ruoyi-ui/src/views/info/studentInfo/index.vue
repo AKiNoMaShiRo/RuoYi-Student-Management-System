@@ -32,7 +32,7 @@
     <section class="am-box">
       <div class="am-p am-bd-b">
         <el-button size="small" icon="el-icon-close" disabsled @click="clearForm"> 清空</el-button>
-        <el-button size="small" icon="el-icon-minus" disabsled @click="resetForm"> 重置</el-button>
+        <el-button size="small" icon="el-icon-refresh" disabsled @click="resetForm"> 重置</el-button>
         <el-button size="small" icon="el-icon-check" type="primary" @click="submitForm"> 提交</el-button>
       </div>
       <div class="am-p">

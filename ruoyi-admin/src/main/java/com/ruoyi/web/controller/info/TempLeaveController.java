@@ -7,10 +7,8 @@ import com.ruoyi.info.service.ITempLeaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +27,15 @@ public class TempLeaveController extends BaseController {
 
     @ApiOperation("根据学号查询请假单信息")
     @GetMapping("/queryById/{studentId}")
-    public AjaxResult getInfo(@PathVariable String studentId){
+    public AjaxResult getTempLeave(@PathVariable String studentId){
         List<TempLeave> tempLeaves = tempLeaveService.selectLeaveById(studentId);
         return AjaxResult.success(tempLeaves);
+    }
+
+    @ApiOperation("添加请假单信息")
+    @PostMapping("/add")
+    public AjaxResult addTempLeave(@Validated @RequestBody TempLeave tempLeave){
+        return toAjax(tempLeaveService.insertTempLeave(tempLeave));
     }
 
 }

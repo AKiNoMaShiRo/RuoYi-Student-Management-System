@@ -22,11 +22,11 @@ public class TempLeave extends BaseEntity {
 
     /** 请假开始时间 */
     @Excel(name = "请假开始时间")
-    private Date startTime;
+    private Date leaveStartTime;
 
     /** 请假结束时间 */
     @Excel(name = "请假结束时间")
-    private Date endTime;
+    private Date leaveEndTime;
 
     /** 任课老师 */
     @Excel(name = "任课老师")
@@ -35,6 +35,18 @@ public class TempLeave extends BaseEntity {
     /** 申请表状态 */
     @Excel(name = "申请表状态")
     private int status;
+
+    /** 辅导员编号 */
+    @Excel(name = "辅导员编号")
+    private String instructorId;
+
+    /** 辅导员姓名 */
+    @Excel(name = "辅导员姓名")
+    private String instructorName;
+
+    /** 任课老师编号 */
+    @Excel(name = "任课老师编号")
+    private String teacherId;
 
     public Long getLeaveId() {
         return leaveId;
@@ -60,20 +72,20 @@ public class TempLeave extends BaseEntity {
         this.reason = reason;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getLeaveStartTime() {
+        return leaveStartTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setLeaveStartTime(Date leaveStartTime) {
+        this.leaveStartTime = leaveStartTime;
     }
 
     public Date getLeaveEndTime() {
-        return endTime;
+        return leaveEndTime;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setLeaveEndTime(Date leaveEndTime) {
+        this.leaveEndTime = leaveEndTime;
     }
 
     public String getTeacher() {
@@ -92,16 +104,43 @@ public class TempLeave extends BaseEntity {
         this.status = status;
     }
 
+    public String getInstructorId() {
+        return instructorId;
+    }
+
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
     @Override
     public String toString() {
         return "TempLeave{" +
                 "leaveId=" + leaveId +
                 ", studentId='" + studentId + '\'' +
                 ", reason='" + reason + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+                ", startTime=" + leaveStartTime +
+                ", leaveEndTime=" + leaveEndTime +
                 ", teacher='" + teacher + '\'' +
                 ", status=" + status +
+                ", instructorId='" + instructorId + '\'' +
+                ", instructorName='" + instructorName + '\'' +
+                ", teacherId='" + teacherId + '\'' +
                 '}';
     }
 }

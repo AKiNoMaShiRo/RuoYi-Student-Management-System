@@ -39,4 +39,14 @@ public class StuInfoController extends BaseController {
     public AjaxResult editInfo(@Validated @RequestBody StuInfo stuInfo){
         return toAjax(stuInfoService.updateStu(stuInfo));
     }
+
+    @ApiOperation("根据学号查询学生基本信息")
+    @GetMapping(value = { "/queryBaseById/{studentId}"})
+    public AjaxResult getBaseInfo(@PathVariable(value = "studentId")String studentId){
+        AjaxResult ajaxResult = AjaxResult.success();
+        if(StringUtils.isNotNull(studentId)){
+            ajaxResult.put(AjaxResult.DATA_TAG, stuInfoService.selectStuBaseById(studentId));
+        }
+        return ajaxResult;
+    }
 }

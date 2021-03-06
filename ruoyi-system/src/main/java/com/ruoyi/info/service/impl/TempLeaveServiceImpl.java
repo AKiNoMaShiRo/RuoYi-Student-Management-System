@@ -22,6 +22,16 @@ public class TempLeaveServiceImpl implements ITempLeaveService {
      */
     @Override
     public List<TempLeave> selectLeaveById(String studentId){
-        return tempLeaveMapper.selectLeaveById(studentId);
+        return tempLeaveMapper.selectLeaveByStuId(studentId);
+    }
+
+    /**
+     * 新增请假信息
+     *
+     * @param tempLeave 请假表信息
+     * @return 结果
+     */
+    public int insertTempLeave(TempLeave tempLeave){
+        return tempLeaveMapper.insertTempLeave(tempLeave);
     }
 }

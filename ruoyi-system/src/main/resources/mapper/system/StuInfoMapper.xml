@@ -42,6 +42,15 @@
         <result property="reportItem"           column="report_item"/>
     </resultMap>
 
+    <resultMap id="StuBaseInfoResult" type="StuBaseInfo">
+        <id     property="studentId"            column="student_id"/>
+        <result property="department"           column="department"/>
+        <result property="profession"           column="profession"/>
+        <result property="grade"                column="grade"/>
+        <result property="classNum"             column="class_num"/>
+        <result property="name"                 column="name"/>
+    </resultMap>
+
     <sql id="selectStuInfoVo">
         select s.student_id, s.name, s.gradu_intention, s.registration, s.teacher, s.phone_number, s.email,
                s.qq, s.we_chat, s.birthday, s.nation, s.politics_status, s.join_time, s.student_origin_p,
@@ -54,6 +63,11 @@
     </sql>
 
     <select id="selectStuById" parameterType="String" resultMap="StuInfoResult">
+        <include refid="selectStuInfoVo"></include>
+        where s.student_id = #{studentId}
+    </select>
+
+    <select id="selectStuBaseById" parameterType="String" resultMap="StuBaseInfoResult">
         <include refid="selectStuInfoVo"></include>
         where s.student_id = #{studentId}
     </select>

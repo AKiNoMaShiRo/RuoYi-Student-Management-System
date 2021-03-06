@@ -60,7 +60,7 @@ create table class_info (
 drop table if exists instructor_info;
 create table instructor_info (
   instructor_id		varchar(20)     not null 			       comment '辅导员工号',
-  name				varchar(30)		not null				   comment '姓名',
+  instructor_name	varchar(30)		not null				   comment '姓名',
 
   primary key (instructor_id)
 ) engine=innodb comment = '辅导员信息表';
@@ -96,7 +96,7 @@ create table temp_leave (
   reason			varchar(500)	not null				   comment '请假原因',
   start_time		datetime		not null				   comment '请假开始时间',
   end_time			datetime		not null				   comment '请假结束时间',
-  teacher			varchar(30)		default null				   comment '任课老师',
+  teacher_id		varchar(30)		default null			   comment '任课老师编号',
   status			int(4)			not null				   comment '申请表状态',
 
   primary key (leave_id)

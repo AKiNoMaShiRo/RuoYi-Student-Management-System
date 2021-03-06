@@ -4,23 +4,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.info.mapper.TempLeaveMapper">
 
-    <resultMap id="TempLeaveResult" type="TempLeave">
+    <resultMap id="TempLeaveStuResult" type="TempLeave">
         <id         property="leaveId"         column="leave_id"/>
         <result     property="studentId"       column="student_id"/>
         <result     property="reason"          column="reason"/>
-        <result     property="startTime"       column="start_time"/>
-        <result     property="endTime"         column="end_time"/>
+        <result     property="leaveStartTime"       column="start_time"/>
+        <result     property="leaveEndTime"         column="end_time"/>
         <result     property="teacher"         column="teacher"/>
         <result     property="status"          column="status"/>
     </resultMap>
 
     <sql id="TempLeaveVo">
-        select *
-        from temp_leave tl
+        select tl.*, i.instructor_name
+        from temp_leave tl inner join stu_info s inner join class_info c inner join instructor_info i
+        on tl.student_id = s.student_id and s.class_id = c.class_id and c.instructor_id = i.instructor_id
     </sql>
 
-    <select id="selectLeaveById" parameterType="String" resultMap="TempLeaveResult">
+    <select id="selectLeaveByStuId" parameterType="String" resultMap="TempLeaveStuResult">
         <include refid="TempLeaveVo"></include>
         where tl.student_id = #{studentId}
     </select>
+
+    <insert id="insertTempLeave" parameterType="TempLeave" useGeneratedKeys="true" keyProperty="leaveId">
+        insert into temp_leave (
+            <if test="reason != null and reason != ''">reason,</if>
+            <if test="leaveStartTime != null">start_time,</if>
+            <if test="leaveEndTime != null">end_time,</if>
+            <if test="teacher != null and teacher != ''">teacher,</if>
+            student_id,
+            status
+        ) values (
+            <if test="reason != null and reason != ''">#{reason},</if>
+            <if test="leaveStartTime != null">#{leaveStartTime},</if>
+            <if test="leaveEndTime != null">#{leaveEndTime},</if>
+            <if test="teacher != null and teacher != ''">#{teacher},</if>
+            #{studentId},
+            1
+        )
+    </insert>
+
 </mapper>
