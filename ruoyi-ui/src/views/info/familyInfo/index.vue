@@ -5,16 +5,16 @@
       <div class="am-p">
         <el-form ref="infoForm" label-width="80px" :model="formData" :rules="rules" inline>
           <el-form-item label="称谓" prop="appellation">
-            <el-input size="small" v-model="formData.appellation"></el-input>
+            <el-input size="small" v-model="formData.appellation" clearable></el-input>
           </el-form-item>
           <el-form-item label="姓名" prop="memberName">
-            <el-input size="small" v-model="formData.memberName"></el-input>
+            <el-input size="small" v-model="formData.memberName" clearable></el-input>
           </el-form-item>
-          <el-form-item label="身份证号" prop="identity_card">
-            <el-input size="small" v-model="formData.identity_card"></el-input>
+          <el-form-item label="身份证号" prop="identityCard">
+            <el-input size="small" v-model="formData.identityCard" clearable></el-input>
           </el-form-item>
           <el-form-item label="健康状况" prop="health">
-            <el-select size="small" v-model="formData.health">
+            <el-select size="small" v-model="formData.health" clearable>
               <el-option
                 v-for="healthState in healthStates"
                 :key="healthState.v"
@@ -25,19 +25,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="单位名称" prop="company">
-            <el-input size="small" v-model="formData.company"></el-input>
+            <el-input size="small" v-model="formData.company" clearable></el-input>
           </el-form-item>
           <el-form-item label="职位" prop="duty">
-            <el-input size="small" v-model="formData.duty"></el-input>
+            <el-input size="small" v-model="formData.duty" clearable></el-input>
           </el-form-item>
-          <el-form-item label="邮编" prop="post_code">
-            <el-input size="small" v-model="formData.post_code"></el-input>
+          <el-form-item label="邮编" prop="postCode">
+            <el-input size="small" v-model="formData.postCode" clearable></el-input>
           </el-form-item>
-          <el-form-item label="电话号码" prop="phone_number">
-            <el-input size="small" v-model="formData.phone_number"></el-input>
+          <el-form-item label="电话号码" prop="phoneNumber">
+            <el-input size="small" v-model="formData.phoneNumber" clearable></el-input>
           </el-form-item>
           <el-form-item label="政治面貌" prop="politics_status">
-            <el-select size="small" v-model="formData.politics_status">
+            <el-select size="small" v-model="formData.politics_status" clearable>
               <el-option
                 v-for="politicsStatusOption in politicsStatusOptions"
                 :key="politicsStatusOption.v"
@@ -48,7 +48,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="备注" prop="remark">
-            <el-input size="small" v-model="formData.remark"></el-input>
+            <el-input size="small" v-model="formData.remark" clearable></el-input>
           </el-form-item>
           <el-form-item label=" ">
             <el-button size="mini" disabsled @click="resetForm">重置</el-button>
@@ -127,7 +127,7 @@
       </div>
     </section>
     <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible">
-      <el-form class="am-flex-center am-flex-wrap" :model="dialogFormData" inline>
+      <el-form class="am-flex-center am-flex-wrap" :rules="rules" :model="dialogFormData" inline>
         <el-form-item label="称谓" prop="appellation" label-width="100px">
           <el-input size="small" v-model="dialogFormData.appellation"></el-input>
         </el-form-item>
@@ -185,7 +185,7 @@
 
 <script>
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
-import { getFamilyInfo, editFamilyInfo, deleteFamilyInfo } from '@/api/info/familyInfo'
+import { getFamilyInfo, editFamilyInfo, deleteFamilyInfo, addFamilyInfo } from '@/api/info/familyInfo'
 // import { mapGetters, mapState } from "vuex";
 // import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
@@ -250,7 +250,7 @@ export default {
         // }
       ],
       rules: {
-        name: [ { required: true, message: '请输入成员姓名', trigger: 'blur' } ]
+        memberName: [ { required: true, message: '请输入成员姓名', trigger: 'blur' } ]
       }
     }
   },
@@ -273,12 +273,15 @@ export default {
   },
   methods: {
     getInfo () {
+      this.tableLoading = true
       getFamilyInfo('20171344054').then(res => {
         this.tableData = []
         if (res.data && res.data.length !== 0) {
           this.tableData = res.data
         }
-      })
+      }).finally( () => {
+        this.tableLoading = false
+      } )
     },
     resetForm () {
       this.$refs.infoForm.resetFields()
@@ -286,10 +289,19 @@ export default {
     submitForm () {
       this.$refs.infoForm.validate( ( valid ) => {
         if (valid) {
-          this.tableLoading = true
-          setTimeout( () => {
-            this.tableLoading = false
-          }, 1000 )
+          let param = this.formData
+          param = Object.assign(param, { relativeStu: '20171344054' })
+          addFamilyInfo(param).then(res => {
+            if (res.msg === '操作成功') {
+              this.$message.success('添加成功')
+              this.resetForm()
+              this.getInfo('20171344054')
+            } else {
+              this.$message.error('添加失败')
+            }
+          }).catch( () =>{
+            this.$message.error('添加失败')
+          } )
         }
       } )
     },

@@ -17,10 +17,19 @@ export function editFamilyInfo(params){
     })
 }
 
-//    修改家庭成员信息
+//    删除家庭成员信息
 export function deleteFamilyInfo(memberId){
     return request({
         url: '/info/family/delete/' + memberId,
         method: 'delete'
+    })
+}
+
+//    新增家庭成员信息
+export function addFamilyInfo(params){
+    return request({
+        url: '/info/family/add',
+        method: 'post',
+        data: params
     })
 }

@@ -49,31 +49,29 @@
 
     <insert id="insertFamily" parameterType="FamilyInfo" useGeneratedKeys="true" keyProperty="memberId">
         insert into stu_family_info(
-            <if test="memberId != null and memberId !=0">member_id,</if>
-            <if test="relativeStu != null and relativeStu !=''">relative_stu,</if>
-            <if test="appellation != null">appellation,</if>
-            <if test="memberName != null">member_name,</if>
-            <if test="identityCard != null">identit_card,</if>
-            <if test="health != null">health,</if>
-            <if test="company != null">company,</if>
-            <if test="duty != null">duty,</if>
-            <if test="postCode != null">post_code,</if>
-            <if test="phoneNumber != null">phone_number,</if>
-            <if test="politicsStatus != null">politics_status,</if>
-            <if test="remark != null">remark,</if>
+            <if test="appellation != null and appellation != ''">appellation,</if>
+            <if test="memberName != null and memberName != ''">member_name,</if>
+            <if test="identityCard != null and identityCard != ''">identity_card,</if>
+            <if test="health != null and health != ''">health,</if>
+            <if test="company != null and company != ''">company,</if>
+            <if test="duty != null and duty != ''">duty,</if>
+            <if test="postCode != null and postCode != ''">post_code,</if>
+            <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
+            <if test="politicsStatus != null and politicsStatus != ''">politics_status,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            relative_stu
         ) values (
-            <if test="memberId != null and memberId !=0">#{memberId},</if>
-            <if test="relativeStu != null and relativeStu !=''">#{memberId},</if>
-            <if test="appellation != null">#{appellation},</if>
-            <if test="memberName != null">#{memberName},</if>
-            <if test="identityCard != null">#{identityCard},</if>
-            <if test="health != null">#{health},</if>
-            <if test="company != null">#{company},</if>
-            <if test="duty != null">#{duty},</if>
-            <if test="postCode != null">#{postCode},</if>
-            <if test="phoneNumber != null">#{phoneNumber},</if>
-            <if test="politicsStatus != null">#{politicsStatus},</if>
-            <if test="remark != null">#{remark}</if>
+            <if test="appellation != null and appellation != ''">#{appellation},</if>
+            <if test="memberName != null and memberName != ''">#{memberName},</if>
+            <if test="identityCard != null and identityCard != ''">#{identityCard},</if>
+            <if test="health != null and health != ''">#{health},</if>
+            <if test="company != null and company != ''">#{company},</if>
+            <if test="duty != null and duty != ''">#{duty},</if>
+            <if test="postCode != null and postCode != ''">#{postCode},</if>
+            <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="politicsStatus != null and politicsStatus != ''">#{politicsStatus},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            #{relativeStu}
         )
     </insert>
 
