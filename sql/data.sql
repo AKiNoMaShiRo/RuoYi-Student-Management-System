@@ -6,6 +6,8 @@ INSERT INTO class_info VALUES (1, '计算机与软件学院', '软件工程', 17
 INSERT INTO class_info VALUES (2, '计算机与软件学院', '软件工程', 17, 2, 1);
 INSERT INTO class_info VALUES (3, '计算机与软件学院', '软件工程', 17, 3, 1);
 
+INSERT INTO temp_leave (student_id, reason, start_time, end_time, teacher, status) VALUES ('20171344054', '打酱油', '2021-3-6', '2021-3-7', '无', 1);
+INSERT INTO temp_leave (student_id, reason, start_time, end_time, teacher, status) VALUES ('20171344054', '摸鱼', '2021-3-7', '2021-3-8', '无', 1);
 
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info

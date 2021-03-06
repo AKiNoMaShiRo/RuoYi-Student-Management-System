@@ -96,7 +96,7 @@ create table temp_leave (
   reason			varchar(500)	not null				   comment '请假原因',
   start_time		datetime		not null				   comment '请假开始时间',
   end_time			datetime		not null				   comment '请假结束时间',
-  teacher			varchar(30)		not null				   comment '任课老师',
+  teacher			varchar(30)		default null				   comment '任课老师',
   status			int(4)			not null				   comment '申请表状态',
 
   primary key (leave_id)

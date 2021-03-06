@@ -37,6 +37,6 @@ public class StuInfoServiceImpl implements IStuInfoService {
      */
     @Override
     public int updateStu(StuInfo stuInfo){
-        return  infoMapper.updateStu(stuInfo);
+        return infoMapper.updateStu(stuInfo);
     }
 }
