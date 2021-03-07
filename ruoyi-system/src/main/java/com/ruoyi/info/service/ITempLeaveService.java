@@ -20,4 +20,28 @@ public interface ITempLeaveService {
      * @return 结果
      */
     public int insertTempLeave(TempLeave tempLeave);
+
+    /**
+     * 删除请假信息
+     *
+     * @param leaveId 请假表信息编号
+     * @return 结果
+     */
+    public int deleteTempLeave(Long leaveId);
+
+    /**
+     * 修改请假信息状态
+     *
+     * @param tempLeave 请假表信息
+     * @return 结果
+     */
+    public int updateStatus(TempLeave tempLeave);
+
+    /**
+     * 修改请假申请
+     *
+     * @param tempLeave 请假表信息
+     * @return 结果
+     */
+    public int updateTempLeave(TempLeave tempLeave);
 }

@@ -117,7 +117,8 @@
 </template>
 
 <script>
-import { getTempLeave, addTempLeave } from '@/api/info/tempLeave.js'
+import * as TEMPLEAVE from '@/api/info/tempLeave.js'
+// import { getTempLeave, addTempLeave } from '@/api/info/tempLeave.js'
 import { DEPARTMENTS } from '@/libs/teachUnit.js'
 import Pagination from '../../components/Pagination.vue'
 
@@ -149,11 +150,12 @@ export default {
       },
       tableLoading: false,
       tableColumns: [
-        { prop: 'leaveStartTime', label: '开始时间', minWidth: '' },
-        { prop: 'leaveEndTime', label: '结束时间', minWidth: '' },
-        { prop: 'reason', label: '请假原因', minWidth: '' },
-        { prop: 'teacher', label: '任课老师', minWidth: '' },
-        { prop: 'status', label: '审批状态', minWidth: '' }
+        { prop: 'leaveId', label: '申请编号', minWidth: '90' },
+        { prop: 'leaveStartTime', label: '开始时间', minWidth: '120' },
+        { prop: 'leaveEndTime', label: '结束时间', minWidth: '120' },
+        { prop: 'reason', label: '请假原因', minWidth: '180' },
+        { prop: 'teacher', label: '任课老师', minWidth: '90' }
+        // { prop: 'status', label: '审批状态', minWidth: '90' }
       ],
       tableData: []
     }
@@ -169,7 +171,7 @@ export default {
   methods: {
     getInfo () {
       this.tableLoading = true
-      getTempLeave('20171344054').then( res => {
+      TEMPLEAVE.getTempLeave('20171344054').then( res => {
         if (res.data && res.data.length !== 0){
           this.tableData = res.data
         } else {
@@ -181,7 +183,7 @@ export default {
     },
     //    TODO编辑请假申请
     handleEdit (row) {},
-    //    TODO辅导员审批请假申请
+    //    辅导员审批请假申请
     handleDeal (row) {
       this.dealRequest = row
       this.dgVisible = true
@@ -205,7 +207,7 @@ export default {
             leaveEndTime: this.formData.timeRange[1]
           }
           // console.log(param)
-          addTempLeave(param).then( res => {
+          TEMPLEAVE.addTempLeave(param).then( res => {
             if ( res.msg === '操作成功' ) {
               this.$message.success('申请提交成功')
             } else {

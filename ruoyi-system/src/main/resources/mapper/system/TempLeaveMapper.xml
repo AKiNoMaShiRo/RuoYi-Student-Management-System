@@ -43,4 +43,26 @@
         )
     </insert>
 
+    <delete id="deleteTempLeave" parameterType="Long">
+        delete from temp_leave where leave_id = #{leaveId}
+    </delete>
+
+    <update id="updateStatus" parameterType="TempLeave">
+        update temp_leave
+        <set>
+            <if test="status != null and status != 0">status = #{status},</if>
+        </set>
+        where leave_id = #{leaveId}
+    </update>
+
+    <update id="updateTempLeave" parameterType="TempLeave">
+        update temp_leave
+        <set>
+            <if test="reason != null and reason != ''">reason = #{reason},</if>
+            <if test="leaveStartTime != null">start_time = #{leaveStartTime},</if>
+            <if test="leaveEndTime != null">end_time = #{leaveEndTime},</if>
+            <if test="teacher != null and teacher != ''">teacher = #{teacher},</if>
+        </set>
+        where leave_id = #{leaveId}
+    </update>
 </mapper>
