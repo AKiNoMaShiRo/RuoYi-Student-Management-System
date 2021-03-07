@@ -128,17 +128,17 @@
       </div>
     </section>
     <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible">
-      <el-form class="am-flex-center am-flex-wrap" :rules="rules" :model="dialogFormData" inline>
-        <el-form-item label="称谓" prop="appellation" label-width="100px">
+      <el-form class="am-flex-center am-flex-wrap" label-width="80px" :rules="rules" :model="dialogFormData" inline>
+        <el-form-item label="称谓" prop="appellation">
           <el-input size="small" v-model="dialogFormData.appellation"></el-input>
         </el-form-item>
-        <el-form-item label="姓名" prop="memberName" label-width="100px">
+        <el-form-item label="姓名" prop="memberName">
           <el-input size="small" v-model="dialogFormData.memberName"></el-input>
         </el-form-item>
-        <el-form-item label="身份证" prop="identityCard" label-width="100px">
+        <el-form-item label="身份证" prop="identityCard">
           <el-input size="small" v-model="dialogFormData.identityCard"></el-input>
         </el-form-item>
-        <el-form-item label="健康状况" prop="health" label-width="100px">
+        <el-form-item label="健康状况" prop="health">
           <el-select size="small" v-model="dialogFormData.health">
             <el-option
               v-for="healthState in healthStates"
@@ -149,19 +149,19 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="单位名称" prop="company" label-width="100px">
+        <el-form-item label="单位名称" prop="company">
           <el-input size="small" v-model="dialogFormData.company"></el-input>
         </el-form-item>
-        <el-form-item label="职位" prop="duty" label-width="100px">
+        <el-form-item label="职位" prop="duty">
           <el-input size="small" v-model="dialogFormData.duty"></el-input>
         </el-form-item>
-        <el-form-item label="邮编" prop="postCode" label-width="100px">
+        <el-form-item label="邮编" prop="postCode">
           <el-input size="small" v-model="dialogFormData.postCode"></el-input>
         </el-form-item>
-        <el-form-item label="电话号码" prop="phoneNumber" label-width="100px">
+        <el-form-item label="电话号码" prop="phoneNumber">
           <el-input size="small" v-model="dialogFormData.phoneNumber"></el-input>
         </el-form-item>
-        <el-form-item label="政治面貌" prop="politicsStatus" label-width="100px">
+        <el-form-item label="政治面貌" prop="politicsStatus">
           <el-select size="small" v-model="dialogFormData.politicsStatus">
             <el-option
               v-for="politicsStatusOption in politicsStatusOptions"
@@ -172,11 +172,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="备注" prop="remark" label-width="100px">
+        <el-form-item label="备注" prop="remark">
           <el-input size="small" v-model="dialogFormData.remark"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer" label-width="100px">
+      <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="handleDialogFormCancel">取消</el-button>
         <el-button size="small" type="primary" @click="handleDialogFormConfirm">修改</el-button>
       </div>

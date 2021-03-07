@@ -103,7 +103,13 @@
             <el-date-picker size="small" v-model="formData.joinTime" type="month" clearable></el-date-picker>
           </el-form-item>
           <el-form-item label="生源地区" prop="studentOrigin">
-            <el-cascader size="small" v-model="formData.studentOrigin" :options="regionData" @change="handleChange" clearable>
+            <el-cascader
+              size="small"
+              v-model="formData.studentOrigin"
+              :options="regionData"
+              :show-all-levels="false"
+              clearable
+            >
             </el-cascader>
           </el-form-item>
           <el-form-item label="家庭地址" prop="familyAddress">
@@ -132,7 +138,7 @@
               size="small"
               v-model="formData.nativePlace"
               :options="regionData"
-              :props="{ expandTrigger: 'hover' }"
+              :show-all-levels="false"
               clearable
             >
             </el-cascader>
@@ -265,9 +271,6 @@ export default {
           this.$$message.error('修改失败')
         }
       })
-    },
-    handleChange (value) {
-      console.log(value)
     }
   }
 }

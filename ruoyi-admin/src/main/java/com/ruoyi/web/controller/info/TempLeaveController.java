@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.info;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.info.domain.TempLeave;
 import com.ruoyi.info.service.ITempLeaveService;
 import io.swagger.annotations.Api;
@@ -26,10 +27,11 @@ public class TempLeaveController extends BaseController {
     private ITempLeaveService tempLeaveService;
 
     @ApiOperation("根据学号查询请假单信息")
-    @GetMapping("/queryById/{studentId}")
-    public AjaxResult getTempLeave(@PathVariable String studentId){
+    @GetMapping("/queryById")
+    public TableDataInfo getTempLeave(String studentId){
+        startPage();
         List<TempLeave> tempLeaves = tempLeaveService.selectLeaveById(studentId);
-        return AjaxResult.success(tempLeaves);
+        return getDataTable(tempLeaves);
     }
 
     @ApiOperation("添加请假单信息")

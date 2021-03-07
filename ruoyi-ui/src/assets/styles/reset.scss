@@ -79,10 +79,16 @@ aside {
 //表单样式修改
 .el-form{
   .el-form-item{
-    margin-bottom: 16px;
-    margin-right: 12px;
+    margin-bottom: 12px;
+    margin-right: 16px;
     .el-input {
       width: 180px;
+    }
+    .el-date-editor--datetimerange {
+      width: 350px;
+      .el-range-separator {
+        width: 20px;
+      }
     }
   }
 }
@@ -140,7 +146,7 @@ aside {
 }
 
 //去除表格底部线条
-.el-table::before, .el-table__fixed::before{
+.el-table::before, .el-table__fixed::before, .el-table__fixed-right::before, .el-table__fixed-left::before{
   bottom: auto;
 }
 

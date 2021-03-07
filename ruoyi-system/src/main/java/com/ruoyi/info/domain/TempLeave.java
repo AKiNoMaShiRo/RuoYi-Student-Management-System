@@ -1,5 +1,6 @@
 package com.ruoyi.info.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -21,11 +22,13 @@ public class TempLeave extends BaseEntity {
     private String reason;
 
     /** 请假开始时间 */
-    @Excel(name = "请假开始时间")
+    @Excel(name = "请假开始时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date leaveStartTime;
 
     /** 请假结束时间 */
-    @Excel(name = "请假结束时间")
+    @Excel(name = "请假结束时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     private Date leaveEndTime;
 
     /** 任课老师 */
