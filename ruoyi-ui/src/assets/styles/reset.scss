@@ -79,6 +79,7 @@ aside {
 //表单样式修改
 .el-form{
   .el-form-item{
+    margin-top: 6px;
     margin-bottom: 12px;
     margin-right: 16px;
     .el-input {
@@ -86,6 +87,12 @@ aside {
     }
     .el-date-editor--datetimerange {
       width: 350px;
+      .el-range-separator {
+        width: 20px;
+      }
+    }
+    .el-date-editor--daterange {
+      width: 300px;
       .el-range-separator {
         width: 20px;
       }
