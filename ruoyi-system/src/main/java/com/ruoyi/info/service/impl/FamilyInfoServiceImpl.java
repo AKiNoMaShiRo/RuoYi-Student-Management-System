@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FamilyInfoImpl implements IFamilyInfoService {
+public class FamilyInfoServiceImpl implements IFamilyInfoService {
 
     @Autowired
     private FamilyInfoMapper familyInfoMapper;
