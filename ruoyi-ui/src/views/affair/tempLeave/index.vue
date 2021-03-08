@@ -173,14 +173,12 @@
 <script>
 import * as TEMPLEAVE from '@/api/info/tempLeave.js'
 // import { getTempLeave, addTempLeave } from '@/api/info/tempLeave.js'
-import { DEPARTMENTS } from '@/libs/teachUnit.js'
 import Pagination from '../../components/Pagination.vue'
 
 export default {
   components: { Pagination },
   data () {
     return {
-      departments: DEPARTMENTS,
       dgDealVisible: false,
       dgEditVisible: false,
       dealResult: 2,

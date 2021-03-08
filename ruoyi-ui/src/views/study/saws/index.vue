@@ -52,12 +52,12 @@
           </div>
           <div style="height: 100%;">
             <el-table v-loading="tableLoading" :data="tableData" height="300px">
-                <el-table-column label="学号" prop="student_id" min-width="110" showOverflowTooltip></el-table-column>
+                <el-table-column label="学号" prop="studentId" min-width="110" showOverflowTooltip></el-table-column>
                 <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
-                <el-table-column label="院系" prop="department" min-width="140" showOverflowTooltip></el-table-column>
+                <el-table-column label="院系" prop="department" min-width="110" showOverflowTooltip></el-table-column>
                 <el-table-column label="专业" prop="profession" min-width="100" showOverflowTooltip></el-table-column>
                 <el-table-column label="班级" prop="class" min-width="60" showOverflowTooltip></el-table-column>
-                <el-table-column label="预警等级" prop="alarm_level" min-width="100" showOverflowTooltip>
+                <el-table-column label="预警等级" prop="alarm_level" min-width="80" showOverflowTooltip>
                   <template slot-scope="scope">
                     <span v-if=" scope.row.alarm_level === '一级预警' " class="am-alarm-badge am-alarm-level-1">一级预警</span>
                     <span v-else-if=" scope.row.alarm_level === '二级预警' " class="am-alarm-badge am-alarm-level-2">二级预警</span>
@@ -65,13 +65,13 @@
                     <span v-else class="fe-alarm-badge"></span>
                   </template>
                 </el-table-column>
-                <el-table-column label="预警原因" prop="alarm_reason" min-width="100"></el-table-column>
-                <el-table-column label="备注" prop="comment" min-width="80"></el-table-column>
+                <el-table-column label="预警原因" prop="alarm_reason" min-width="120"></el-table-column>
+                <el-table-column label="备注" prop="comment" min-width="120"></el-table-column>
               <template></template>
             </el-table>
             <Pagination
               :total="total"
-              :page-range="[15, 20, 30]"
+              :page-range="[10, 15, 20]"
               :current-page="currentPage"
               :page-size="pageSize"
               @onPaginationUpdate="handlePaginationUpdate"
@@ -85,7 +85,6 @@
 
 <script>
 import Pagination from '@/views/components/Pagination.vue'
-import { DEPARTMENTS } from '@/libs/teachUnit.js'
 
 export default {
   components: {
@@ -93,13 +92,12 @@ export default {
   },
   data () {
     return {
-      departments: DEPARTMENTS,
-      total: 100,
+      total: 1,
       currentPage: 1,
-      pageSize: 15,
+      pageSize: 10,
       tableLoading: false,
       tableData: [
-          { student_id: '20171344049', name: '孔允孔允', department: '计算机与软件学院', profession: '软件工程', class: '2', alarm_level: '一级预警', alarm_reason: '略略略', comment: '无'}
+        { studentId: '20171344049', name: '孔允孔允', department: '计算机与软件学院', profession: '软件工程', class: '2', alarm_level: '一级预警', alarm_reason: '略略略', comment: '无'}
       ],
       formData: {
         student_id: '',

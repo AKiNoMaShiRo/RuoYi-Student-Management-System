@@ -130,16 +130,16 @@
     <el-dialog title="家庭成员信息详情" :visible.sync="dgFromVisible">
       <el-form class="am-flex-center am-flex-wrap" label-width="80px" :rules="rules" :model="dialogFormData" inline>
         <el-form-item label="称谓" prop="appellation">
-          <el-input size="small" v-model="dialogFormData.appellation"></el-input>
+          <el-input size="small" v-model="dialogFormData.appellation" clearable></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="memberName">
-          <el-input size="small" v-model="dialogFormData.memberName"></el-input>
+          <el-input size="small" v-model="dialogFormData.memberName" clearable></el-input>
         </el-form-item>
         <el-form-item label="身份证" prop="identityCard">
-          <el-input size="small" v-model="dialogFormData.identityCard"></el-input>
+          <el-input size="small" v-model="dialogFormData.identityCard" clearable></el-input>
         </el-form-item>
         <el-form-item label="健康状况" prop="health">
-          <el-select size="small" v-model="dialogFormData.health">
+          <el-select size="small" v-model="dialogFormData.health" clearable>
             <el-option
               v-for="healthState in healthStates"
               :key="healthState.v"
@@ -150,19 +150,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="单位名称" prop="company">
-          <el-input size="small" v-model="dialogFormData.company"></el-input>
+          <el-input size="small" v-model="dialogFormData.company" clearable></el-input>
         </el-form-item>
         <el-form-item label="职位" prop="duty">
-          <el-input size="small" v-model="dialogFormData.duty"></el-input>
+          <el-input size="small" v-model="dialogFormData.duty" clearable></el-input>
         </el-form-item>
         <el-form-item label="邮编" prop="postCode">
-          <el-input size="small" v-model="dialogFormData.postCode"></el-input>
+          <el-input size="small" v-model="dialogFormData.postCode" clearable></el-input>
         </el-form-item>
         <el-form-item label="电话号码" prop="phoneNumber">
-          <el-input size="small" v-model="dialogFormData.phoneNumber"></el-input>
+          <el-input size="small" v-model="dialogFormData.phoneNumber" clearable></el-input>
         </el-form-item>
         <el-form-item label="政治面貌" prop="politicsStatus">
-          <el-select size="small" v-model="dialogFormData.politicsStatus">
+          <el-select size="small" v-model="dialogFormData.politicsStatus" clearable>
             <el-option
               v-for="politicsStatusOption in politicsStatusOptions"
               :key="politicsStatusOption.v"
@@ -173,7 +173,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input size="small" v-model="dialogFormData.remark"></el-input>
+          <el-input size="small" v-model="dialogFormData.remark" clearable></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

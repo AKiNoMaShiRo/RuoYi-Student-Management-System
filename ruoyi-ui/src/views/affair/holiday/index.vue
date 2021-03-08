@@ -17,6 +17,8 @@
               <el-option label="清明节" value="qingMing "></el-option>
               <el-option label="劳动节" value="laborDay"></el-option>
               <el-option label="国庆节" value="nationalDay"></el-option>
+              <el-option label="寒假" value="winter"></el-option>
+              <el-option label="暑假" value="summer"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="去向类别" prop="destination">

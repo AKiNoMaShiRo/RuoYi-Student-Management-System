@@ -13,6 +13,10 @@
               <span class="am-ml-lg">{{baseInfo.department}}</span>
             </div>
             <div class="info-content">
+              <span>专业:</span>
+              <span class="am-ml-lg">{{baseInfo.profession}}</span>
+            </div>
+            <div class="info-content">
               <span>班级:</span>
               <span class="am-ml-lg">{{baseInfo.classNum}}</span>
             </div>
@@ -20,7 +24,7 @@
               <span>学号:</span>
               <span class="am-ml-lg">{{baseInfo.studentId}}</span>
             </div>
-            <div class="info-content">
+            <div class="info-content" style="margin-bottom: 0px;">
               <span>姓名:</span>
               <span class="am-ml-lg">{{baseInfo.name}}</span>
             </div>
@@ -188,6 +192,7 @@ export default {
       regionData: regionData,
       baseInfo: {
         department: '',
+        profession: '',
         classNum: '',
         studentId: '',
         name: ''
@@ -229,10 +234,9 @@ export default {
     getStuInfo('20171344054').then(res => {
       this.formData = {}
       if(res && res.data){
-        this.baseInfo.department = res.data.department
-        this.baseInfo.classNum = res.data.classNum
-        this.baseInfo.studentId = res.data.studentId
-        this.baseInfo.name = res.data.name
+        for (let key in this.baseInfo) {
+          this.baseInfo[key] = res.data[key]
+        }
         this.formData = res.data
         this.formData.studentOrigin = [res.data.studentOriginP, res.data.studentOriginC, res.data.studentOriginA]
         this.formData.nativePlace = [res.data.nativePlaceP, res.data.nativePlaceC, res.data.nativePlaceA]
