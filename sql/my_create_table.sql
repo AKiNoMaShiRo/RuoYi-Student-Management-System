@@ -103,7 +103,42 @@ create table temp_leave (
 ) engine=innodb auto_increment=1000 comment = '临时请假申请表';
 
 -- ----------------------------
--- 6、学业预警信息表
+-- 6、节假日去向报备表
+-- ----------------------------
+drop table if exists holiday_go;
+create table holiday_go (
+  go_id				bigint(20)      not null auto_increment    comment '报备信息ID',
+  student_id		varchar(20)		not null				   comment '学号',
+  term				varchar(20)     not null			       comment '学期',
+  holiday_type		varchar(20)     not null			       comment '节假日',
+  destination		varchar(20)     not null    			   comment '去向类别',
+  start_time		datetime		default null			   comment '离校时间',
+  end_time			datetime		default null			   comment '拟回校时间',
+  address			varchar(20)		default null			   comment '外出地址',
+  remark			varchar(20)		default null			   comment '备注',
+  status			int(4)			not null				   comment '申请状态',
+
+  primary key (go_id)
+) engine=innodb auto_increment=1000 comment = '节假日去向报备表';
+
+-- ----------------------------
+-- 7、外宿申请表
+-- ----------------------------
+drop table if exists no_borad;
+create table no_borad (
+  board_id			bigint(20)      not null auto_increment    comment '报备信息ID',
+  student_id		varchar(20)		not null				   comment '学号',
+  term				varchar(20)     not null			       comment '学期',
+  address			varchar(20)		not null			   	   comment '外宿地址',
+  reason			varchar(20)     not null			       comment '外宿原因',
+  connect_method	varchar(20)     not null    			   comment '家长联系方式',
+  status			int(4)			not null				   comment '申请状态',
+
+  primary key (board_id)
+) engine=innodb auto_increment=1000 comment = '外宿申请表';
+
+-- ----------------------------
+-- 8、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (

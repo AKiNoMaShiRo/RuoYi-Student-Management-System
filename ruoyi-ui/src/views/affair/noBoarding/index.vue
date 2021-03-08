@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <section class="am-box am-mb">
-      <div class="am-p am-title am-bd-b">节假日去向报备</div>
+      <div class="am-p am-title am-bd-b">外宿申请</div>
       <div class="am-p">
         <el-form
           ref="boardForm"
@@ -23,8 +23,8 @@
           <el-form-item label="外宿原因" prop="reason">
             <el-input size="small" v-model="formData.reason" clearable></el-input>
           </el-form-item>
-          <el-form-item label="家长联系方式" prop="connection">
-            <el-input size="small" v-model="formData.connection" clearable></el-input>
+          <el-form-item label="家长联系方式" prop="connectMethod">
+            <el-input size="small" v-model="formData.connectMethod" clearable></el-input>
           </el-form-item>
           <el-form-item label=" ">
             <el-button el-button size="small" disabsled @click="handleResetForm">重置</el-button>
@@ -34,7 +34,7 @@
       </div>
     </section>
     <section class="am-box">
-      <div class="am-p am-title am-bd-b">历史节假日去向报备记录</div>
+      <div class="am-p am-title am-bd-b">外宿申请记录</div>
       <div class="am-p">
         <el-table v-loading="tableLoading" :data="tableData" :height="tableHeight" highlight-current-row>
           <!-- row-key=""
@@ -131,21 +131,21 @@ export default {
         term: '',
         address: '',
         reason: '',
-        connection: ''
+        connectMethod: ''
       },
       tableLoading: false,
       rules: {
         term: [ { required: true, message: '请选择外宿学期', trigger: 'blur' } ],
         address: [ { required: true, message: '请输入外宿地址', trigger: 'blur' } ],
         reason: [ { required: true, message: '请输入外宿原因', trigger: 'blur' } ],
-        connection: [ { required: true, message: '请输入家长联系方式', trigger: 'blur' } ]
+        connectMethod: [ { required: true, message: '请输入家长联系方式', trigger: 'blur' } ]
       },
       tableData: [],
       tableColumns: [
         { prop: 'term', label: '学期', minWidth: '80' },
         { prop: 'address', label: '外宿地址', minWidth: '80' },
         { prop: 'reason', label: '外宿原因', minWidth: '120' },
-        { prop: 'connection', label: '家长联系方式', minWidth: '120' }
+        { prop: 'connectMethod', label: '家长联系方式', minWidth: '120' }
       ]
     }
   },

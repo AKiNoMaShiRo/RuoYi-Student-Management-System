@@ -11,6 +11,10 @@ INSERT INTO temp_leave (student_id, reason, start_time, end_time, teacher_id, st
 
 INSERT INTO instructor_info VALUES ('1001', '张学会');
 
+INSERT INTO holiday_go ( student_id, term, holiday_type, destination, status ) VALUES ('20171344054', '2020-2021-2', 'qingMing', 'school', 1);
+
+INSERT INTO no_borad ( student_id, term, address, reason, connect_method, status ) VALUES ('20171344054', '2020-2021-2', 'M87星云', 'aaa', '10086', 1);
+
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info
 ON stu_info.class_id = class_info.class_id
