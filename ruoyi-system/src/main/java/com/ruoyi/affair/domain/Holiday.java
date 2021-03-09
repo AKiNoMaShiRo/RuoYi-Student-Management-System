@@ -115,12 +115,10 @@ public class Holiday extends BaseEntity {
         this.address = address;
     }
 
-    @Override
     public String getRemark() {
         return remark;
     }
 
-    @Override
     public void setRemark(String remark) {
         this.remark = remark;
     }

@@ -126,7 +126,7 @@ create table holiday_go (
 -- ----------------------------
 drop table if exists no_borad;
 create table no_borad (
-  board_id			bigint(20)      not null auto_increment    comment '报备信息ID',
+  board_id			bigint(20)      not null auto_increment    comment '外宿申请ID',
   student_id		varchar(20)		not null				   comment '学号',
   term				varchar(20)     not null			       comment '学期',
   address			varchar(20)		not null			   	   comment '外宿地址',

@@ -19,7 +19,7 @@
 
     <sql id="HolidayVo">
         select *
-        from holiday_go;
+        from holiday_go
     </sql>
 
     <select id="selectHolidayById" parameterType="String" resultMap="HolidayResult">
@@ -27,5 +27,52 @@
         where holiday_go.student_id = #{studentId}
         order by holiday_go.go_id desc
     </select>
+
+    <insert id="addHoliday" parameterType="Holiday" useGeneratedKeys="true" keyProperty="goId">
+        insert into holiday_go(
+            <if test="studentId != null and studentId != ''">student_id,</if>
+            <if test="term != null and term != ''">term,</if>
+            <if test="holidayType != null and holidayType != ''">holiday_type,</if>
+            <if test="leaveStartTime != null">start_time,</if>
+            <if test="leaveEndTime != null">end_time,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            status
+        ) values (
+            <if test="studentId != null and studentId != ''">#{studentId},</if>
+            <if test="term != null and term != ''">#{term},</if>
+            <if test="holidayType != null and holidayType != ''">#{holidayType},</if>
+            <if test="leaveStartTime != null">#{leaveStartTime},</if>
+            <if test="leaveEndTime != null">#{leaveStartTime},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            1
+        )
+    </insert>
+
+    <update id="updateHolidayStatus" parameterType="Holiday">
+        update holiday_go
+        <set>
+            <if test="status != null and status != 0">status = #{status},</if>
+        </set>
+        where holiday_go.go_id = #{goId}
+    </update>
+
+    <update id="updateHoliday" parameterType="Holiday">
+        update holiday_go
+        <set>
+            <if test="term != null and term != ''">term = #{term},</if>
+            <if test="holidayType != null and holidayType != ''">holiday_type = #{holidayType},</if>
+            <if test="leaveStartTime != null">start_time = #{leaveStartTime},</if>
+            <if test="leaveEndTime != null">end_time = #{leaveEndTime},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where holiday_go.go_id = #{goId}
+    </update>
+
+    <delete id="deleteHoliday" parameterType="Long">
+        delete from holiday_go where go_id = #{goId}
+    </delete>
 
 </mapper>

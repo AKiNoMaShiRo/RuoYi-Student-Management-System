@@ -13,4 +13,37 @@ public interface HolidayMapper {
      * @return 结果
      */
     public List<Holiday> selectHolidayById(String studentId);
+
+    /**
+     * 新增节假日去向报备信息
+     *
+     * @param holiday 节假日去向报备
+     * @return 结果
+     */
+    public int addHoliday(Holiday holiday);
+
+    /**
+     * 更新节假日去向报备信息状态
+     *
+     * @param holiday 节假日去向报备
+     * @return 结果
+     */
+    public int updateHolidayStatus(Holiday holiday);
+
+    /**
+     * 更新节假日去向报备信息
+     *
+     * @param holiday 节假日去向报备
+     * @return 结果
+     */
+    public int updateHoliday(Holiday holiday);
+
+    /**
+     * 删除节假日去向报备信息
+     *
+     * @param goId 节假日去向报备信息编号
+     * @return 结果
+     */
+    public int deleteHoliday(Long goId);
+
 }
