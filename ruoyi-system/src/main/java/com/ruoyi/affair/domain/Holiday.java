@@ -32,12 +32,12 @@ public class Holiday extends BaseEntity {
     /** 离校时间 */
     @Excel(name = "离校时间", dateFormat = "yyyy-MM-dd")
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
-    private Date leaveStartTime;
+    private Date holidayStartTime;
 
     /** 拟回校时间 */
     @Excel(name = "拟回校时间", dateFormat = "yyyy-MM-dd")
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
-    private Date leaveEndTime;
+    private Date holidayEndTime;
 
     /** 外出地址 */
     @Excel(name = "外出地址")
@@ -91,20 +91,20 @@ public class Holiday extends BaseEntity {
         this.destination = destination;
     }
 
-    public Date getLeaveStartTime() {
-        return leaveStartTime;
+    public Date getHolidayStartTime() {
+        return holidayStartTime;
     }
 
-    public void setLeaveStartTime(Date leaveStartTime) {
-        this.leaveStartTime = leaveStartTime;
+    public void setHolidayStartTime(Date holidayStartTime) {
+        this.holidayStartTime = holidayStartTime;
     }
 
-    public Date getLeaveEndTime() {
-        return leaveEndTime;
+    public Date getHolidayEndTime() {
+        return holidayEndTime;
     }
 
-    public void setLeaveEndTime(Date leaveEndTime) {
-        this.leaveEndTime = leaveEndTime;
+    public void setHolidayEndTime(Date holidayEndTime) {
+        this.holidayEndTime = holidayEndTime;
     }
 
     public String getAddress() {
@@ -139,8 +139,8 @@ public class Holiday extends BaseEntity {
                 ", term='" + term + '\'' +
                 ", holidayType='" + holidayType + '\'' +
                 ", destination='" + destination + '\'' +
-                ", leaveStartTime=" + leaveStartTime +
-                ", leaveEndTime=" + leaveEndTime +
+                ", leaveStartTime=" + holidayStartTime +
+                ", leaveEndTime=" + holidayEndTime +
                 ", address='" + address + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status=" + status +

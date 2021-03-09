@@ -10,8 +10,8 @@
         <result     property="term"                 column="term"/>
         <result     property="holidayType"          column="holiday_type"/>
         <result     property="destination"          column="destination"/>
-        <result     property="leaveStartTime"       column="start_time"/>
-        <result     property="leaveEndTime"         column="end_time"/>
+        <result     property="holidayStartTime"       column="start_time"/>
+        <result     property="holidayEndTime"         column="end_time"/>
         <result     property="address"              column="address"/>
         <result     property="remark"               column="remark"/>
         <result     property="status"               column="status"/>
@@ -33,8 +33,9 @@
             <if test="studentId != null and studentId != ''">student_id,</if>
             <if test="term != null and term != ''">term,</if>
             <if test="holidayType != null and holidayType != ''">holiday_type,</if>
-            <if test="leaveStartTime != null">start_time,</if>
-            <if test="leaveEndTime != null">end_time,</if>
+            <if test="destination != null and  destination != ''">destination,</if>
+            <if test="holidayStartTime != null">start_time,</if>
+            <if test="holidayEndTime != null">end_time,</if>
             <if test="address != null and address != ''">address,</if>
             <if test="remark != null and remark != ''">remark,</if>
             status
@@ -42,8 +43,9 @@
             <if test="studentId != null and studentId != ''">#{studentId},</if>
             <if test="term != null and term != ''">#{term},</if>
             <if test="holidayType != null and holidayType != ''">#{holidayType},</if>
-            <if test="leaveStartTime != null">#{leaveStartTime},</if>
-            <if test="leaveEndTime != null">#{leaveStartTime},</if>
+            <if test="destination != null and  destination != ''">#{destination},</if>
+            <if test="holidayStartTime != null">#{holidayStartTime},</if>
+            <if test="holidayEndTime != null">#{holidayEndTime},</if>
             <if test="address != null and address != ''">#{address},</if>
             <if test="remark != null and remark != ''">#{remark},</if>
             1

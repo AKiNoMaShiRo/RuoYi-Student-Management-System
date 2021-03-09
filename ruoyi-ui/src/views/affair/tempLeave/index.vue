@@ -164,14 +164,14 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="dgDealVisible = false">取消</el-button>
-        <el-button size="small" type="primary" @click="handleDealDialog">修改</el-button>
+        <el-button size="small" type="primary" @click="handleDealDialog">确定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import * as TEMPLEAVE from '@/api/info/tempLeave.js'
+import * as TEMPLEAVE from '@/api/affair/tempLeave.js'
 // import { getTempLeave, addTempLeave } from '@/api/info/tempLeave.js'
 import Pagination from '../../components/Pagination.vue'
 
