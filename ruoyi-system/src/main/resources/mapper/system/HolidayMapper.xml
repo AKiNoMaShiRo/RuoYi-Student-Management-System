@@ -65,8 +65,8 @@
         <set>
             <if test="term != null and term != ''">term = #{term},</if>
             <if test="holidayType != null and holidayType != ''">holiday_type = #{holidayType},</if>
-            <if test="leaveStartTime != null">start_time = #{leaveStartTime},</if>
-            <if test="leaveEndTime != null">end_time = #{leaveEndTime},</if>
+            <if test="holidayStartTime != null">start_time = #{holidayStartTime},</if>
+            <if test="holidayEndTime != null">end_time = #{holidayEndTime},</if>
             <if test="address != null">address = #{address},</if>
             <if test="remark != null">remark = #{remark},</if>
         </set>

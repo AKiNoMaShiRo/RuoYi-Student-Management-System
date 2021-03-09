@@ -240,6 +240,7 @@
 
 <script>
 import moment from 'moment'
+import { HOLIDAYTYPEOPTS, DESTINATIONOPTS } from '@/libs/utils.js'
 import * as HOLIDAY from '@/api/affair/holiday.js'
 import Pagination from '../../components/Pagination.vue'
 
@@ -255,6 +256,7 @@ export default {
       dealRequest: {},
       dgEditVisible: false,
       formData: {
+        goId: null,
         holidayType: '',
         destination: '',
         address: '',
@@ -262,25 +264,15 @@ export default {
         remark: ''
       },
       editData: {
+        goId: null,
         holidayType: '',
         destination: '',
         address: '',
         timeRange: ['', ''],
         remark: ''
       },
-      holidayTypeOpts: [
-        { label: '元旦', value: 'newYearDay' },
-        { label: '清明节', value: 'qingMing' },
-        { label: '劳动节', value: 'laborDay' },
-        { label: '国庆节', value: 'nationalDay' },
-        { label: '寒假', value: 'winter' },
-        { label: '暑假', value: 'summer' }
-      ],
-      destinationOpts: [
-        { label: '回家', value: 'home' },
-        { label: '外出', value: 'other' },
-        { label: '留校', value: 'school' }
-      ],
+      holidayTypeOpts: HOLIDAYTYPEOPTS,
+      destinationOpts: DESTINATIONOPTS,
       leaveRules: {
         holidayType: [ { required: true, message: '请选择节假日类型', trigger: 'blur' } ],
         destination: [ { required: true, message: '请选择节假日去向', trigger: 'blur' } ],
@@ -313,21 +305,24 @@ export default {
       handler(val) {
         if (val !== '') {
           this.$refs.holidayForm.clearValidate()
-          this.formData.address = ''
-          this.formData.timeRange = null
+          if (this.formData.destination === 'school') {
+            this.formData.address = ''
+            this.formData.timeRange = null
+          }
         }
       },
       immediate: true
     },
     'editData.destination': {
-      handler(val) {
-        if (val !== '') {
+      handler(newValue, oldValue) {
+        if (oldValue !== newValue) {
           this.$refs[dialogForm].clearValidate()
-          this.editData.address = ''
-          this.editData.timeRange = null
+          if (newValue === 'school') {
+            this.editData.address = ''
+            this.editData.timeRange = null
+          }
         }
-      },
-      immediate: true
+      }
     }
   },
   created () {
@@ -381,19 +376,16 @@ export default {
     },
     //    表格编辑按钮
     handleEdit (row) {
-      for (let key in this.editData) {
-        this.editData[key] = row[key]
-      }
+      this.editData = Object.assign(this.editData, row)
       if (row.holidayStartTime !== null && row.holidayEndTime !== null) {
         this.editData = Object.assign(this.editData, {
           timeRange: [ row.holidayStartTime, row.holidayEndTime ]
         })
       }
-      // row.holidayStartTime ? this.editData.timeRange[0] = row.holidayStartTime : this.editData.timeRange[0] = ''
-      // row.holidayEndTime ? this.editData.timeRange[1] = row.holidayEndTime : this.editData.timeRange[1] = ''
+      console.log(this.editData)
       this.dgEditVisible = true
     },
-    //    TODO 编辑对话框按钮
+    //    编辑对话框按钮
     handleEditDialog () {
       this.$refs.dialogForm.validate(valid => {
         if (valid) {
@@ -451,29 +443,16 @@ export default {
       if (val === '' || val === null || val === undefined) {
         return '--'
       } else if (prop === 'holidayType') {
-        let holidayTypeOpts = [
-          { label: '元旦', value: 'newYearDay' },
-          { label: '清明节', value: 'qingMing' },
-          { label: '劳动节', value: 'laborDay' },
-          { label: '国庆节', value: 'nationalDay' },
-          { label: '寒假', value: 'winter' },
-          { label: '暑假', value: 'summer' }
-        ]
         let res = ''
-        holidayTypeOpts.forEach(item => {
+        HOLIDAYTYPEOPTS.forEach(item => {
           if (item.value === val) {
             res = item.label
           }
         })
         return res
       } else if (prop === 'destination') {
-        let destinationOpts = [
-          { label: '回家', value: 'home' },
-          { label: '外出', value: 'other' },
-          { label: '留校', value: 'school' }
-        ]
         let res = ''
-        destinationOpts.forEach(item => {
+        DESTINATIONOPTS.forEach(item => {
           if (item.value === val) {
             res = item.label
           }
