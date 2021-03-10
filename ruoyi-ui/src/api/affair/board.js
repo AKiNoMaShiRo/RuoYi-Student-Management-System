@@ -39,9 +39,9 @@ export function editBoard(params){
 }
 
 //    撤销报备信息
-export function deleteBoard(goId){
+export function deleteBoard(boardId){
     return request({
-        url: BASEPATH + '/delete/' + goId,
+        url: BASEPATH + '/delete/' + boardId,
         method: 'delete'
     })
 }

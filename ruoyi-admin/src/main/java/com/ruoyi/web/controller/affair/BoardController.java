@@ -26,8 +26,8 @@ public class BoardController extends BaseController {
     private IBoardService boardService;
 
     @ApiOperation("根据学号查询外宿申请")
-    @GetMapping("/queryById/{studentId}")
-    public AjaxResult getBoard(@PathVariable String studentId){
+    @GetMapping("/queryById")
+    public AjaxResult getBoard(String studentId){
         List<Board> boards = boardService.selectBoardByStuId(studentId);
         return AjaxResult.success(boards);
     }

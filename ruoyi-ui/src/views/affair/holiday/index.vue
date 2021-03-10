@@ -382,7 +382,6 @@ export default {
           timeRange: [ row.holidayStartTime, row.holidayEndTime ]
         })
       }
-      console.log(this.editData)
       this.dgEditVisible = true
     },
     //    编辑对话框按钮

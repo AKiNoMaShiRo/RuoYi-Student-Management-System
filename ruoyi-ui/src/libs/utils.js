@@ -16,6 +16,14 @@ export const DESTINATIONOPTS = [
     { label: '留校', value: 'school' }
 ]
 
-export const TERM = [
-    { l: '', v: '' }
-]
+export function termOptions(stuId) {
+    let res = [] 
+    let startYear = parseInt( stuId.substring(0, 4) )    //入学年份
+    for (let i = 0; i < 4; i ++) {
+        let temp = (startYear + i).toString() + '-' + (startYear + i + 1).toString() + '-1'
+        res.push({ label: temp, value: temp })
+        temp = (startYear + i).toString() + '-' + (startYear + i + 1).toString() + '-2'
+        res.push({ label: temp, value: temp })
+    }
+    return res
+}

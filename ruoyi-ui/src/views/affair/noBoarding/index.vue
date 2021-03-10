@@ -13,8 +13,15 @@
         >
           <el-form-item label="学期" prop="term">
             <el-select size="small" v-model="formData.term" clearable>
-              <el-option label="元旦" value="newYearDay"></el-option>
-              <el-option label="清明节" value="qingMing "></el-option>
+              <el-option
+                v-for="opt in termOpts"
+                :key="opt.label"
+                :value="opt.value"
+                :label="opt.label"
+              >
+              </el-option>
+              <!-- <el-option label="元旦" value="newYearDay"></el-option>
+              <el-option label="清明节" value="qingMing "></el-option> -->
             </el-select>
           </el-form-item>
           <el-form-item label="外宿地址" prop="address">
@@ -36,7 +43,7 @@
     <section class="am-box">
       <div class="am-p am-title am-bd-b">外宿申请记录</div>
       <div class="am-p">
-        <el-table v-loading="tableLoading" :data="tableData" :height="tableHeight" highlight-current-row>
+        <el-table v-loading="tableLoading" :data="tableData" height="360px" highlight-current-row>
           <!-- row-key=""
           :expand-row-keys="expandRowKeys" -->
           <el-table-column
@@ -70,6 +77,7 @@
                 icon="el-icon-edit"
                 size="mini"
                 style="margin-right: 6px;"
+                :disabled="scope.row.status !== 1"
                 @click="handleEdit(scope.row)"
               >
                 <!-- :disabled="scope.row.status !== 1" -->
@@ -79,6 +87,7 @@
                 icon="el-icon-edit-outline"
                 size="mini"
                 style="margin-right: 6px; margin-left: 0px;"
+                :disabled="scope.row.status !== 1"
                 @click="handleDeal(scope.row)"
               >
                 <!-- :disabled="scope.row.status !== 1" -->
@@ -96,6 +105,7 @@
                   icon="el-icon-refresh-left"
                   size="mini"
                   style="margin-right: 6px; margin-left: 0px;"
+                  :disabled="scope.row.status !== 1"
                   slot="reference"
                 >
                   <!-- :disabled="scope.row.status !== 1" -->
@@ -104,29 +114,90 @@
             </template>
           </el-table-column>
         </el-table>
-        <Pagination
+        <!-- <Pagination
           :total="total"
           :page-range="[10, 15, 20]"
           :current-page="currentPage"
           :page-size="pageSize"
           @onPaginationUpdate="handlePaginationUpdate"
         >
-        </Pagination>
+        </Pagination> -->
       </div>
     </section>
+    <el-dialog title="外宿申请审批" width="30%" :visible.sync="dgDealVisible">
+      <el-form :model="dealResult" label-width="80px">
+        <el-form-item label="审批意见" prop="dealResult">
+          <el-radio-group size="small" v-model="dealResult">
+            <el-radio :label="2">同意</el-radio>
+            <el-radio :label="3">不同意</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="dgDealVisible = false">取消</el-button>
+        <el-button size="small" type="primary" @click="handleDealDialog">确定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="外宿申请审批" :visible.sync="dgEditVisible">
+      <el-form
+          ref="dialogForm"
+          :rules="rules"
+          :model="editData"
+          label-position="right"
+          label-width="110px"
+          inline
+        >
+          <el-form-item label="学期" prop="term">
+            <el-select size="small" v-model="editData.term" clearable>
+              <el-option
+                v-for="opt in termOpts"
+                :key="opt.label"
+                :value="opt.value"
+                :label="opt.label"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="外宿地址" prop="address">
+            <el-input size="small" v-model="editData.address" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="外宿原因" prop="reason">
+            <el-input size="small" v-model="editData.reason" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="家长联系方式" prop="connectMethod">
+            <el-input size="small" v-model="editData.connectMethod" clearable></el-input>
+          </el-form-item>
+        </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="dgEditVisible = false">取消</el-button>
+        <el-button size="small" type="primary" @click="handleEditDialog">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import * as BOARD from '@/api/affair/board.js'
+import { termOptions } from '@/libs/utils.js'
 import Pagination from '../../components/Pagination.vue'
 
 export default {
   components: { Pagination },
   data () {
     return {
-      total: 0,
-      currentPage: 1,
-      pageSize: 10,
+      // total: 0,
+      // currentPage: 1,
+      // pageSize: 10,
+      dgDealVisible: false,
+      dealResult: null,
+      dealRuquest: {},
+      dgEditVisible: false,
+      editData: {
+        term: '',
+        address: '',
+        reason: '',
+        connectMethod: ''
+      },
       formData: {
         term: '',
         address: '',
@@ -150,35 +221,119 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
-      return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
+    // tableHeight () {
+    //   return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
+    // },
+    termOpts () {
+      return termOptions('20171344054')
     }
   },
+  created () {
+    this.getInfo()
+  },
   methods: {
+    getInfo () {
+      this.tableLoading = true
+      let param = {
+        studentId: '20171344054'
+      }
+      BOARD.getBoard(param).then( res => {
+        if (res.data && res.data.length !== 0){
+          this.tableData = res.data
+        } else {
+          this.tableData = []
+        }
+      }).finally( () => {
+        this.tableLoading = false
+      })
+    },
     //    重置表单
     handleResetForm () {
-      this.$refs.holidayForm.resetFields()
+      this.$refs.boardForm.resetFields()
     },
     //    提交表单
     handleSubmitForm () {
-      this.$refs.holidayForm.validate( valid => {
+      this.$refs.boardForm.validate( valid => {
         if (valid) {
-          console.log('验证成功')
           // TODO 提交申请
-          this.$refs.holidayForm.resetFields()
+          let param = this.formData
+          param = Object.assign(param, {
+            studentId: '20171344054'
+          })
+          BOARD.addBoard(param).then( res => {
+            if (res.msg === '操作成功') {
+              this.$message.success('提交成功')
+              this.getInfo()
+            } else {
+              this.$message.error('提交失败')
+            }
+          }).finally( () => {
+            this.$refs.boardForm.resetFields()
+          })
         }
       })
     },
+    handleDealDialog () {
+      let param = {
+        boardId: this.dealRuquest.boardId,
+        status: this.dealResult
+      }
+      BOARD.setStatus(param).then( res => {
+        if (res.msg === '操作成功'){
+          this.$message.success('审批成功')
+          this.dgDealVisible = false
+          this.getInfo()
+        } else {
+          this.$message.error('审批失败')
+        }
+      })
+    },
+    handleEditDialog () {
+      this.$refs.dialogForm.validate( valid => {
+        if (valid) {
+          let param = this.editData
+          param = Object.assign(param, {
+            studentId: '20171344054'
+          })
+          BOARD.editBoard(param).then( res => {
+            if (res.msg === '操作成功') {
+              this.$message.success('申请修改成功')
+              this.getInfo()
+              this.dgEditVisible = false
+            } else {
+              this.$message.error('申请修改失败')
+            }
+          })
+        }
+      })
+      
+    },
     //    表格编辑按钮
-    handleEdit(row) {},
+    handleEdit(row) {
+      this.editData = row
+      this.dgEditVisible = true
+    },
     //    表格审批按钮
-    handleEdit(row) {},
+    handleDeal (row) {
+      this.dgDealVisible = true
+      this.dealRuquest = row
+      console.log(this.dealRuquest)
+    },
     //    表格撤销按钮
-    handleEdit(row) {},
-    handlePaginationUpdate (param) {
-      this.currentPage = param.pageNum
-      this.pageSize = param.pageSize
-    }
+    handleCancel(row) {
+      BOARD.deleteBoard(row.boardId).then( res => {
+        if (res.msg === '操作成功'){
+          this.$message.success('撤销成功')
+          this.getInfo()
+        } else {
+          this.$message.error('撤销失败')
+        }
+      })
+    },
+    // handlePaginationUpdate (param) {
+    //   this.currentPage = param.pageNum
+    //   this.pageSize = param.pageSize
+    // }
   }
 }
 </script>
