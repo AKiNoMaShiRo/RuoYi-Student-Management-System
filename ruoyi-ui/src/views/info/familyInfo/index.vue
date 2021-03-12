@@ -187,7 +187,7 @@
 <script>
 import { politicsStatusOptions, healthStates } from '../../../libs/personalInfo'
 import { getFamilyInfo, editFamilyInfo, deleteFamilyInfo, addFamilyInfo } from '@/api/info/familyInfo'
-// import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 // import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 
 export default {
@@ -268,6 +268,9 @@ export default {
     // isSideBar () {
     //   return this.sidebar.open
     // }
+    ...mapState({
+      userName: state => state.user.name
+    })
   },
   created () {
     this.getInfo()
@@ -275,7 +278,7 @@ export default {
   methods: {
     getInfo () {
       this.tableLoading = true
-      getFamilyInfo('20171344054').then(res => {
+      getFamilyInfo(this.userName).then(res => {
         this.tableData = []
         if (res.data && res.data.length !== 0) {
           this.tableData = res.data
@@ -291,12 +294,12 @@ export default {
       this.$refs.infoForm.validate( valid => {
         if (valid) {
           let param = this.formData
-          param = Object.assign(param, { relativeStu: '20171344054' })
+          param = Object.assign(param, { relativeStu: this.userName })
           addFamilyInfo(param).then(res => {
             if (res.msg === '操作成功') {
               this.$message.success('添加成功')
               this.resetForm()
-              this.getInfo('20171344054')
+              this.getInfo(this.userName)
             } else {
               this.$message.error('添加失败')
             }

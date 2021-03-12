@@ -174,6 +174,7 @@
 import * as TEMPLEAVE from '@/api/affair/tempLeave.js'
 // import { getTempLeave, addTempLeave } from '@/api/info/tempLeave.js'
 import Pagination from '../../components/Pagination.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: { Pagination },
@@ -221,7 +222,10 @@ export default {
   computed: {
     tableHeight () {
       return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
-    }
+    },
+    ...mapState({
+      userName: state => state.user.name
+    })
   },
   created () {
     this.getInfo()
@@ -232,7 +236,7 @@ export default {
       let param = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        studentId: '20171344054'
+        studentId: this.userName
       }
       TEMPLEAVE.getTempLeave(param).then( res => {
         if (res.rows && res.rows.length !== 0){
@@ -310,7 +314,7 @@ export default {
       this.$refs.tempForm.validate(valid => {
         if (valid) {
           let param = {
-            studentId: '20171344054',
+            studentId: this.userName,
             ...this.formData,
             leaveStartTime: this.formData.timeRange[0],
             leaveEndTime: this.formData.timeRange[1]

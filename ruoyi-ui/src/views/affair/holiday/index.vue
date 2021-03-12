@@ -239,10 +239,10 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { HOLIDAYTYPEOPTS, DESTINATIONOPTS } from '@/libs/utils.js'
 import * as HOLIDAY from '@/api/affair/holiday.js'
 import Pagination from '../../components/Pagination.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: { Pagination },
@@ -298,7 +298,10 @@ export default {
   computed: {
     tableHeight () {
       return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
-    }
+    },
+    ...mapState({
+      userName: state => state.user.name
+    })
   },
   watch: {
     'formData.destination': {
@@ -335,7 +338,7 @@ export default {
       let param = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        studentId: '20171344054'
+        studentId: this.userName
       }
       HOLIDAY.getHoliday(param).then( res => {
         if (res.rows && res.rows.length !== 0) {
@@ -362,7 +365,7 @@ export default {
             term: '2020-2021-2',
             holidayStartTime: this.formData.timeRange ? this.formData.timeRange[0] : null,
             holidayEndTime: this.formData.timeRange ? this.formData.timeRange[1] : null,
-            studentId: '20171344054'
+            studentId: this.userName
           })
           HOLIDAY.addHoliday(param).then( res => {
             if (res && res.msg === '操作成功') {

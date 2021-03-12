@@ -180,6 +180,7 @@
 import * as BOARD from '@/api/affair/board.js'
 import { termOptions } from '@/libs/utils.js'
 import Pagination from '../../components/Pagination.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: { Pagination },
@@ -224,8 +225,11 @@ export default {
     // tableHeight () {
     //   return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
     // },
+    ...mapState({
+      userName: state => state.user.name
+    }),
     termOpts () {
-      return termOptions('20171344054')
+      return termOptions(this.userName)
     }
   },
   created () {
@@ -235,7 +239,7 @@ export default {
     getInfo () {
       this.tableLoading = true
       let param = {
-        studentId: '20171344054'
+        studentId: this.userName
       }
       BOARD.getBoard(param).then( res => {
         if (res.data && res.data.length !== 0){
@@ -258,7 +262,7 @@ export default {
           // TODO 提交申请
           let param = this.formData
           param = Object.assign(param, {
-            studentId: '20171344054'
+            studentId: this.userName
           })
           BOARD.addBoard(param).then( res => {
             if (res.msg === '操作成功') {
@@ -293,7 +297,7 @@ export default {
         if (valid) {
           let param = this.editData
           param = Object.assign(param, {
-            studentId: '20171344054'
+            studentId: this.userName
           })
           BOARD.editBoard(param).then( res => {
             if (res.msg === '操作成功') {

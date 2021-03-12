@@ -1,29 +1,31 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="6" :xs="24">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>个人信息</span>
-          </div>
-          <div>
+      <el-col :span="7" :xs="24">
+        <div class="am-box">
+          <div class="am-p am-title am-bd-b">账号信息</div>
+          <div class="am-p">
             <div class="text-center">
               <userAvatar :user="user" />
             </div>
             <ul class="list-group list-group-striped">
               <li class="list-group-item">
-                <svg-icon icon-class="user" />用户名称
+                <svg-icon icon-class="nested" />学号
                 <div class="pull-right">{{ user.userName }}</div>
+              </li>
+              <li class="list-group-item">
+                <svg-icon icon-class="user" />姓名
+                <div class="pull-right">{{ user.nickName }}</div>
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="phone" />手机号码
                 <div class="pull-right">{{ user.phonenumber }}</div>
               </li>
               <li class="list-group-item">
-                <svg-icon icon-class="email" />用户邮箱
-                <div class="pull-right">{{ user.email }}</div>
+                <svg-icon icon-class="peoples" />系统角色
+                <div class="pull-right">{{ user.remark }}</div>
               </li>
-              <li class="list-group-item">
+              <!-- <li class="list-group-item">
                 <svg-icon icon-class="tree" />所属部门
                 <div class="pull-right" v-if="user.dept">{{ user.dept.deptName }} / {{ postGroup }}</div>
               </li>
@@ -34,25 +36,25 @@
               <li class="list-group-item">
                 <svg-icon icon-class="date" />创建日期
                 <div class="pull-right">{{ user.createTime }}</div>
-              </li>
+              </li> -->
             </ul>
           </div>
-        </el-card>
+        </div>
       </el-col>
-      <el-col :span="18" :xs="24">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>基本资料</span>
+      <el-col :span="17" :xs="24">
+        <div class="am-box">
+          <div class="am-p am-title am-bd-b">修改密码</div>
+          <div class="am-p">
+            <!-- <el-tabs v-model="activeTab">
+              <el-tab-pane label="基本资料" name="userinfo">
+                <userInfo :user="user" />
+              </el-tab-pane>
+              <el-tab-pane label="修改密码" name="resetPwd"> -->
+                <resetPwd :user="user" />
+              <!-- </el-tab-pane>
+            </el-tabs> -->
           </div>
-          <el-tabs v-model="activeTab">
-            <el-tab-pane label="基本资料" name="userinfo">
-              <userInfo :user="user" />
-            </el-tab-pane>
-            <el-tab-pane label="修改密码" name="resetPwd">
-              <resetPwd :user="user" />
-            </el-tab-pane>
-          </el-tabs>
-        </el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -60,13 +62,12 @@
 
 <script>
 import userAvatar from "./userAvatar";
-import userInfo from "./userInfo";
 import resetPwd from "./resetPwd";
 import { getUserProfile } from "@/api/system/user";
 
 export default {
   name: "Profile",
-  components: { userAvatar, userInfo, resetPwd },
+  components: { userAvatar, resetPwd },
   data() {
     return {
       user: {},
@@ -89,3 +90,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.svg-icon {
+  margin-right: 2px;
+}
+</style>

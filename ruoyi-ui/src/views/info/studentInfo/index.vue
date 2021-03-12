@@ -34,12 +34,13 @@
     </section>
         
     <section class="am-box">
-      <div class="am-p am-bd-b">
-        <el-button size="small" icon="el-icon-close" disabsled @click="clearForm"> 清空</el-button>
-        <el-button size="small" icon="el-icon-refresh" disabsled @click="resetForm"> 重置</el-button>
-        <el-button size="small" icon="el-icon-check" type="primary" @click="submitForm"> 提交</el-button>
-      </div>
+      <div class="am-p am-title am-bd-b">详细资料</div>
       <div class="am-p">
+        <div class="am-mb">
+          <el-button size="mini" icon="el-icon-close" disabsled @click="clearForm"> 清空</el-button>
+          <el-button size="mini" icon="el-icon-refresh" disabsled @click="resetForm"> 重置</el-button>
+          <el-button size="mini" icon="el-icon-check" type="primary" @click="submitForm"> 提交</el-button>
+        </div>
         <el-form ref="infoForm" label-width="120px" :model="formData" inline>
           <el-form-item label="毕业意向调查" prop="graduateIntention">
             <el-select size="small" v-model="formData.graduateIntention" clearable>
@@ -180,6 +181,7 @@ import {
 } from '../../../libs/personalInfo'
 import { regionData } from 'element-china-area-data'
 import { getStuInfo, editStuInfo } from '@/api/info/stuInfo'
+import { mapState } from 'vuex'
 
 export default {
   name: 'StudentInfo',
@@ -230,8 +232,14 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      userName: state => state.user.name
+    })
+  },
   created () {
-    getStuInfo('20171344054').then(res => {
+    // console.log(this.userName)
+    getStuInfo(this.userName).then(res => {
       this.formData = {}
       if(res && res.data){
         for (let key in this.baseInfo) {
@@ -249,7 +257,7 @@ export default {
     },
     resetForm () {
       // this.$refs.infoForm.resetFields()
-      getStuInfo('20171344054').then(res => {
+      getStuInfo(this.userName).then(res => {
         this.formData = {}
         if(res && res.data){
           this.formData = res.data
