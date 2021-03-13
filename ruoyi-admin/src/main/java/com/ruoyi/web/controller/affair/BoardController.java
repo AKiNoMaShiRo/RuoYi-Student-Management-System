@@ -7,6 +7,7 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,7 @@ public class BoardController extends BaseController {
     }
 
     @ApiOperation("修改外宿申请状态")
+    @PreAuthorize("@ss.hasPermi('affair:noboard:approve')")
     @PostMapping("/setStatus")
     public AjaxResult editBoardStatus(@Validated @RequestBody Board board){
         return toAjax(boardService.updateBoardStatus(board));

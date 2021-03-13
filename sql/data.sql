@@ -15,6 +15,16 @@ INSERT INTO holiday_go ( student_id, term, holiday_type, destination, status ) V
 
 INSERT INTO no_borad ( student_id, term, address, reason, connect_method, status ) VALUES ('20171344054', '2020-2021-2', 'M87星云', 'aaa', '10086', 1);
 
+-- 事务管理按钮权限
+insert into sys_menu values('2001', '审批请假', '801', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:templeave:approve',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('2002', '审批节假日去向报备', '800', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:holiday:approve',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('2003', '审批外宿申请', '802', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:noboard:approve',       '#', 'admin', sysdate(), '', null, '');
+
+
+-- insert into sys_role_menu values ('2', '1');
+-- insert into sys_role_menu values ('2', '2');
+-- insert into sys_role_menu values ('2', '3');
+
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info
 ON stu_info.class_id = class_info.class_id

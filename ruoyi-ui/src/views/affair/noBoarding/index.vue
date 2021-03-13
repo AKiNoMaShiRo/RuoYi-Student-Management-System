@@ -80,7 +80,6 @@
                 :disabled="scope.row.status !== 1"
                 @click="handleEdit(scope.row)"
               >
-                <!-- :disabled="scope.row.status !== 1" -->
               编辑</el-button>
               <el-button
                 type="text"
@@ -88,9 +87,9 @@
                 size="mini"
                 style="margin-right: 6px; margin-left: 0px;"
                 :disabled="scope.row.status !== 1"
+                v-hasPermi="['affair:noboard:approve']"
                 @click="handleDeal(scope.row)"
               >
-                <!-- :disabled="scope.row.status !== 1" -->
               审批</el-button>
               <el-popconfirm
                 confirm-button-text="确定"

@@ -85,6 +85,7 @@
                 size="mini"
                 style="margin-right: 6px; margin-left: 0px;"
                 :disabled="scope.row.status !== 1"
+                v-hasPermi="['affair:templeave:approve']"
                 @click="handleDeal(scope.row)"
               >
               审批</el-button>

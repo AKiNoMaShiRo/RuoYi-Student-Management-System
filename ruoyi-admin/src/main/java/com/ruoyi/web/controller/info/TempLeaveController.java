@@ -8,6 +8,7 @@ import com.ruoyi.info.service.ITempLeaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,7 @@ public class TempLeaveController extends BaseController {
     }
 
     @ApiOperation("更新请假申请状态")
+    @PreAuthorize("@ss.hasPermi('affair:templeave:approve')")
     @PostMapping("/setStatus")
     public AjaxResult setTempLeaveStatus(@Validated @RequestBody TempLeave tempLeave){
         return toAjax(tempLeaveService.updateStatus(tempLeave));

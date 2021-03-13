@@ -8,6 +8,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ public class HolidayController extends BaseController {
     }
 
     @ApiOperation("修改节假日去向报备信息状态")
+    @PreAuthorize("@ss.hasPermi('affair:holiday:approve')")
     @PostMapping("/setStatus")
     public AjaxResult setHolidayStatus(@Validated @RequestBody Holiday holiday){
         return toAjax(holidayService.updateHolidayStatus(holiday));
