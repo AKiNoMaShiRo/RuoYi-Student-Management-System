@@ -1,17 +1,17 @@
-package com.ruoyi.info.service;
+package com.ruoyi.affair.mapper;
 
-import com.ruoyi.info.domain.TempLeave;
+import com.ruoyi.affair.domain.TempLeave;
 
 import java.util.List;
 
-public interface ITempLeaveService {
+public interface TempLeaveMapper {
     /**
      * 根据学号查询请假信息
      *
      * @param studentId 学号
      * @return 结果
      */
-    public List<TempLeave> selectLeaveById(String studentId);
+    public List<TempLeave> selectLeaveByStuId(String studentId);
 
     /**
      * 新增请假信息

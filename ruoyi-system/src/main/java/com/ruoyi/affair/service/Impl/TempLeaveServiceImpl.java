@@ -1,8 +1,8 @@
-package com.ruoyi.info.service.impl;
+package com.ruoyi.affair.service.Impl;
 
-import com.ruoyi.info.domain.TempLeave;
-import com.ruoyi.info.mapper.TempLeaveMapper;
-import com.ruoyi.info.service.ITempLeaveService;
+import com.ruoyi.affair.domain.TempLeave;
+import com.ruoyi.affair.mapper.TempLeaveMapper;
+import com.ruoyi.affair.service.ITempLeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

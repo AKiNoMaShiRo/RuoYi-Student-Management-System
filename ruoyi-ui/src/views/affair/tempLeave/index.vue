@@ -19,7 +19,7 @@
               v-model="formData.timeRange"
               type="datetimerange"
               size="small"
-              value-format="yyyy-MM-dd HH:00:00"
+              value-format="yyyy-MM-dd HH:00"
               range-separator="至"
               start-placeholder="请假开始时间"
               end-placeholder="请假结束时间"
@@ -137,7 +137,7 @@
             v-model="editData.timeRange"
             type="datetimerange"
             size="small"
-            value-format="yyyy-MM-dd HH:00:00"
+            value-format="yyyy-MM-dd HH:00"
             range-separator="至"
             start-placeholder="请假开始时间"
             end-placeholder="请假结束时间"
@@ -225,7 +225,7 @@ export default {
       return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
     },
     ...mapState({
-      userName: state => state.user.name
+      userName: state => state.user.name,
     })
   },
   created () {
@@ -257,6 +257,8 @@ export default {
       for (let key in row) {
         this.editData[key] = row[key]
       }
+      this.editData.timeRange = [ row.leaveStartTime, row.leaveEndTime ]
+      console.log(this.editData)
     },
     //    表格辅导员审批请假申请
     handleDeal (row) {

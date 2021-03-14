@@ -1,10 +1,10 @@
-package com.ruoyi.web.controller.info;
+package com.ruoyi.web.controller.affair;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.info.domain.TempLeave;
-import com.ruoyi.info.service.ITempLeaveService;
+import com.ruoyi.affair.domain.TempLeave;
+import com.ruoyi.affair.service.ITempLeaveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

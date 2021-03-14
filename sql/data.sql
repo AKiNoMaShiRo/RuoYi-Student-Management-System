@@ -20,10 +20,14 @@ insert into sys_menu values('2001', '审批请假', '801', '1',  '', '', 1, 0, '
 insert into sys_menu values('2002', '审批节假日去向报备', '800', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:holiday:approve',       '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('2003', '审批外宿申请', '802', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:noboard:approve',       '#', 'admin', sysdate(), '', null, '');
 
+insert into sys_menu values('5', '用户管理', '0', '5', 'users',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '系统用户管理');
+insert into sys_menu values('502',  '学生管理', '5',   '1', 'student', 'user/student/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '学生账号管理菜单');
 
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');
 -- insert into sys_role_menu values ('2', '3');
+
+insert into sys_role values('3', '辅导员',    'instructor', 2, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '辅导员');
 
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info

@@ -11,19 +11,19 @@
             <ul class="list-group list-group-striped">
               <li class="list-group-item">
                 <svg-icon icon-class="nested" />学号
-                <div class="pull-right">{{ user.userName }}</div>
+                <div class="pull-right">{{ userName }}</div>
               </li>
               <li class="list-group-item">
-                <svg-icon icon-class="user" />姓名
-                <div class="pull-right">{{ user.nickName }}</div>
+                <svg-icon icon-class="people" />姓名
+                <div class="pull-right">{{ nickName }}</div>
               </li>
-              <li class="list-group-item">
+              <!-- <li class="list-group-item">
                 <svg-icon icon-class="phone" />手机号码
                 <div class="pull-right">{{ user.phonenumber }}</div>
-              </li>
+              </li> -->
               <li class="list-group-item">
                 <svg-icon icon-class="peoples" />系统角色
-                <div class="pull-right">{{ user.remark }}</div>
+                <div class="pull-right">{{ roleName }}</div>
               </li>
               <!-- <li class="list-group-item">
                 <svg-icon icon-class="tree" />所属部门
@@ -64,6 +64,7 @@
 import userAvatar from "./userAvatar";
 import resetPwd from "./resetPwd";
 import { getUserProfile } from "@/api/system/user";
+import { mapState } from 'vuex'
 
 export default {
   name: "Profile",
@@ -75,6 +76,13 @@ export default {
       postGroup: {},
       activeTab: "userinfo"
     };
+  },
+  computed: {
+    ...mapState({
+      userName: state => state.user.name,
+      nickName: state => state.user.nickName,
+      roleName: state => state.user.roleName
+    })
   },
   created() {
     this.getUser();
