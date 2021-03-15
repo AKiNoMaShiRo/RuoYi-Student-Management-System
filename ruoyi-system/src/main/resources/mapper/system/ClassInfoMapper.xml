@@ -24,12 +24,12 @@
 
     <select id="selectClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
         <include refid="ClassInfoVo"></include>
-        where
-        <set>
-            <if test="profession != null and profession != ''">profession = #{profession},</if>
-            <if test="grade != null and grade != 0">grade = #{grade},</if>
-            <if test="instructorId != null and instructorId != ''">instructor_id = #{instructorId},</if>
-        </set>
+        <where>
+            1=1
+            <if test="profession != null and profession != ''">and profession = #{profession}</if>
+            <if test="grade != null and grade != 0">and grade = #{grade}</if>
+            <if test="instructorId != null and instructorId != ''">and instructor_id = #{instructorId}</if>
+        </where>
     </select>
 
     <insert id="insertClassInfo" parameterType="ClassInfo">

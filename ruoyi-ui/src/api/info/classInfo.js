@@ -10,6 +10,14 @@ export function getClassInfo(param){
     })
 }
 
+export function getAllClassInfo(param){
+    return request({
+        url: BASEPATH + '/queryAll',
+        method: 'post',
+        data: param
+    })
+}
+
 export function addClassInfo(param){
     return request({
         url: BASEPATH + '/add',

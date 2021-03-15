@@ -120,22 +120,41 @@ export default {
     methods: {
         getInfo () {
             this.tableLoading = true
+            let isAll = true
+            if (this.searchFormData.profession !== '' || 
+                this.searchFormData.grade !== null || this.searchFormData.instructorId !== ''){
+                isAll = false
+            }
             let param = {
-                ...this.searchFormData,
                 pageNum: this.currentPage,
                 pageSize: this.pageSize
             }
-            CLASSINFO.getClassInfo(param).then( res => {
-                if (res.rows && res.rows.length != 0) {
-                    this.total = res.total
-                    this.tableData = res.rows
-                } else {
-                    this.total = 0
-                    this.tableData = []
-                }
-            }).finally( () => {
-                this.tableLoading = false
-            })
+            if (isAll) {
+                CLASSINFO.getAllClassInfo(param).then( res => {
+                    if (res.rows && res.rows.length != 0) {
+                        this.total = res.total
+                        this.tableData = res.rows
+                    } else {
+                        this.total = 0
+                        this.tableData = []
+                    }
+                }).finally( () => {
+                    this.tableLoading = false
+                })
+            } else {
+                param = Object.assign(param, {...this.searchFormData})
+                CLASSINFO.getClassInfo(param).then( res => {
+                    if (res.rows && res.rows.length != 0) {
+                        this.total = res.total
+                        this.tableData = res.rows
+                    } else {
+                        this.total = 0
+                        this.tableData = []
+                    }
+                }).finally( () => {
+                    this.tableLoading = false
+                })
+            }
         },
         handleUpdate (row) {
             // CLASSINFO.editClassInfo()

@@ -32,20 +32,9 @@ public class ClassInfoController extends BaseController {
     @ApiOperation("查询班级信息")
     @PostMapping("/query")
     public TableDataInfo queryClassInfo(@Validated @RequestBody ClassInfo classInfo){
-        Boolean isAll = true;
-        if (classInfo.getProfession().equals("") && "null".equals(String.valueOf(classInfo.getClassNum()))
-                && classInfo.getInstructorId().equals("")){
-            isAll = false;
-        }
-        if (isAll) {
-            startPage();
-            List<ClassInfo> classInfos = classInfoService.selectAllClassInfo(classInfo);
-            return getDataTable(classInfos);
-        } else {
-            startPage();
-            List<ClassInfo> classInfos = classInfoService.selectClassInfo(classInfo);
-            return getDataTable(classInfos);
-        }
+        startPage();
+        List<ClassInfo> classInfos = classInfoService.selectClassInfo(classInfo);
+        return getDataTable(classInfos);
     }
 
     @ApiOperation("新增班级信息")
