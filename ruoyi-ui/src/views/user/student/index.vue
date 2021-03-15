@@ -13,7 +13,6 @@
                     <el-form-item label="学生姓名" prop="nickName">
                         <el-input
                             v-model="searchFormData.nickName"
-                            placeholder="请输入学生姓名"
                             size="small"
                             clearable
                         ></el-input>
@@ -21,7 +20,6 @@
                     <el-form-item label="所属班级" prop="classNum">
                         <el-select
                             v-model="searchFormData.classNum"
-                            placeholder="请输入学生姓名"
                             size="small"
                             clearable
                         >

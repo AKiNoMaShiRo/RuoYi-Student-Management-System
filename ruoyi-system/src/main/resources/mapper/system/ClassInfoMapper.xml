@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.ClassInfoMapper">
+
+    <resultMap id="ClassInfoResult" type="ClassInfo">
+        <id         property="classId"          column="class_id"/>
+        <result     property="department"       column="department"/>
+        <result     property="profession"       column="profession"/>
+        <result     property="grade"            column="grade"/>
+        <result     property="classNum"         column="class_num"/>
+        <result     property="instructorId"     column="instructor_id"/>
+    </resultMap>
+
+    <sql id="ClassInfoVo">
+        select *
+        from class_info
+    </sql>
+
+    <select id="selectAllClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
+        <include refid="ClassInfoVo"></include>
+    </select>
+
+    <select id="selectClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
+        <include refid="ClassInfoVo"></include>
+        where
+        <set>
+            <if test="profession != null and profession != ''">profession = #{profession},</if>
+            <if test="grade != null and grade != 0">grade = #{grade},</if>
+            <if test="instructorId != null and instructorId != ''">instructor_id = #{instructorId},</if>
+        </set>
+    </select>
+
+    <insert id="insertClassInfo" parameterType="ClassInfo">
+        insert into class_info (
+            <set>
+                <if test="department != null and department != ''">department,</if>
+                <if test="profession != null and profession != ''">profession,</if>
+                <if test="grade != null and grade != 0">grade,</if>
+                <if test="classNum != null and classNum != 0">classNum,</if>
+                <if test="instructorId != null and instructorId != ''">instructor_id,</if>
+            </set>
+        ) values (
+            <set>
+                <if test="department != null and department != ''">#{department},</if>
+                <if test="profession != null and profession != ''">#{profession},</if>
+                <if test="grade != null and grade != 0">#{grade},</if>
+                <if test="classNum != null and classNum != 0">#{classNum},</if>
+                <if test="instructorId != null and instructorId != ''">#{instructorId},</if>
+            </set>
+        )
+    </insert>
+
+    <update id="updateClassInfo" parameterType="Classinfo">
+        update class_info
+        <set>
+            <if test="department != null and department != ''">department = #{department},</if>
+            <if test="profession != null and profession != ''">profession = #{profession},</if>
+            <if test="grade != null and grade != 0">grade = #{grade},</if>
+            <if test="classNum != null and classNum != 0">classNum = #{classNum},</if>
+            <if test="instructorId != null and instructorId != ''">instructor_id = #{instructorId},</if>
+        </set>
+        where class_id = #{classId}
+    </update>
+
+    <delete id="deleteClassInfo" parameterType="Long">
+        delete from class_info where class_id = #{classId}
+    </delete>
+
+</mapper>

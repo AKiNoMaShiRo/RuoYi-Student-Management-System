@@ -2,9 +2,23 @@ INSERT INTO stu_info VALUES (2, '20171344054', '王圣滋', 1, 'payed', '', '', 
 INSERT INTO stu_info VALUES (2, '20171344049', '勾怡璇', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
 INSERT INTO stu_info VALUES (1, '20171344042', '寇雅楠', 1, 'payed', '', '', '', '', '', NULL, NULL, 'gqty', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 503, NULL, '', 'no');
 
-INSERT INTO class_info VALUES (1, '计算机与软件学院', '软件工程', 17, 1, 1);
-INSERT INTO class_info VALUES (2, '计算机与软件学院', '软件工程', 17, 2, 1);
-INSERT INTO class_info VALUES (3, '计算机与软件学院', '软件工程', 17, 3, 1);
+INSERT INTO class_info VALUES (1, '计算机与软件学院', '软件工程', 17, 1, 1001);
+INSERT INTO class_info VALUES (2, '计算机与软件学院', '软件工程', 17, 2, 1001);
+INSERT INTO class_info VALUES (3, '计算机与软件学院', '软件工程', 17, 3, 1001);
+INSERT INTO class_info VALUES (4, '计算机与软件学院', '计算机科学与技术', 17, 1, 1002);
+INSERT INTO class_info VALUES (5, '计算机与软件学院', '计算机科学与技术', 17, 2, 1002);
+INSERT INTO class_info VALUES (6, '计算机与软件学院', '计算机科学与技术', 17, 3, 1002);
+INSERT INTO class_info VALUES (7, '计算机与软件学院', '计算机科学与技术', 17, 4, 1002);
+INSERT INTO class_info VALUES (8, '计算机与软件学院', '计算机科学与技术', 17, 5, 1003);
+INSERT INTO class_info VALUES (9, '计算机与软件学院', '计算机科学与技术', 17, 6, 1003);
+INSERT INTO class_info VALUES (10, '计算机与软件学院', '物联网工程', 17, 1, 1003);
+INSERT INTO class_info VALUES (11, '计算机与软件学院', '物联网工程', 17, 2, 1003);
+INSERT INTO class_info VALUES (12, '计算机与软件学院', '信息安全', 17, 1, 1001);
+INSERT INTO class_info VALUES (13, '计算机与软件学院', '信息安全', 17, 2, 1004);
+INSERT INTO class_info VALUES (14, '计算机与软件学院', '网络工程', 17, 1, 1004);
+INSERT INTO class_info VALUES (15, '计算机与软件学院', '网络工程', 17, 2, 1004);
+INSERT INTO class_info VALUES (16, '计算机与软件学院', '软件工程中外合作办学', 17, 1, 1004);
+INSERT INTO class_info VALUES (17, '计算机与软件学院', '软件工程嵌入式', 17, 1, 1001);
 
 INSERT INTO temp_leave (student_id, reason, start_time, end_time, teacher_id, status) VALUES ('20171344054', '打酱油', '2021-3-6', '2021-3-7', '1001', 1);
 INSERT INTO temp_leave (student_id, reason, start_time, end_time, teacher_id, status) VALUES ('20171344054', '摸鱼', '2021-3-7', '2021-3-8', '1001', 1);
@@ -22,6 +36,7 @@ insert into sys_menu values('2003', '审批外宿申请', '802', '1',  '', '', 1
 
 insert into sys_menu values('5', '用户管理', '0', '5', 'users',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '系统用户管理');
 insert into sys_menu values('502',  '学生管理', '5',   '1', 'student', 'user/student/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '学生账号管理菜单');
+insert into sys_menu values('503',  '班级管理', '5',   '2', 'class', 'user/class/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班级信息管理菜单');
 
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');
