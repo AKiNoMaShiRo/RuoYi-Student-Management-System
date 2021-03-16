@@ -129,8 +129,9 @@
             <el-button size="small" @click="dgAddVisible = false">取消</el-button>
             <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
         </div>
-      </el-dialog><el-dialog title="修改班级信息" :visible.sync="dgEditVisible">
-        <el-form :model="editFormData" :rules="rules" ref="addForm" label-width="95px" inline>
+      </el-dialog>
+      <el-dialog title="修改班级信息" :visible.sync="dgEditVisible">
+        <el-form :model="editFormData" :rules="rules" ref="editForm" label-width="95px" inline>
             <el-form-item label="学院" prop="department">
               <el-input v-model="editFormData.department" size="small" clearable disabled></el-input>
             </el-form-item>
@@ -160,111 +161,111 @@ import * as CLASSINFO from '@/api/info/classInfo.js'
 import Pagination from '../../components/Pagination.vue'
 
 export default {
-    components: {
-        Pagination
+  components: {
+    Pagination
+  },
+  data () {
+    return {
+      dgAddVisible: false,
+      dgEditVisible: false,
+      total: 0,
+      currentPage: 1,
+      pageSize: 10,
+      tableLoading: false,
+      tableColumns: [
+        { label: '班级ID', prop: 'classId' },
+        { label: '专业', prop: 'profession' },
+        { label: '年级', prop: 'grade' },
+        { label: '班级序号', prop: 'classNum' },
+        { label: '辅导员', prop: 'instructorName' }
+      ],
+      tableData: [],
+      searchFormData: {
+        profession: '',
+        grade: null,
+        instructorName: ''
+      },
+      addFormData: {
+        department: '计算机与软件学院',
+        profession: '',
+        grade: null,
+        classNum: null,
+        instructorId: ''
+      },
+      editFormData: {
+        department: '计算机与软件学院',
+        profession: '',
+        grade: null,
+        classNum: null,
+        instructorId: ''
+      },
+      rules: {
+        department: [ { required: true, message: '请输入学院', trigger: 'blur' } ],
+        profession: [ { required: true, message: '请输入专业名称', trigger: 'blur' } ],
+        grade: [
+          { required: true, message: '请输入年级', trigger: 'blur' },
+          { type: 'number', message: '年级必须为数字值'}
+        ],
+        classNum: [
+          { required: true, message: '请输入班级序号', trigger: 'blur' },
+          { type: 'number', message: '班级序号必须为数字值'}
+        ],
+        instructorId: [ { required: true, message: '请输入辅导员工号', trigger: 'blur' } ]
+      }
+    }
+  },
+  computed: {
+    tableHeight () {
+      return this.total > this.currentPage ? '289px' : 'calc(289px + 40px)'
     },
-    data () {
-        return {
-            dgAddVisible: false,
-            dgEditVisible: false,
-            total: 0,
-            currentPage: 1,
-            pageSize: 10,
-            tableLoading: false,
-            tableColumns: [
-                { label: '专业', prop: 'profession' },
-                { label: '年级', prop: 'grade' },
-                { label: '班级序号', prop: 'classNum' },
-                { label: '辅导员', prop: 'instructorName' }
-            ],
-            tableData: [],
-            searchFormData: {
-                profession: '',
-                grade: null,
-                instructorName: ''
-            },
-            addFormData: {
-                department: '计算机与软件学院',
-                profession: '',
-                grade: null,
-                classNum: null,
-                instructorId: ''
-            },
-            editFormData: {
-                department: '计算机与软件学院',
-                profession: '',
-                grade: null,
-                classNum: null,
-                instructorId: ''
-            },
-            rules: {
-                department: [ { required: true, message: '请输入学院', trigger: 'blur' } ],
-                profession: [ { required: true, message: '请输入专业名称', trigger: 'blur' } ],
-                grade: [
-                  { required: true, message: '请输入年级', trigger: 'blur' },
-                  { type: 'number', message: '年级必须为数字值'}
-                ],
-                classNum: [
-                  { required: true, message: '请输入班级序号', trigger: 'blur' },
-                  { type: 'number', message: '班级序号必须为数字值'}
-                ],
-                instructorId: [ { required: true, message: '请输入辅导员工号', trigger: 'blur' } ]
-            }
+  },
+  created () {
+    this.getInfo()
+  },
+  methods: {
+    getInfo () {
+      this.tableLoading = true
+      let param = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize
+      }
+      param = Object.assign(param, {...this.searchFormData})
+      if (param.grade === '') {
+        param.grade = 0
+      }
+      CLASSINFO.getClassInfo(param).then( res => {
+        if (res.rows && res.rows.length != 0) {
+          this.total = res.total
+          this.tableData = res.rows
+        } else {
+          this.total = 0
+          this.tableData = []
         }
+      }).finally( () => {
+        this.tableLoading = false
+      })
     },
-    computed: {
-        tableHeight () {
-            return this.total > this.currentPage ? '289px' : 'calc(289px + 40px)'
-        },
+    //    新增按钮
+    handleAdd () {
+      this.dgAddVisible = true
     },
-    created () {
-        this.getInfo()
+    handleUpdate (row) {
+      this.dgEditVisible = true
+      for (let key in row) {
+        this.editFormData[key] = row[key]
+      }
     },
-    methods: {
-        getInfo () {
-            this.tableLoading = true
-            let param = {
-                pageNum: this.currentPage,
-                pageSize: this.pageSize
-            }
-            param = Object.assign(param, {...this.searchFormData})
-            if (param.grade === '') {
-                param.grade = 0
-            }
-            CLASSINFO.getClassInfo(param).then( res => {
-                if (res.rows && res.rows.length != 0) {
-                    this.total = res.total
-                    this.tableData = res.rows
-                } else {
-                    this.total = 0
-                    this.tableData = []
-                }
-            }).finally( () => {
-                this.tableLoading = false
-            })
-        },
-        //    新增按钮
-        handleAdd () {
-            this.dgAddVisible = true
-        },
-        handleUpdate (row) {
-            this.dgEditVisible = true
-            for (let key in row) {
-                this.editFormData[key] = row[key]
-            }
-            // this.editFormData = row
-        },
-        handleDelete (row) {
-            let param = row.classId
-            CLASSINFO.deleteClassInfo(param).then( res => {
-                if (res.msg === '操作成功') {
-                    this.$message.success('删除成功')
-                    this.getInfo()
-                } else {
-                    this.$message.error('删除失败')
-                }
-            })
-        },
+    handleDelete (row) {
+      let param = row.classId
+      CLASSINFO.deleteClassInfo(param).then( res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('删除成功')
+          this.getInfo()
+        } else {
+          this.$message.error('删除失败')
+        }
+      })
+    },
         handleSelectionChange () {},
         //    搜索按钮
         handleSearch () {
@@ -292,16 +293,20 @@ export default {
             })
         },
         handleEditDialog () {
-            CLASSINFO.editClassInfo(this.editFormData).then( res => {
+          this.$refs.editForm.validate( valid => {
+            if (valid) {
+              CLASSINFO.editClassInfo(this.editFormData).then( res => {
                 if (res.msg === '操作成功') {
-                    this.$message.success('修改成功')
-                    this.getInfo()
+                  this.$message.success('修改成功')
+                  this.getInfo()
                 } else {
-                    this.$message.error('修改失败')
+                  this.$message.error('修改失败')
                 }
-            }).finally( () => {
+              }).finally( () => {
                 this.dgEditVisible = false
-            })
+              })
+            }
+          })
         }
     }
 }

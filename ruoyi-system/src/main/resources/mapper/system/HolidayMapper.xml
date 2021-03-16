@@ -18,8 +18,9 @@
     </resultMap>
 
     <sql id="HolidayVo">
-        select *
-        from holiday_go
+        select h.*
+        from holiday_go h inner join stu_info s inner join class_info c inner join instructor_info i
+        on h.student_id = s.student_id and s.class_id = c.class_id and c.instructor_id = i.instructor_id
     </sql>
 
     <select id="selectHolidayById" parameterType="String" resultMap="HolidayResult">
@@ -27,10 +28,21 @@
         <where>
             1=1
             <if test="studentId != null and studentId != ''">
-                and holiday_go.student_id = #{studentId}
+                and h.student_id = #{studentId}
             </if>
         </where>
-        order by holiday_go.go_id desc
+        order by h.go_id desc
+    </select>
+
+    <select id="selectHolidayByInsId" parameterType="String" resultMap="HolidayResult">
+        <include refid="HolidayVo"></include>
+        <where>
+            1=1
+            <if test="instructorId != null and instructorId != ''">
+                and i.instructor_id = #{instructorId}
+            </if>
+        </where>
+        order by h.go_id desc
     </select>
 
     <insert id="addHoliday" parameterType="Holiday" useGeneratedKeys="true" keyProperty="goId">

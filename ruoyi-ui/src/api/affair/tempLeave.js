@@ -11,6 +11,15 @@ export function getTempLeave(query) {
     })
 }
 
+//    获取辅导员对应的请假申请信息
+export function getInsTempLeave(query) {
+    return request({
+        url: BASEPATH + '/instructor/queryById',
+        method: 'get',
+        params: query
+    })
+}
+
 //    提交请假申请
 export function addTempLeave(params) {
     return request({

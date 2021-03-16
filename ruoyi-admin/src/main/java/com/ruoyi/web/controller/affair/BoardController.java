@@ -33,6 +33,13 @@ public class BoardController extends BaseController {
         return AjaxResult.success(boards);
     }
 
+    @ApiOperation("根据辅导员工号查询外宿申请")
+    @GetMapping("/instructor/queryById")
+    public AjaxResult getInsBoard(String instructorId){
+        List<Board> boards = boardService.selectBoardByInsId(instructorId);
+        return AjaxResult.success(boards);
+    }
+
     @ApiOperation("修改外宿申请信息")
     @PostMapping("/edit")
     public AjaxResult editBoard(@Validated @RequestBody Board board){

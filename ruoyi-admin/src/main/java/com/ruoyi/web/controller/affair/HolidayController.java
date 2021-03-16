@@ -35,6 +35,14 @@ public class HolidayController extends BaseController {
         return getDataTable(holidays);
     }
 
+    @ApiOperation("根据辅导员查询节假日去向报备")
+    @GetMapping("/instructor/queryById")
+    public TableDataInfo getInsHoliday(String instructorId) {
+        startPage();
+        List<Holiday> holidays = holidayService.selectHolidayByInsId(instructorId);
+        return getDataTable(holidays);
+    }
+
     @ApiOperation("新增节假日去向报备信息")
     @PostMapping("/add")
     public AjaxResult addHoliday(@Validated @RequestBody Holiday holiday){

@@ -42,8 +42,8 @@
           <el-button size="mini" icon="el-icon-check" type="primary" @click="submitForm"> 提交</el-button>
         </div>
         <el-form ref="infoForm" label-width="120px" :model="formData" inline>
-          <el-form-item label="毕业意向调查" prop="graduateIntention">
-            <el-select size="small" v-model="formData.graduateIntention" clearable>
+          <el-form-item label="毕业意向调查" prop="graduIntention">
+            <el-select size="small" v-model="formData.graduIntention" clearable>
               <el-option
                 v-for="graduateIntentionType in graduateIntentionTypes"
                 :key="graduateIntentionType.v"
@@ -204,7 +204,7 @@ export default {
         // classNum: '',
         // studentId: '',
         // name: '',
-        graduateIntention: '',
+        graduIntention: '',
         registration: '',
         teacher: '',
         phoneNumber: '',
@@ -262,7 +262,7 @@ export default {
         if(res && res.data){
           this.formData = res.data
           this.formData.studentOrigin = [res.data.studentOriginP, res.data.studentOriginC, res.data.studentOriginA]
-        this.formData.nativePlace = [res.data.nativePlaceP, res.data.nativePlaceC, res.data.nativePlaceA]
+          this.formData.nativePlace = [res.data.nativePlaceP, res.data.nativePlaceC, res.data.nativePlaceA]
           this.$message.success('已重置')
         }
       })

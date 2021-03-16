@@ -14,6 +14,14 @@ public interface ITempLeaveService {
     public List<TempLeave> selectLeaveById(String studentId);
 
     /**
+     * 根据辅导员工号查询请假信息
+     *
+     * @param instructorId 学号
+     * @return 结果
+     */
+    public List<TempLeave> selectLeaveByInstructor(String instructorId);
+
+    /**
      * 新增请假信息
      *
      * @param tempLeave 请假表信息

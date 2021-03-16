@@ -6,9 +6,17 @@ import com.ruoyi.common.core.domain.BaseEntity;
 public class StuBaseInfo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
+    /** 用户ID */
+    @Excel(name = "用户ID")
+    private Long userId;
+
     /** 学号 */
     @Excel(name = "学号")
     private String studentId;
+
+    /** 姓名 */
+    @Excel(name = "姓名")
+    private String name;
 
     /** 学院 */
     @Excel(name = "学院")
@@ -26,9 +34,13 @@ public class StuBaseInfo extends BaseEntity {
     @Excel(name = "班级")
     private int classNum;
 
-    /** 姓名 */
-    @Excel(name = "姓名")
-    private String name;
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getStudentId() {
         return studentId;
@@ -81,12 +93,13 @@ public class StuBaseInfo extends BaseEntity {
     @Override
     public String toString() {
         return "StuBaseInfo{" +
-                "studentId='" + studentId + '\'' +
+                "userId=" + userId +
+                ", studentId='" + studentId + '\'' +
+                ", name='" + name + '\'' +
                 ", department='" + department + '\'' +
                 ", profession='" + profession + '\'' +
                 ", grade=" + grade +
                 ", classNum=" + classNum +
-                ", name='" + name + '\'' +
                 '}';
     }
 }

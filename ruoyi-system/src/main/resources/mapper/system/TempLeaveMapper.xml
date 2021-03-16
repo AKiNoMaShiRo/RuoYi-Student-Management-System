@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="TempLeaveVo">
-        select tl.*, i.instructor_name
+        select tl.*, i.instructor_name, i.instructor_id
         from temp_leave tl inner join stu_info s inner join class_info c inner join instructor_info i
         on tl.student_id = s.student_id and s.class_id = c.class_id and c.instructor_id = i.instructor_id
     </sql>
@@ -26,6 +26,17 @@
             1=1
             <if test="studentId != null and studentId != ''">
                 and tl.student_id = #{studentId}
+            </if>
+        </where>
+        order by tl.leave_id desc
+    </select>
+
+    <select id="selectLeaveByInstructor" parameterType="String" resultMap="TempLeaveStuResult">
+        <include refid="TempLeaveVo"></include>
+        <where>
+            1=1
+            <if test="instructorId != null and instructorId != ''">
+                and i.instructor_id = #{instructorId}
             </if>
         </where>
         order by tl.leave_id desc

@@ -26,6 +26,16 @@ public class TempLeaveServiceImpl implements ITempLeaveService {
     }
 
     /**
+     * 根据辅导员工号查询请假信息
+     *
+     * @param instructorId 学号
+     * @return 结果
+     */
+    public List<TempLeave> selectLeaveByInstructor(String instructorId){
+        return tempLeaveMapper.selectLeaveByInstructor(instructorId);
+    }
+
+    /**
      * 新增请假信息
      *
      * @param tempLeave 请假表信息

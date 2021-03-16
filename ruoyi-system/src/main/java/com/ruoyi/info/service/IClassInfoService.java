@@ -22,7 +22,7 @@ public interface IClassInfoService {
     /**
      * 查询专业类别
      *
-     * @param classInfo 班级信息
+     * @param
      * @return 结果
      */
     public List<String> selectProfessionType();

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <section class="am-box am-mb">
+    <section class="am-box am-mb" v-if="roleName === '学生'">
       <div class="am-p am-title am-bd-b">外宿申请</div>
       <div class="am-p">
         <el-form
@@ -41,9 +41,10 @@
       </div>
     </section>
     <section class="am-box">
-      <div class="am-p am-title am-bd-b">外宿申请记录</div>
+      <div class="am-p am-title am-bd-b" v-if="roleName === '学生'">历史外宿申请记录</div>
+      <div class="am-p am-title am-bd-b" v-else>外宿申请记录</div>
       <div class="am-p">
-        <el-table v-loading="tableLoading" :data="tableData" height="360px" highlight-current-row>
+        <el-table v-loading="tableLoading" :data="tableData" height="382px" highlight-current-row>
           <!-- row-key=""
           :expand-row-keys="expandRowKeys" -->
           <el-table-column
@@ -238,19 +239,35 @@ export default {
   methods: {
     getInfo () {
       this.tableLoading = true
-      console.log(this.roleName)
-      let param = {
-        studentId: this.roleName === '超级管理员' ? '' : this.userName
-      }
-      BOARD.getBoard(param).then( res => {
-        if (res.data && res.data.length !== 0){
-          this.tableData = res.data
-        } else {
-          this.tableData = []
+      if (this.roleName === '辅导员') {
+        //    辅导员账号
+        let param = {
+          instructorId: this.roleName === '超级管理员' ? '' : this.userName
         }
-      }).finally( () => {
-        this.tableLoading = false
-      })
+        BOARD.getInsBoard(param).then( res => {
+          if (res.data && res.data.length !== 0){
+            this.tableData = res.data
+          } else {
+            this.tableData = []
+          }
+        }).finally( () => {
+          this.tableLoading = false
+        })
+      } else{
+        //    超管账号、学生账号
+        let param = {
+          studentId: this.roleName === '超级管理员' ? '' : this.userName
+        }
+        BOARD.getBoard(param).then( res => {
+          if (res.data && res.data.length !== 0){
+            this.tableData = res.data
+          } else {
+            this.tableData = []
+          }
+        }).finally( () => {
+          this.tableLoading = false
+        })
+      }
     },
     //    重置表单
     handleResetForm () {

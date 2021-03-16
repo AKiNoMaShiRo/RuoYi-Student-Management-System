@@ -3,6 +3,9 @@ package com.ruoyi.info.service;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.info.domain.StuBaseInfo;
 import com.ruoyi.info.domain.StuInfo;
+import com.ruoyi.info.domain.StuUserInfo;
+
+import java.util.List;
 
 /**
  * 学生信息 业务层
@@ -33,4 +36,21 @@ public interface IStuInfoService {
      * @return 学生信息
      */
     public StuBaseInfo selectStuBaseById(String studentId);
+
+    /**
+     * 批量查询学生基本信息
+     *
+     * @param stuBaseInfo 入参
+     * @return 学生信息
+     */
+    public List<StuBaseInfo> selectAllStuBase(StuBaseInfo stuBaseInfo);
+
+    /**
+     * 添加学生基本信息
+     *
+     * @param stuUserInfo 入参
+     * @return 结果
+     */
+    public int insertStuBaseInfo(StuUserInfo stuUserInfo);
+
 }

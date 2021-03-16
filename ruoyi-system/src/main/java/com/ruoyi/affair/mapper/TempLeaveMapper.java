@@ -5,6 +5,7 @@ import com.ruoyi.affair.domain.TempLeave;
 import java.util.List;
 
 public interface TempLeaveMapper {
+
     /**
      * 根据学号查询请假信息
      *
@@ -12,6 +13,14 @@ public interface TempLeaveMapper {
      * @return 结果
      */
     public List<TempLeave> selectLeaveByStuId(String studentId);
+
+    /**
+     * 根据辅导员工号查询请假信息
+     *
+     * @param instructorId 学号
+     * @return 结果
+     */
+    public List<TempLeave> selectLeaveByInstructor(String instructorId);
 
     /**
      * 新增请假信息

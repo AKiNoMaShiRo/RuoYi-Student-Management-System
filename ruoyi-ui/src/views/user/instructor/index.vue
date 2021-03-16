@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <section class="am-box">
-      <div class="am-title am-p am-bd-b">学生账号列表</div>
+      <div class="am-title am-p am-bd-b">辅导员账号列表</div>
       <div class="am-px-lg am-pt am-mb">
         <el-form
           :model="searchFormData"
@@ -10,17 +10,11 @@
           label-width="85px"
           inline
         >
-          <el-form-item label="学生学号" prop="studentId">
-            <el-input v-model="searchFormData.studentId" size="small" clearable></el-input>
+          <el-form-item label="辅导员工号" prop="instructorId">
+            <el-input v-model="searchFormData.instructorId" size="small" clearable></el-input>
           </el-form-item>
-          <el-form-item label="学生姓名" prop="name">
-            <el-input v-model="searchFormData.name" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="专业" prop="profession">
-            <el-input v-model="searchFormData.profession" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="年级" prop="grade">
-            <el-input v-model="searchFormData.grade" size="small" clearable></el-input>
+          <el-form-item label="辅导员姓名" prop="instructorName">
+            <el-input v-model="searchFormData.instructorName" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
@@ -31,7 +25,7 @@
           type="primary"
           icon="el-icon-plus"
           size="mini"
-          @click="dgAddVisible = true"
+          @click="handleAdd"
         >新增</el-button>
       </div>
       <div class="am-px-lg am-pb">
@@ -47,11 +41,7 @@
             v-bind="column"
             :key="column.prop"
             show-overflow-tooltip
-          ></el-table-column>
-          <!-- <el-table-column label="学生学号" align="center" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="学生姓名" align="center" prop="nickName" :show-overflow-tooltip="true" />
-          <el-table-column label="专业" align="center" prop="profession" :show-overflow-tooltip="true" /> -->
-          <el-table-column
+          ></el-table-column><el-table-column
             label="操作"
             align="center"
             width="160"
@@ -90,33 +80,12 @@
         </Pagination>
       </div>
     </section>
-    <el-dialog title="新增学生用户" :visible.sync="dgAddVisible">
-        <el-form :model="addFormData" :rules="addRules" ref="addForm" label-width="95px" inline>
-          <el-form-item label="学生学号" prop="userName">
-            <el-input v-model="addFormData.studeuserNamentId" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="学生姓名" prop="nickName">
-            <el-input v-model="addFormData.nickName" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input v-model="addFormData.password" size="small" clearable show-password></el-input>
-          </el-form-item>
-          <el-form-item label="班级ID" prop="classId">
-            <el-input v-model="addFormData.classId" size="small" clearable></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button size="small" @click="dgAddVisible = false">取消</el-button>
-            <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
-        </div>
-      </el-dialog>
   </div>
 </template>
 
 <script>
 import Pagination from '../../components/Pagination.vue'
 import * as STUINFO from '@/api/info/stuInfo.js'
-import { resetUserPwd } from "@/api/system/user";
 
 export default {
   components: {
@@ -124,44 +93,20 @@ export default {
   },
   data () {
     return {
-      dgAddVisible: false,
       total: 0,
       currentPage: 1,
       pageSize: 10,
       tableLoading: false,
       tableData: [],
       tableColumns: [
-        { label: '学生学号', prop: 'studentId', minWidth: '100' },
-        { label: '学生姓名', prop: 'name', minWidth: '100' },
-        { label: '学院', prop: 'department', minWidth: '150' },
-        { label: '专业', prop: 'profession', minWidth: '150' },
-        { label: '年级', prop: 'grade', minWidth: '60' },
-        { label: '班级序号', prop: 'classNum', minWidth: '80' }
+        { label: '辅导员工号', prop: 'studentId', minWidth: '100' },
+        { label: '辅导员姓名', prop: 'name', minWidth: '100' },
+        { label: '管理班级', prop: 'manageClass', minWidth: '80' }
       ],
       classOptions: [],
       searchFormData: {
-        studentId: '',
-        name: '',
-        profession: '',
-        grade: null
-      },
-      searchRules: {
-        grade: [ { type: 'number', message: '年级必须为数字值'} ]
-      },
-      addFormData: {
-        userName: '',
-        nickName: '',
-        password: '',
-        classId: null
-      },
-      addRules: {
-        userName: [ { required: true, message: '请输入学生学号', trigger: 'blur' } ],
-        nickName: [ { required: true, message: '请输入学生姓名', trigger: 'blur' } ],
-        password: [ { required: true, message: '请输入密码', trigger: 'blur' } ],
-        classId: [
-          { required: true, message: '请输入学生姓名', trigger: 'blur' },
-          { type: 'number', message: '班级ID必须为数字' }
-        ]
+        instructorId: '',
+        instructorName: ''
       }
     }
   },
@@ -175,7 +120,6 @@ export default {
   },
   methods: {
     getInfo () {
-      parseInt
       this.tableLoading = true
       let param = {
         pageNum: this.currentPage,
@@ -209,25 +153,16 @@ export default {
     resetSearchForm () {
       this.$refs.searchForm.resetFields()
     },
+    //    新增按钮
+    handleAdd () {},
     handleUpdate () {},
     handleDelete () {},
-    handleResetPwd (row) {
-      this.$prompt('请输入"' + row.studentId + '"的新密码', "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      }).then(({ value }) => {
-        resetUserPwd(row.userId, value).then(response => {
-          this.msgSuccess("修改成功，新密码是：" + value);
-        });
-      })
-    },
+    handleResetPwd () {},
     handleSelectionChange () {},
     handlePaginationUpdate (param) {
       this.currentPage = param.currentPage
       this.pageSize = param.pageSize
-      this.getInfo()
-    },
-    handleAddDialog () {}
+    }
   }
 }
 </script>

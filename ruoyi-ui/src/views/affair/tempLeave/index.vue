@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <section class="am-box am-mb">
+    <section class="am-box am-mb" v-if="roleName === '学生'">
       <div class="am-p am-title am-bd-b">临时请假申请</div>
       <div class="am-p">
         <el-form
@@ -39,7 +39,8 @@
       </div>
     </section>
     <section class="am-box">
-      <div class="am-p am-title am-bd-b">历史请假记录</div>
+      <div class="am-p am-title am-bd-b" v-if="roleName === '学生'">历史临时请假申请记录</div>
+      <div class="am-p am-title am-bd-b" v-else>临时请假申请记录</div>
       <div class="am-p">
         <el-table v-loading="tableLoading" :data="tableData" :height="tableHeight" highlight-current-row>
           <!-- row-key=""
@@ -222,7 +223,7 @@ export default {
   },
   computed: {
     tableHeight () {
-      return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
+      return this.total > this.currentPage ? '338px' : 'calc(338px + 40px)'
     },
     ...mapState({
       userName: state => state.user.name,
@@ -235,22 +236,43 @@ export default {
   methods: {
     getInfo () {
       this.tableLoading = true
-      let param = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        studentId: this.roleName === '超级管理员' ? '' : this.userName
-      }
-      TEMPLEAVE.getTempLeave(param).then( res => {
-        if (res.rows && res.rows.length !== 0){
-          this.tableData = res.rows
-          this.total = res.total
-        } else {
-          this.tableData = []
-          this.total = 0
+      if (this.roleName === '辅导员') {
+        //    辅导员账号
+        let param = {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          instructorId: this.userName
         }
-      }).finally( () => {
-        this.tableLoading = false
-      })
+        TEMPLEAVE.getInsTempLeave(param).then( res => {
+          if (res.rows && res.rows.length !== 0){
+            this.tableData = res.rows
+            this.total = res.total
+          } else {
+            this.tableData = []
+            this.total = 0
+          }
+        }).finally( () => {
+          this.tableLoading = false
+        })
+      } else {
+        //    超管账号、学生账号
+        let param = {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          studentId: this.roleName === '超级管理员' ? '' : this.userName
+        }
+        TEMPLEAVE.getTempLeave(param).then( res => {
+          if (res.rows && res.rows.length !== 0){
+            this.tableData = res.rows
+            this.total = res.total
+          } else {
+            this.tableData = []
+            this.total = 0
+          }
+        }).finally( () => {
+          this.tableLoading = false
+        })
+      }
     },
     //    表格编辑请假申请
     handleEdit (row) {

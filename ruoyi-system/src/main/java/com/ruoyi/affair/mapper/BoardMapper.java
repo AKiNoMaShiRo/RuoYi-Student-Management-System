@@ -15,6 +15,14 @@ public interface BoardMapper {
     public List<Board> selectBoardByStuId(String studentId);
 
     /**
+     * 根据辅导员查询外宿申请
+     *
+     * @param instructorId 工号
+     * @return 结果
+     */
+    public List<Board> selectBoardByInsId(String instructorId);
+
+    /**
      * 新增外宿申请
      *
      * @param board 外宿申请信息

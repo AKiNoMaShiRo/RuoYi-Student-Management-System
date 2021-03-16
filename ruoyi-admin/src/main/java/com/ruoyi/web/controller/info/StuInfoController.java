@@ -2,14 +2,19 @@ package com.ruoyi.web.controller.info;
 
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.info.domain.StuBaseInfo;
 import com.ruoyi.info.domain.StuInfo;
+import com.ruoyi.info.domain.StuUserInfo;
 import com.ruoyi.info.service.IStuInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 学生信息
@@ -32,6 +37,20 @@ public class StuInfoController extends BaseController {
             ajaxResult.put(AjaxResult.DATA_TAG, stuInfoService.selectStuById(studentId));
         }
         return ajaxResult;
+    }
+
+    @ApiOperation("批量查询学生信息")
+    @GetMapping(value = { "/queryAll"})
+    public TableDataInfo getAllInfo(StuBaseInfo stuBaseInfo){
+        startPage();
+        List<StuBaseInfo> stuBaseInfos = stuInfoService.selectAllStuBase(stuBaseInfo);
+        return getDataTable(stuBaseInfos);
+    }
+
+    @ApiOperation("添加学生账号")
+    @PostMapping(value = { "/add"})
+    public AjaxResult addStuInfo(@Validated @RequestBody StuUserInfo stuUserInfo){
+        return toAjax(stuInfoService.insertStuBaseInfo(stuUserInfo));
     }
 
     @ApiOperation("修改学生信息")

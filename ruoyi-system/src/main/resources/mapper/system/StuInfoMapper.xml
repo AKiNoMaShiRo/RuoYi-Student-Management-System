@@ -10,7 +10,7 @@
         <result property="profession"           column="profession"/>
         <result property="grade"                column="grade"/>
         <result property="classNum"             column="class_num"/>
-        <result property="name"                 column="name"/>
+        <result property="name"                 column="stu_name"/>
         <result property="graduIntention"       column="gradu_intention"/>
         <result property="registration"         column="registration"/>
         <result property="teacher"              column="teacher"/>
@@ -43,16 +43,26 @@
     </resultMap>
 
     <resultMap id="StuBaseInfoResult" type="StuBaseInfo">
-        <id     property="studentId"            column="student_id"/>
-        <result property="department"           column="department"/>
-        <result property="profession"           column="profession"/>
-        <result property="grade"                column="grade"/>
-        <result property="classNum"             column="class_num"/>
-        <result property="name"                 column="name"/>
+        <id         property="studentId"            column="student_id"/>
+        <result     property="name"                 column="stu_name"/>
+        <result     property="department"           column="department"/>
+        <result     property="profession"           column="profession"/>
+        <result     property="grade"                column="grade"/>
+        <result     property="classNum"             column="class_num"/>
+    </resultMap>
+
+    <resultMap id="StuUserInfoResult" type="StuBaseInfo">
+        <id         property="userId"               column="user_id"/>
+        <result     property="studentId"            column="student_id"/>
+        <result     property="name"                 column="stu_name"/>
+        <result     property="department"           column="department"/>
+        <result     property="profession"           column="profession"/>
+        <result     property="grade"                column="grade"/>
+        <result     property="classNum"             column="class_num"/>
     </resultMap>
 
     <sql id="selectStuInfoVo">
-        select s.student_id, s.name, s.gradu_intention, s.registration, s.teacher, s.phone_number, s.email,
+        select s.student_id, s.stu_name, s.gradu_intention, s.registration, s.teacher, s.phone_number, s.email,
                s.qq, s.we_chat, s.birthday, s.nation, s.politics_status, s.join_time, s.student_origin_p,
                s.student_origin_c, s.student_origin_a, s.family_address, s.family_phone_number,
                s.family_contacts, s.family_postcode, s.gradu_school, s.gradu_school_postcode, s.used_name,
@@ -60,6 +70,12 @@
                s.report_item, c.department, c.profession, c.grade, c.class_num
         from stu_info s inner join class_info c
         on s.class_id = c.class_id
+    </sql>
+
+    <sql id="selectStuUserVo">
+        select u.user_id, s.student_id, s.stu_name, c.department, c.profession, c.grade, c.class_num
+        from stu_info s inner join class_info c inner join sys_user u
+        on u.user_name = s.student_id and s.class_id = c.class_id
     </sql>
 
     <select id="selectStuById" parameterType="String" resultMap="StuInfoResult">
@@ -71,6 +87,40 @@
         <include refid="selectStuInfoVo"></include>
         where s.student_id = #{studentId}
     </select>
+
+    <select id="selectAllStuBase" parameterType="StuBaseInfo" resultMap="StuUserInfoResult">
+        <include refid="selectStuUserVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and s.student_id like concat('%', #{studentId}, '%')</if>
+            <if test="name != null and name != ''"> and s.stu_name like concat('%', #{name}, '%')</if>
+            <if test="profession != null and profession != ''"> and c.profession = #{profession}</if>
+            <if test="grade != null and grade != 0"> and c.grade = #{grade}</if>
+        </where>
+    </select>
+
+    <insert id="insertStuUserInfo" parameterType="StuUserInfo" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_user (
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="nickName != null and nickName != ''">nick_name,</if>
+            <if test="avatar != null and avatar != ''">avatar,</if>
+            <if test="password != null and password != ''">password,</if>
+            create_time
+        ) values (
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="nickName != null and nickName != ''">#{nickName},</if>
+            <if test="avatar != null and avatar != ''">#{avatar},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            sysdate()
+        );
+        insert into stu_info ( class_id, student_id, stu_name )
+        values ( #{classId}, #{userName}, #{nickName} )
+    </insert>
+
+    <insert id="insertStuBaseInfo" parameterType="StuBaseInfo" useGeneratedKeys="true" keyProperty="">
+        insert into stu_info ( class_id, student_id, stu_name )
+        values ( #{classId}, #{studentId}, #{stuName} )
+    </insert>
     
     <update id="updateStu" parameterType="StuInfo">
         update stu_info

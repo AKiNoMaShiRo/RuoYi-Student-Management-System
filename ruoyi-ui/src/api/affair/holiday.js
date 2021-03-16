@@ -11,6 +11,15 @@ export function getHoliday(query){
     })
 }
 
+//    获取辅导员对应的节假日去向信息
+export function getInsHoliday(query) {
+    return request({
+        url: BASEPATH + '/instructor/queryById',
+        method: 'get',
+        params: query
+    })
+}
+
 //    新增节假日去向报备
 export function addHoliday(params){
     return request({

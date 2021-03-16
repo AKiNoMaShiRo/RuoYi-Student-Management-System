@@ -11,6 +11,15 @@ export function getBoard(query){
     })
 }
 
+//    获取辅导员对应的外宿信息
+export function getInsBoard(query) {
+    return request({
+        url: BASEPATH + '/instructor/queryById',
+        method: 'get',
+        params: query
+    })
+}
+
 //    新增外宿报备
 export function addBoard(params){
     return request({

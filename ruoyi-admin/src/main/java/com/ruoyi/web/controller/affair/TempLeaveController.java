@@ -35,6 +35,14 @@ public class TempLeaveController extends BaseController {
         return getDataTable(tempLeaves);
     }
 
+    @ApiOperation("根据辅导员工号查询请假单信息")
+    @GetMapping("/instructor/queryById")
+    public TableDataInfo getInsTempLeave(String instructorId){
+        startPage();
+        List<TempLeave> tempLeaves = tempLeaveService.selectLeaveByInstructor(instructorId);
+        return getDataTable(tempLeaves);
+    }
+
     @ApiOperation("添加请假单信息")
     @PostMapping("/add")
     public AjaxResult addTempLeave(@Validated @RequestBody TempLeave tempLeave){

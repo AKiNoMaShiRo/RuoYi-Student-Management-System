@@ -26,6 +26,16 @@ public class HolidayServiceImpl implements IHolidayService {
     }
 
     /**
+     * 根据辅导员查询节假日去向信息
+     *
+     * @param instructorId 学号
+     * @return 结果
+     */
+    public List<Holiday> selectHolidayByInsId(String instructorId){
+        return holidayMapper.selectHolidayByInsId(instructorId);
+    }
+
+    /**
      * 新增节假日去向报备信息
      *
      * @param holiday 节假日去向报备
