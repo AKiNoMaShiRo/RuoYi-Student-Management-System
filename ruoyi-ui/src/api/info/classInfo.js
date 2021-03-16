@@ -4,17 +4,16 @@ const BASEPATH = '/info/classInfo'
 
 export function getClassInfo(param){
     return request({
-        url: BASEPATH + '/query',
-        method: 'post',
-        data: param
+        url: BASEPATH + '/query/',
+        method: 'get',
+        params: param
     })
 }
 
-export function getAllClassInfo(param){
+export function getProfessionType(){
     return request({
-        url: BASEPATH + '/queryAll',
-        method: 'post',
-        data: param
+        url: BASEPATH + '/profession/type',
+        method: 'get'
     })
 }
 

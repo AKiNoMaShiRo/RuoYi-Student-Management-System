@@ -226,6 +226,7 @@ export default {
     },
     ...mapState({
       userName: state => state.user.name,
+      roleName: state => state.user.roleName
     })
   },
   created () {
@@ -237,7 +238,7 @@ export default {
       let param = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        studentId: this.userName
+        studentId: this.roleName === '超级管理员' ? '' : this.userName
       }
       TEMPLEAVE.getTempLeave(param).then( res => {
         if (res.rows && res.rows.length !== 0){

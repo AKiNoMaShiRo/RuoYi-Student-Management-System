@@ -30,6 +30,10 @@ public class ClassInfo extends BaseEntity {
     @Excel(name = "辅导员工号")
     private String instructorId;
 
+    /** 辅导员姓名 */
+    @Excel(name = "辅导员姓名")
+    private String instructorName;
+
     public Long getClassId() {
         return classId;
     }
@@ -78,6 +82,14 @@ public class ClassInfo extends BaseEntity {
         this.instructorId = instructorId;
     }
 
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
     @Override
     public String toString() {
         return "ClassInfo{" +
@@ -87,6 +99,7 @@ public class ClassInfo extends BaseEntity {
                 ", grade=" + grade +
                 ", classNum=" + classNum +
                 ", instructorId='" + instructorId + '\'' +
+                ", instructorName='" + instructorName + '\'' +
                 '}';
     }
 }

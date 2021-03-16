@@ -22,7 +22,12 @@
 
     <select id="selectLeaveByStuId" parameterType="String" resultMap="TempLeaveStuResult">
         <include refid="TempLeaveVo"></include>
-        where tl.student_id = #{studentId}
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''">
+                and tl.student_id = #{studentId}
+            </if>
+        </where>
         order by tl.leave_id desc
     </select>
 

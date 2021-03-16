@@ -21,20 +21,20 @@ public class ClassInfoController extends BaseController {
     @Autowired
     private IClassInfoService classInfoService;
 
-    @ApiOperation("查询所有班级信息")
-    @PostMapping("/queryAll")
-    public TableDataInfo queryAllClassInfo(@Validated @RequestBody ClassInfo classInfo){
-        startPage();
-        List<ClassInfo> classInfos = classInfoService.selectAllClassInfo(classInfo);
-        return getDataTable(classInfos);
-    }
-
     @ApiOperation("查询班级信息")
-    @PostMapping("/query")
-    public TableDataInfo queryClassInfo(@Validated @RequestBody ClassInfo classInfo){
+    @GetMapping("/query")
+    public TableDataInfo queryClassInfo(ClassInfo classInfo){
         startPage();
         List<ClassInfo> classInfos = classInfoService.selectClassInfo(classInfo);
         return getDataTable(classInfos);
+    }
+
+    @ApiOperation("查询专业类别")
+    @GetMapping("/profession/type")
+    public AjaxResult queryProfessionType(){
+        AjaxResult ajaxResult = AjaxResult.success();
+        ajaxResult.put(AjaxResult.DATA_TAG, classInfoService.selectProfessionType());
+        return ajaxResult;
     }
 
     @ApiOperation("新增班级信息")

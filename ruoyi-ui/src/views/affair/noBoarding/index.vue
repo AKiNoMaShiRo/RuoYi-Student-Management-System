@@ -225,7 +225,8 @@ export default {
     //   return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
     // },
     ...mapState({
-      userName: state => state.user.name
+      userName: state => state.user.name,
+      roleName: state => state.user.roleName
     }),
     termOpts () {
       return termOptions(this.userName)
@@ -237,8 +238,9 @@ export default {
   methods: {
     getInfo () {
       this.tableLoading = true
+      console.log(this.roleName)
       let param = {
-        studentId: this.userName
+        studentId: this.roleName === '超级管理员' ? '' : this.userName
       }
       BOARD.getBoard(param).then( res => {
         if (res.data && res.data.length !== 0){

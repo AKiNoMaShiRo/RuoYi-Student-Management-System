@@ -12,20 +12,21 @@ import java.util.List;
 public interface IClassInfoService {
 
     /**
-     * 查询所有班级信息
-     *
-     * @param classInfo 班级信息
-     * @return 结果
-     */
-    public List<ClassInfo> selectAllClassInfo(ClassInfo classInfo);
-
-    /**
      * 查询班级信息
      *
      * @param classInfo 班级信息
      * @return 结果
      */
     public List<ClassInfo> selectClassInfo(ClassInfo classInfo);
+
+    /**
+     * 查询专业类别
+     *
+     * @param classInfo 班级信息
+     * @return 结果
+     */
+    public List<String> selectProfessionType();
+
 
     /**
      * 新增班级信息

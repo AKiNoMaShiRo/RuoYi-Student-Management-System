@@ -19,17 +19,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private ClassInfoMapper classInfoMapper;
 
-
-    /**
-     * 查询所有班级信息
-     *
-     * @param classInfo 班级信息
-     * @return 结果
-     */
-    public List<ClassInfo> selectAllClassInfo(ClassInfo classInfo){
-        return classInfoMapper.selectAllClassInfo(classInfo);
-    }
-
     /**
      * 查询班级信息
      *
@@ -39,6 +28,16 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<ClassInfo> selectClassInfo(ClassInfo classInfo){
         return classInfoMapper.selectClassInfo(classInfo);
+    }
+
+    /**
+     * 查询专业类别
+     *
+     * @param
+     * @return 结果
+     */
+    public List<String> selectProfessionType(){
+        return classInfoMapper.selectProfessionType();
     }
 
     /**
@@ -66,7 +65,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     /**
      * 编辑班级信息
      *
-     * @param classInfo 班级信息
+     * @param classId 班级信息编号
      * @return 结果
      */
     @Override

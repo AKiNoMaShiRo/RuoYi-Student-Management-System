@@ -11,44 +11,39 @@
         <result     property="grade"            column="grade"/>
         <result     property="classNum"         column="class_num"/>
         <result     property="instructorId"     column="instructor_id"/>
+        <result     property="instructorName"     column="instructor_name"/>
+    </resultMap>
+
+    <resultMap id="ProfessionTypeResult" type="String">
+        <result     property="profession"       column="profession"/>
     </resultMap>
 
     <sql id="ClassInfoVo">
-        select *
-        from class_info
+        select class_info.*, instructor_info.instructor_name
+        from class_info left join instructor_info
+        on class_info.instructor_id = instructor_info.instructor_id
     </sql>
-
-    <select id="selectAllClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
-        <include refid="ClassInfoVo"></include>
-    </select>
 
     <select id="selectClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
         <include refid="ClassInfoVo"></include>
         <where>
             1=1
-            <if test="profession != null and profession != ''">and profession = #{profession}</if>
-            <if test="grade != null and grade != 0">and grade = #{grade}</if>
-            <if test="instructorId != null and instructorId != ''">and instructor_id = #{instructorId}</if>
+            <if test="profession != null and profession != ''">and class_info.profession = #{profession}</if>
+            <if test="grade != null and grade != 0">and class_info.grade = #{grade}</if>
+            <if test="instructorId != null and instructorId != ''">and class_info.instructor_id = #{instructorId}</if>
+            <if test="instructorName != null and instructorName != ''">and instructor_info.instructor_name = #{instructorName}</if>
         </where>
     </select>
 
-    <insert id="insertClassInfo" parameterType="ClassInfo">
+    <select id="selectProfessionType" resultMap="ProfessionTypeResult">
+        select distinct class_info.profession from class_info
+    </select>
+
+    <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="classId">
         insert into class_info (
-            <set>
-                <if test="department != null and department != ''">department,</if>
-                <if test="profession != null and profession != ''">profession,</if>
-                <if test="grade != null and grade != 0">grade,</if>
-                <if test="classNum != null and classNum != 0">classNum,</if>
-                <if test="instructorId != null and instructorId != ''">instructor_id,</if>
-            </set>
+            department, profession, grade, class_num, instructor_id
         ) values (
-            <set>
-                <if test="department != null and department != ''">#{department},</if>
-                <if test="profession != null and profession != ''">#{profession},</if>
-                <if test="grade != null and grade != 0">#{grade},</if>
-                <if test="classNum != null and classNum != 0">#{classNum},</if>
-                <if test="instructorId != null and instructorId != ''">#{instructorId},</if>
-            </set>
+            #{department}, #{profession}, #{grade}, #{classNum}, #{instructorId}
         )
     </insert>
 
@@ -58,7 +53,7 @@
             <if test="department != null and department != ''">department = #{department},</if>
             <if test="profession != null and profession != ''">profession = #{profession},</if>
             <if test="grade != null and grade != 0">grade = #{grade},</if>
-            <if test="classNum != null and classNum != 0">classNum = #{classNum},</if>
+            <if test="classNum != null and classNum != 0">class_num = #{classNum},</if>
             <if test="instructorId != null and instructorId != ''">instructor_id = #{instructorId},</if>
         </set>
         where class_id = #{classId}

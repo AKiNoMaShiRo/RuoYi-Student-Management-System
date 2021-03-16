@@ -24,7 +24,12 @@
 
     <select id="selectHolidayById" parameterType="String" resultMap="HolidayResult">
         <include refid="HolidayVo"></include>
-        where holiday_go.student_id = #{studentId}
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''">
+                and holiday_go.student_id = #{studentId}
+            </if>
+        </where>
         order by holiday_go.go_id desc
     </select>
 

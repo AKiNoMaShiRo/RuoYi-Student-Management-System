@@ -299,7 +299,8 @@ export default {
       return this.total > this.currentPage ? '320px' : 'calc(320px + 40px)'
     },
     ...mapState({
-      userName: state => state.user.name
+      userName: state => state.user.name,
+      roleName: state => state.user.roleName
     })
   },
   watch: {
@@ -337,7 +338,7 @@ export default {
       let param = {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        studentId: this.userName
+        studentId: this.roleName === '超级管理员' ? '' : this.userName
       }
       HOLIDAY.getHoliday(param).then( res => {
         if (res.rows && res.rows.length !== 0) {

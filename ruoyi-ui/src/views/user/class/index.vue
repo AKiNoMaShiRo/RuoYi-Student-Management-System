@@ -1,87 +1,157 @@
 <template>
     <div class="app-container">
-        <section class="am-box">
-            <div class="am-title am-p am-bd-b">学生账号列表</div>
-            <div class="am-px-lg am-pt">
-                <el-form
-                    :model="searchFormData"
-                    ref="searchForm"
-                    label-position="right"
-                    label-width="80px"
-                    inline
-                >
-                    <el-form-item label="专业" prop="profession">
-                        <el-select v-model="searchFormData.profession" size="small" clearable>
-                            <el-option label="软件工程" value="软件工程"></el-option>
-                            <!-- <el-option v-for="opt in professionOptions" :key="opt.v" :label="opt.l" :value="opt.v"></el-option> -->
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="年级" prop="grade">
-                        <el-input
-                            v-model="searchFormData.grade"
-                            placeholder="请输入年级"
-                            size="small"
-                            clearable
-                        ></el-input>
-                    </el-form-item>
-                    <el-form-item label="辅导员" prop="instructorId">
-                        <el-select v-model="searchFormData.instructorId" size="small" clearable>
+      <section class="am-box">
+        <div class="am-title am-p am-bd-b">班级信息列表</div>
+        <div class="am-px-lg am-pt am-mb">
+          <el-form
+            :model="searchFormData"
+            ref="searchForm"
+            label-position="right"
+            label-width="60px"
+            inline
+          >
+            <el-form-item label="专业" prop="profession">
+              <el-input
+                v-model="searchFormData.profession"
+                placeholder="请输入专业"
+                size="small" 
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="年级" prop="grade">
+              <el-input
+                v-model="searchFormData.grade"
+                placeholder="请输入年级"
+                size="small"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="辅导员" prop="instructorName">
+              <el-input
+                v-model="searchFormData.instructorName"
+                placeholder="请输入辅导员姓名"
+                size="small" 
+                clearable
+              ></el-input>
+                        <!-- <el-select v-model="searchFormData.instructorId" size="small" clearable>
                             <el-option label="张学会" value="1001"></el-option>
-                            <!-- <el-option v-for="opt in instructorOptions" :key="opt.v" :label="opt.l" :value="opt.v"></el-option> -->
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
-                        <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-            <div class="am-px-lg am-pb">
-                <el-table
-                    v-loading="tableLoading"
-                    :data="tableData"
-                    :height="tableHeight"
-                    @selection-change="handleSelectionChange"
+                            <el-option v-for="opt in instructorOptions" :key="opt.v" :label="opt.l" :value="opt.v"></el-option>
+                        </el-select> -->
+            </el-form-item>
+            <el-form-item>
+              <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+            </el-form-item>
+          </el-form>
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            size="mini"
+            @click="handleAdd"
+          >新增</el-button>
+        </div>
+        <div class="am-px-lg am-pb">
+          <el-table
+            v-loading="tableLoading"
+            :data="tableData"
+            :height="tableHeight"
+            highlight-current-row=""
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column
+              v-for="column in tableColumns"
+              v-bind="column"
+              :key="column.prop"
+              show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+              label="操作"
+              align="center"
+              width="160"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="text"
+                  icon="el-icon-edit"
+                  style="margin-right: 6px;"
+                   @click="handleUpdate(scope.row)"
+                >修改</el-button>
+                <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="确定删除该班级？"
+                  @onConfirm="handleDelete(scope.row)"
                 >
-                    <el-table-column type="selection" width="50" align="center" />
-                    <el-table-column label="专业" align="center" prop="profession" :show-overflow-tooltip="true" />
-                    <el-table-column label="年级" align="center" prop="grade" :show-overflow-tooltip="true" />
-                    <el-table-column label="班级编号" align="center" prop="classNum" :show-overflow-tooltip="true" />
-                    <el-table-column label="辅导员" align="center" prop="instructorId" :show-overflow-tooltip="true" />
-                    <el-table-column
-                        label="操作"
-                        align="center"
-                        width="160"
-                    >
-                        <template slot-scope="scope">
-                            <el-button
-                                size="mini"
-                                type="text"
-                                icon="el-icon-edit"
-                                @click="handleUpdate(scope.row)"
-                                v-hasPermi="['system:user:edit']"
-                            >修改</el-button>
-                            <el-button
-                                v-if="scope.row.userId !== 1"
-                                size="mini"
-                                type="text"
-                                icon="el-icon-delete"
-                                @click="handleDelete(scope.row)"
-                                v-hasPermi="['system:user:remove']"
-                            >删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <Pagination
-                    :total="total"
-                    :page-range="[10, 15, 20]"
-                    :current-page="currentPage"
-                    :page-size="pageSize"
-                    @onPaginationUpdate="handlePaginationUpdate"
-                >
-                </Pagination>
-            </div>
-        </section>
+                  <el-button
+                    type="text"
+                    con="el-icon-delete"
+                    size="mini"
+                    style="margin-right: 6px; margin-left: 0px;"
+                    slot="reference"
+                  >删除</el-button>
+                </el-popconfirm>
+              </template>
+            </el-table-column>
+          </el-table>
+          <Pagination
+            :total="total"
+            :page-range="[10, 15, 20]"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            @onPaginationUpdate="handlePaginationUpdate"
+          >
+          </Pagination>
+        </div>
+      </section>
+      <el-dialog title="新增班级" :visible.sync="dgAddVisible">
+        <div class="am-mb" style="color: #ff4949; font-size: 12px;">请注意：同一专业，同一年级不应出现重复的班级序号</div>
+        <el-form :model="addFormData" :rules="rules" ref="addForm" label-width="95px" inline>
+            <el-form-item label="学院" prop="department">
+              <el-input v-model="addFormData.department" size="small" clearable disabled></el-input>
+            </el-form-item>
+            <el-form-item label="专业" prop="profession">
+              <el-input v-model="addFormData.profession" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="年级" prop="grade">
+              <el-input v-model.number="addFormData.grade" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="班级序号" prop="classNum">
+              <el-input v-model.number="addFormData.classNum" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="辅导员工号" prop="instructorId">
+              <el-input v-model="addFormData.instructorId" size="small" clearable></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button size="small" @click="dgAddVisible = false">取消</el-button>
+            <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
+        </div>
+      </el-dialog><el-dialog title="修改班级信息" :visible.sync="dgEditVisible">
+        <el-form :model="editFormData" :rules="rules" ref="addForm" label-width="95px" inline>
+            <el-form-item label="学院" prop="department">
+              <el-input v-model="editFormData.department" size="small" clearable disabled></el-input>
+            </el-form-item>
+            <el-form-item label="专业" prop="profession">
+              <el-input v-model="editFormData.profession" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="年级" prop="grade">
+              <el-input v-model.number="editFormData.grade" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="班级序号" prop="classNum">
+              <el-input v-model.number="editFormData.classNum" size="small" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="辅导员工号" prop="instructorId">
+              <el-input v-model="editFormData.instructorId" size="small" clearable></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button size="small" @click="dgEditVisible = false">取消</el-button>
+            <el-button size="small" type="primary" @click="handleEditDialog">确定</el-button>
+        </div>
+      </el-dialog>
     </div>
 </template>
 
@@ -95,23 +165,56 @@ export default {
     },
     data () {
         return {
+            dgAddVisible: false,
+            dgEditVisible: false,
             total: 0,
             currentPage: 1,
             pageSize: 10,
             tableLoading: false,
+            tableColumns: [
+                { label: '专业', prop: 'profession' },
+                { label: '年级', prop: 'grade' },
+                { label: '班级序号', prop: 'classNum' },
+                { label: '辅导员', prop: 'instructorName' }
+            ],
             tableData: [],
-            professionOptions: [],
-            classOptions: [],
             searchFormData: {
                 profession: '',
                 grade: null,
+                instructorName: ''
+            },
+            addFormData: {
+                department: '计算机与软件学院',
+                profession: '',
+                grade: null,
+                classNum: null,
                 instructorId: ''
+            },
+            editFormData: {
+                department: '计算机与软件学院',
+                profession: '',
+                grade: null,
+                classNum: null,
+                instructorId: ''
+            },
+            rules: {
+                department: [ { required: true, message: '请输入学院', trigger: 'blur' } ],
+                profession: [ { required: true, message: '请输入专业名称', trigger: 'blur' } ],
+                grade: [
+                  { required: true, message: '请输入年级', trigger: 'blur' },
+                  { type: 'number', message: '年级必须为数字值'}
+                ],
+                classNum: [
+                  { required: true, message: '请输入班级序号', trigger: 'blur' },
+                  { type: 'number', message: '班级序号必须为数字值'}
+                ],
+                instructorId: [ { required: true, message: '请输入辅导员工号', trigger: 'blur' } ]
             }
         }
     },
     computed: {
         tableHeight () {
-        return this.total > this.currentPage ? '300px' : 'calc(300px + 40px)'
+            return this.total > this.currentPage ? '289px' : 'calc(289px + 40px)'
         },
     },
     created () {
@@ -120,44 +223,36 @@ export default {
     methods: {
         getInfo () {
             this.tableLoading = true
-            let isAll = true
-            if (this.searchFormData.profession !== '' || 
-                this.searchFormData.grade !== null || this.searchFormData.instructorId !== ''){
-                isAll = false
-            }
             let param = {
                 pageNum: this.currentPage,
                 pageSize: this.pageSize
             }
-            if (isAll) {
-                CLASSINFO.getAllClassInfo(param).then( res => {
-                    if (res.rows && res.rows.length != 0) {
-                        this.total = res.total
-                        this.tableData = res.rows
-                    } else {
-                        this.total = 0
-                        this.tableData = []
-                    }
-                }).finally( () => {
-                    this.tableLoading = false
-                })
-            } else {
-                param = Object.assign(param, {...this.searchFormData})
-                CLASSINFO.getClassInfo(param).then( res => {
-                    if (res.rows && res.rows.length != 0) {
-                        this.total = res.total
-                        this.tableData = res.rows
-                    } else {
-                        this.total = 0
-                        this.tableData = []
-                    }
-                }).finally( () => {
-                    this.tableLoading = false
-                })
+            param = Object.assign(param, {...this.searchFormData})
+            if (param.grade === '') {
+                param.grade = 0
             }
+            CLASSINFO.getClassInfo(param).then( res => {
+                if (res.rows && res.rows.length != 0) {
+                    this.total = res.total
+                    this.tableData = res.rows
+                } else {
+                    this.total = 0
+                    this.tableData = []
+                }
+            }).finally( () => {
+                this.tableLoading = false
+            })
+        },
+        //    新增按钮
+        handleAdd () {
+            this.dgAddVisible = true
         },
         handleUpdate (row) {
-            // CLASSINFO.editClassInfo()
+            this.dgEditVisible = true
+            for (let key in row) {
+                this.editFormData[key] = row[key]
+            }
+            // this.editFormData = row
         },
         handleDelete (row) {
             let param = row.classId
@@ -183,6 +278,30 @@ export default {
             this.currentPage = param.currentPage
             this.pageSize = param.pageSize
             this.getInfo()
+        },
+        handleAddDialog () {
+            CLASSINFO.addClassInfo(this.addFormData).then( res => {
+                if (res.msg === '操作成功') {
+                    this.$message.success('添加成功')
+                    this.getInfo()
+                } else {
+                    this.$message.error('添加失败')
+                }
+            }).finally( () => {
+                this.dgAddVisible = false
+            })
+        },
+        handleEditDialog () {
+            CLASSINFO.editClassInfo(this.editFormData).then( res => {
+                if (res.msg === '操作成功') {
+                    this.$message.success('修改成功')
+                    this.getInfo()
+                } else {
+                    this.$message.error('修改失败')
+                }
+            }).finally( () => {
+                this.dgEditVisible = false
+            })
         }
     }
 }
