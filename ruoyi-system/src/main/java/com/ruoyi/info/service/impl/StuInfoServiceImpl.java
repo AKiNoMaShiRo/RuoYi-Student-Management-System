@@ -7,7 +7,7 @@ import com.ruoyi.info.domain.StuUserInfo;
 import com.ruoyi.info.mapper.StuInfoMapper;
 import com.ruoyi.info.service.IStuInfoService;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.mapper.SysUserRoleMapper;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class StuInfoServiceImpl implements IStuInfoService {
     private StuInfoMapper infoMapper;
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private SysUserMapper userMapper;
 
     /**
      * 根据学生学号查询学生信息
@@ -91,6 +91,36 @@ public class StuInfoServiceImpl implements IStuInfoService {
         StuBaseInfo stuBaseInfo = infoMapper.selectStuUserId(studentId);
         Long userId = stuBaseInfo.getUserId();
         return infoMapper.insertStuRoleInfo(userId);
+    }
+
+    /**
+     * 删除学生基本信息
+     *
+     * @param studentId 学生学号
+     * @return 结果
+     */
+    public int deleteStuBaseInfo(String studentId){
+        return infoMapper.deleteStuInfo(studentId);
+    }
+
+    /**
+     * 删除学生角色信息
+     *
+     * @param userId 学生用户ID
+     * @return 结果
+     */
+    public int deleteStuRoleInfo(Long userId){
+        return infoMapper.deleteStuRoleInfo(userId);
+    }
+
+    /**
+     * 删除学生用户信息
+     *
+     * @param userId 学生用户ID
+     * @return 结果
+     */
+    public int deleteStuUserInfo(Long userId){
+        return userMapper.deleteUserById(userId);
     }
 
 }

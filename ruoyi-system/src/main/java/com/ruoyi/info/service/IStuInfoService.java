@@ -62,4 +62,28 @@ public interface IStuInfoService {
      */
     public int insertStuRoleInfo(String studentId);
 
+    /**
+     * 删除学生基本信息
+     *
+     * @param studentId 学生学号
+     * @return 结果
+     */
+    public int deleteStuBaseInfo(String studentId);
+
+    /**
+     * 删除学生角色信息
+     *
+     * @param userId 学生学号
+     * @return 结果
+     */
+    public int deleteStuRoleInfo(Long userId);
+
+    /**
+     * 删除学生用户信息
+     *
+     * @param userId 学生用户ID
+     * @return 结果
+     */
+    public int deleteStuUserInfo(Long userId);
+
 }

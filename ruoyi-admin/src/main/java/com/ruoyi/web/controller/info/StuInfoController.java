@@ -40,6 +40,16 @@ public class StuInfoController extends BaseController {
         return ajaxResult;
     }
 
+    @ApiOperation("根据学号查询学生基本信息")
+    @GetMapping(value = { "/queryBaseById/{studentId}"})
+    public AjaxResult getBaseInfo(@PathVariable(value = "studentId")String studentId){
+        AjaxResult ajaxResult = AjaxResult.success();
+        if(StringUtils.isNotNull(studentId)){
+            ajaxResult.put(AjaxResult.DATA_TAG, stuInfoService.selectStuBaseById(studentId));
+        }
+        return ajaxResult;
+    }
+
     @ApiOperation("批量查询学生信息")
     @GetMapping(value = { "/queryAll"})
     public TableDataInfo getAllInfo(StuBaseInfo stuBaseInfo){
@@ -66,13 +76,22 @@ public class StuInfoController extends BaseController {
         return toAjax(stuInfoService.updateStu(stuInfo));
     }
 
-    @ApiOperation("根据学号查询学生基本信息")
-    @GetMapping(value = { "/queryBaseById/{studentId}"})
-    public AjaxResult getBaseInfo(@PathVariable(value = "studentId")String studentId){
-        AjaxResult ajaxResult = AjaxResult.success();
-        if(StringUtils.isNotNull(studentId)){
-            ajaxResult.put(AjaxResult.DATA_TAG, stuInfoService.selectStuBaseById(studentId));
-        }
-        return ajaxResult;
+    @ApiOperation("删除学生基本信息")
+    @DeleteMapping("/deleteBase/{studentId}")
+    public AjaxResult deleteStuBaseInfo(@PathVariable String studentId){
+        return toAjax(stuInfoService.deleteStuBaseInfo(studentId));
     }
+
+    @ApiOperation("删除学生角色信息")
+    @DeleteMapping("/deleteRole/{userId}")
+    public AjaxResult deleteStuRoleInfo(@PathVariable Long userId){
+        return toAjax(stuInfoService.deleteStuRoleInfo(userId));
+    }
+
+    @ApiOperation("删除学生用户信息")
+    @DeleteMapping("/deleteUser/{userId}")
+    public AjaxResult deleteStuUserInfo(@PathVariable Long userId){
+        return toAjax(stuInfoService.deleteStuUserInfo(userId));
+    }
+
 }

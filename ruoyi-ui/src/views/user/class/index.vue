@@ -87,7 +87,7 @@
                 >
                   <el-button
                     type="text"
-                    con="el-icon-delete"
+                    icon="el-icon-delete"
                     size="mini"
                     style="margin-right: 6px; margin-left: 0px;"
                     slot="reference"

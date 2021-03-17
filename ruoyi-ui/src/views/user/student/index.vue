@@ -62,19 +62,31 @@
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
+                style="margin-right: 6px;"
                 @click="handleUpdate(scope.row)"
               >修改</el-button>
-              <el-button
-                v-if="scope.row.userId !== 1"
-                size="mini"
-                type="text"
-                icon="el-icon-delete"
-                @click="handleDelete(scope.row)"
-              >删除</el-button>
+              <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                icon="el-icon-info"
+                icon-color="red"
+                title="确定删除该学生账号？"
+                @onConfirm="handleDelete(scope.row)"
+              >
+                <el-button
+                  v-if="scope.row.userId !== 1"
+                  slot="reference"
+                  size="mini"
+                  type="text"
+                  icon="el-icon-delete"
+                  style="margin-right: 6px; margin-left: 0px;"
+                >删除</el-button>
+              </el-popconfirm>
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-key"
+                style="margin-right: 6px; margin-left: 0px;"
                 @click="handleResetPwd(scope.row)"
               >重置</el-button>
             </template>
@@ -90,7 +102,7 @@
         </Pagination>
       </div>
     </section>
-    <el-dialog title="新增学生用户" :visible.sync="dgAddVisible">
+    <el-dialog title="新增学生用户" :visible.sync="dgAddVisible" @close="handleAddDgClose">
         <el-form :model="addFormData" :rules="addRules" ref="addForm" label-width="95px" inline>
           <el-form-item label="学生学号" prop="userName">
             <el-input v-model="addFormData.userName" size="small" clearable></el-input>
@@ -116,7 +128,7 @@
 <script>
 import Pagination from '../../components/Pagination.vue'
 import * as STUINFO from '@/api/info/stuInfo.js'
-import { addUser } from '@/api/system/user'
+import { addUser, delUser } from '@/api/system/user'
 import { resetUserPwd } from "@/api/system/user";
 
 export default {
@@ -211,9 +223,39 @@ export default {
       this.$refs.searchForm.resetFields()
     },
     handleUpdate () {},
-    handleDelete () {},
+    deleteStuUser (stuId) {
+      return STUINFO.deleteStuUserInfo(stuId).then( res => {
+        if ( !(res.msg && res.msg === '操作成功') ) {
+          this.$message.error('删除学生用户失败')
+        }
+      })
+    },
+    deleteStuInfo (stuId) {
+      return STUINFO.deleteStuInfo(stuId).then( res => {
+        if ( !(res.msg && res.msg === '操作成功') ) {
+          this.$message.error('删除学生基本信息失败')
+        }
+      })
+    },
+    deleteStuRole (stuId) {
+      return STUINFO.deleteStuRoleInfo(stuId).then( res => {
+        if ( !(res.msg && res.msg === '操作成功') ) {
+          this.$message.success('删除学生角色信息失败')
+        }
+      })
+    },
+    handleDelete (row) {
+      Promise.all([
+        this.deleteStuInfo(row.studentId), this.deleteStuUser(row.userId), this.deleteStuRole(row.userId)
+      ]).then( () => {
+        this.$message.success('删除成功')
+        this.getInfo()
+      }).catch( () => {
+        this.$message.error('删除失败')
+      })
+    },
     handleResetPwd (row) {
-      this.$prompt('请输入"' + row.studentId + '"的新密码', "提示", {
+      this.$prompt('请输入"' + row.name + '"的新密码', "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       }).then(({ value }) => {
@@ -263,7 +305,9 @@ export default {
           })
         }
       })
-      
+    },
+    handleAddDgClose () {
+      this.$refs.addForm.resetFields()
     }
   }
 }

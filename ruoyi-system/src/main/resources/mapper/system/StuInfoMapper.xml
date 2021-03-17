@@ -149,4 +149,12 @@
         where student_id = #{studentId}
     </update>
 
+    <delete id="deleteStuInfo" parameterType="String">
+        delete from stu_info where student_id = #{studentId}
+    </delete>
+
+    <delete id="deleteStuRoleInfo" parameterType="Long">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+
 </mapper>

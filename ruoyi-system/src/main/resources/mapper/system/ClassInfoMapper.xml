@@ -28,6 +28,7 @@
         <include refid="ClassInfoVo"></include>
         <where>
             1=1
+            <if test="classId != null and classId != 0">and class_info.class_id = #{classId}</if>
             <if test="profession != null and profession != ''">and class_info.profession = #{profession}</if>
             <if test="grade != null and grade != 0">and class_info.grade = #{grade}</if>
             <if test="instructorId != null and instructorId != ''">and class_info.instructor_id = #{instructorId}</if>

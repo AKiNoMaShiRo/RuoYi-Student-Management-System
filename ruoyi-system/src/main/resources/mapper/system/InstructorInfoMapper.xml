@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.InstructorInfoMapper">
+    
+    <resultMap id="InstructorInfoResult" type="InstructorInfo">
+        <id         property="userId"               column="user_id"/>
+        <result     property="instructorId"         column="instructor_id"/>
+        <result     property="instructorName"       column="instructor_name"/>
+    </resultMap>
+
+    <sql id="InstructorInfoVo">
+        select su.user_id, ii.*
+        from instructor_info ii inner join sys_user su
+        on ii.instructor_id = su.user_name
+    </sql>
+
+    <select id="selectInstructor" parameterType="String" resultMap="InstructorInfoResult">
+        <include refid="InstructorInfoVo"></include>
+        where ii.instructor_id = #{instructorId}
+    </select>
+
+    <select id="selectAllInstructor" parameterType="InstructorInfo" resultMap="InstructorInfoResult">
+        <include refid="InstructorInfoVo"></include>
+        <where>
+            1=1
+            <if test="instructorId != null and instructorId != ''">
+                and ii.instructor_id like concat('%', #{instructorId}, '%')
+            </if>
+            <if test="instructorName != null and instructorName != ''">
+                and ii.instructor_name like concat('%', #{instructorName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertInstructor" parameterType="InstructorInfo">
+        insert into instructor_info values ( #{instructorId}, #{instructorName} )
+    </insert>
+
+    <insert id="insertInstructorRole" parameterType="Long">
+        insert into sys_user_role(user_id, role_id) values (#{userId},3)
+    </insert>
+
+    <delete id="deleteInstructor" parameterType="String">
+        delete from instructor_info where instructor_id = #{instructorId}
+    </delete>
+
+    <delete id="deleteInstructorUser" parameterType="String">
+        delete from instructor_info where instructor_id = #{instructorId}
+    </delete>
+    
+</mapper>

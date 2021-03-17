@@ -53,3 +53,27 @@ export function addStuRoleInfo(params){
         data: params
     })
 }
+
+//    删除学生信息
+export function deleteStuInfo(studentId){
+    return request({
+        url: BASEPATH + '/deleteBase/' +studentId ,
+        method: 'delete'
+    })
+}
+
+//    删除学生角色信息
+export function deleteStuRoleInfo(userId){
+    return request({
+        url: BASEPATH + '/deleteRole/' + userId,
+        method: 'delete'
+    })
+}
+
+//    删除学生用户信息
+export function deleteStuUserInfo(userId){
+    return request({
+        url: BASEPATH + '/deleteUser/' + userId,
+        method: 'delete'
+    })
+}
