@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.info.domain.StuBaseInfo;
 import com.ruoyi.info.domain.StuInfo;
 import com.ruoyi.info.domain.StuUserInfo;
+import com.ruoyi.system.domain.SysUserRole;
 
 import java.util.List;
 
@@ -48,9 +49,17 @@ public interface IStuInfoService {
     /**
      * 添加学生基本信息
      *
-     * @param stuUserInfo 入参
+     * @param baseInfo 入参
      * @return 结果
      */
-    public int insertStuBaseInfo(StuUserInfo stuUserInfo);
+    public int insertStuBaseInfo(StuBaseInfo baseInfo);
+
+    /**
+     * 添加学生角色信息
+     *
+     * @param studentId 学生学号
+     * @return 结果
+     */
+    public int insertStuRoleInfo(String studentId);
 
 }

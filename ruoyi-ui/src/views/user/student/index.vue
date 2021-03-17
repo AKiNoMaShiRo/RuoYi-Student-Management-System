@@ -93,16 +93,16 @@
     <el-dialog title="新增学生用户" :visible.sync="dgAddVisible">
         <el-form :model="addFormData" :rules="addRules" ref="addForm" label-width="95px" inline>
           <el-form-item label="学生学号" prop="userName">
-            <el-input v-model="addFormData.studeuserNamentId" size="small" clearable></el-input>
+            <el-input v-model="addFormData.userName" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item label="学生姓名" prop="nickName">
             <el-input v-model="addFormData.nickName" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="addFormData.password" size="small" clearable show-password></el-input>
+            <el-input v-model="addFormData.password" size="small" show-password></el-input>
           </el-form-item>
           <el-form-item label="班级ID" prop="classId">
-            <el-input v-model="addFormData.classId" size="small" clearable></el-input>
+            <el-input v-model.number="addFormData.classId" size="small" clearable></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -116,6 +116,7 @@
 <script>
 import Pagination from '../../components/Pagination.vue'
 import * as STUINFO from '@/api/info/stuInfo.js'
+import { addUser } from '@/api/system/user'
 import { resetUserPwd } from "@/api/system/user";
 
 export default {
@@ -227,7 +228,43 @@ export default {
       this.pageSize = param.pageSize
       this.getInfo()
     },
-    handleAddDialog () {}
+    addStuUser () {
+      return addUser(this.addFormData).then( res => {
+        if ( !(res.msg && res.msg === '操作成功') ) {
+          this.$message.error('添加学生用户失败')
+        }
+      })
+    },
+    addStuInfo () {
+      let param = {
+        classId: this.addFormData.classId,
+        studentId: this.addFormData.userName,
+        name: this.addFormData.nickName
+      }
+      return STUINFO.addStuInfo(param).then( res => {
+        if ( !(res.msg && res.msg === '操作成功') ) {
+          this.$message.error('添加学生信息失败')
+        }
+      })
+    },
+    handleAddDialog () {
+      this.$refs.addForm.validate( valid => {
+        if (valid) {
+          Promise.all([ this.addStuUser(), this.addStuInfo() ]).then( () => {
+            STUINFO.addStuRoleInfo({studentId: this.addFormData.userName}).then( res => {
+              if (res.msg && res.msg === '操作成功') {
+                this.$message.success('添加成功')
+                this.getInfo()
+                this.dgAddVisible = false
+              } else {
+                this.$message.error('添加失败')
+              }
+            })
+          })
+        }
+      })
+      
+    }
   }
 }
 </script>

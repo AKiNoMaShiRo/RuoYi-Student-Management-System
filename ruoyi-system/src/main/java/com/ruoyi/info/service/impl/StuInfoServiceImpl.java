@@ -6,6 +6,8 @@ import com.ruoyi.info.domain.StuInfo;
 import com.ruoyi.info.domain.StuUserInfo;
 import com.ruoyi.info.mapper.StuInfoMapper;
 import com.ruoyi.info.service.IStuInfoService;
+import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class StuInfoServiceImpl implements IStuInfoService {
 
     @Autowired
     private StuInfoMapper infoMapper;
+
+    @Autowired
+    private SysUserRoleMapper userRoleMapper;
 
     /**
      * 根据学生学号查询学生信息
@@ -69,11 +74,23 @@ public class StuInfoServiceImpl implements IStuInfoService {
     /**
      * 添加学生基本信息
      *
-     * @param stuUserInfo 入参
+     * @param baseInfo 入参
      * @return 结果
      */
-    public int insertStuBaseInfo(StuUserInfo stuUserInfo){
-        return infoMapper.insertStuUserInfo(stuUserInfo);
+    public int insertStuBaseInfo(StuBaseInfo baseInfo){
+        return infoMapper.insertStuBaseInfo(baseInfo);
+    }
+
+    /**
+     * 添加学生角色信息
+     *
+     * @param studentId 学生学号
+     * @return 结果
+     */
+    public int insertStuRoleInfo(String studentId){
+        StuBaseInfo stuBaseInfo = infoMapper.selectStuUserId(studentId);
+        Long userId = stuBaseInfo.getUserId();
+        return infoMapper.insertStuRoleInfo(userId);
     }
 
 }

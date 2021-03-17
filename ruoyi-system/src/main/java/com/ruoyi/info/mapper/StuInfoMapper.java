@@ -34,6 +34,14 @@ public interface StuInfoMapper {
     public StuBaseInfo selectStuBaseById(String studentId);
 
     /**
+     * 根据学生学号查询学生用户ID
+     *
+     * @param studentId 学生学号
+     * @return 学生信息
+     */
+    public StuBaseInfo selectStuUserId(String studentId);
+
+    /**
      * 批量查询学生基本信息
      *
      * @param stuBaseInfo 入参
@@ -42,19 +50,19 @@ public interface StuInfoMapper {
     public List<StuBaseInfo> selectAllStuBase(StuBaseInfo stuBaseInfo);
 
     /**
-     * 添加学生账户
-     *
-     * @param stuUserInfo 学生信息
-     * @return 结果
-     */
-    public int insertStuUserInfo(StuUserInfo stuUserInfo);
-
-    /**
      * 添加学生基本信息
      *
      * @param stuBaseInfo 学生基本信息
      * @return 结果
      */
     public int insertStuBaseInfo(StuBaseInfo stuBaseInfo);
+
+    /**
+     * 添加学生角色信息
+     *
+     * @param userId 学生用户ID
+     * @return 结果
+     */
+    public int insertStuRoleInfo(Long userId);
 
 }

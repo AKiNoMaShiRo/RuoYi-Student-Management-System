@@ -83,8 +83,13 @@
         where s.student_id = #{studentId}
     </select>
 
-    <select id="selectStuBaseById" parameterType="String" resultMap="StuBaseInfoResult">
+    <select id="selectStuBaseById" parameterType="String" resultMap="StuUserInfoResult">
         <include refid="selectStuInfoVo"></include>
+        where s.student_id = #{studentId}
+    </select>
+
+    <select id="selectStuUserId" parameterType="String" resultMap="StuUserInfoResult">
+        <include refid="selectStuUserVo"></include>
         where s.student_id = #{studentId}
     </select>
 
@@ -99,27 +104,13 @@
         </where>
     </select>
 
-    <insert id="insertStuUserInfo" parameterType="StuUserInfo" useGeneratedKeys="true" keyProperty="userId">
-        insert into sys_user (
-            <if test="userName != null and userName != ''">user_name,</if>
-            <if test="nickName != null and nickName != ''">nick_name,</if>
-            <if test="avatar != null and avatar != ''">avatar,</if>
-            <if test="password != null and password != ''">password,</if>
-            create_time
-        ) values (
-            <if test="userName != null and userName != ''">#{userName},</if>
-            <if test="nickName != null and nickName != ''">#{nickName},</if>
-            <if test="avatar != null and avatar != ''">#{avatar},</if>
-            <if test="password != null and password != ''">#{password},</if>
-            sysdate()
-        );
-        insert into stu_info ( class_id, student_id, stu_name )
-        values ( #{classId}, #{userName}, #{nickName} )
-    </insert>
-
     <insert id="insertStuBaseInfo" parameterType="StuBaseInfo" useGeneratedKeys="true" keyProperty="">
         insert into stu_info ( class_id, student_id, stu_name )
-        values ( #{classId}, #{studentId}, #{stuName} )
+        values ( #{classId}, #{studentId}, #{name} )
+    </insert>
+
+    <insert id="insertStuRoleInfo" parameterType="Long">
+        insert into sys_user_role(user_id, role_id) values (#{userId},2)
     </insert>
     
     <update id="updateStu" parameterType="StuInfo">

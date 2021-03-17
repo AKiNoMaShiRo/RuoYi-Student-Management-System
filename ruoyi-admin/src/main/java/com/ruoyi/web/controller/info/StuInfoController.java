@@ -8,6 +8,7 @@ import com.ruoyi.info.domain.StuBaseInfo;
 import com.ruoyi.info.domain.StuInfo;
 import com.ruoyi.info.domain.StuUserInfo;
 import com.ruoyi.info.service.IStuInfoService;
+import com.ruoyi.system.domain.SysUserRole;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +48,16 @@ public class StuInfoController extends BaseController {
         return getDataTable(stuBaseInfos);
     }
 
-    @ApiOperation("添加学生账号")
+    @ApiOperation("添加学生基本信息")
     @PostMapping(value = { "/add"})
-    public AjaxResult addStuInfo(@Validated @RequestBody StuUserInfo stuUserInfo){
-        return toAjax(stuInfoService.insertStuBaseInfo(stuUserInfo));
+    public AjaxResult addStuInfo(@Validated @RequestBody StuBaseInfo baseInfo){
+        return toAjax(stuInfoService.insertStuBaseInfo(baseInfo));
+    }
+
+    @ApiOperation("添加学生角色信息")
+    @PostMapping(value = { "/add/role"})
+    public AjaxResult addStuRoleInfo(@Validated @RequestBody StuBaseInfo stuBaseInfo){
+        return toAjax(stuInfoService.insertStuRoleInfo(stuBaseInfo.getStudentId()));
     }
 
     @ApiOperation("修改学生信息")

@@ -1,5 +1,7 @@
 import request from '@/utils/request'
 
+const BASEPATH = '/info/stu'
+
 //    根据学号查询学生信息
 export function getStuInfo(stuId){
     return request({
@@ -29,6 +31,24 @@ export function getAllStuUser(query){
 export function editStuInfo(params){
     return request({
         url: '/info/stu/edit',
+        method: 'post',
+        data: params
+    })
+}
+
+//    添加学生信息
+export function addStuInfo(params){
+    return request({
+        url: BASEPATH + '/add',
+        method: 'post',
+        data: params
+    })
+}
+
+//    添加学生角色信息
+export function addStuRoleInfo(params){
+    return request({
+        url: BASEPATH + '/add/role',
         method: 'post',
         data: params
     })

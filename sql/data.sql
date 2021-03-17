@@ -42,7 +42,9 @@ insert into sys_menu values('503',  '班级管理', '5',   '2', 'class', 'user/c
 -- insert into sys_role_menu values ('2', '2');
 -- insert into sys_role_menu values ('2', '3');
 
-insert into sys_role values('3', '辅导员',    'instructor', 2, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '辅导员');
+insert into sys_role values('3', '辅导员',    'instructor', 3, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '辅导员');
+insert into sys_role values('4', '班主任',    'headmaster', 4, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '班主任');
+insert into sys_role values('5', '副书记',    'master', 5, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '副书记');
 
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info

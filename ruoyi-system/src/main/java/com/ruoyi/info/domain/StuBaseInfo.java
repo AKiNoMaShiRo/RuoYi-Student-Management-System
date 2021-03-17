@@ -34,6 +34,10 @@ public class StuBaseInfo extends BaseEntity {
     @Excel(name = "班级")
     private int classNum;
 
+    /** 班级 */
+    @Excel(name = "班级")
+    private int classId;
+
     public Long getUserId() {
         return userId;
     }
@@ -48,6 +52,14 @@ public class StuBaseInfo extends BaseEntity {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDepartment() {
@@ -82,12 +94,12 @@ public class StuBaseInfo extends BaseEntity {
         this.classNum = classNum;
     }
 
-    public String getName() {
-        return name;
+    public int getClassId() {
+        return classId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     @Override
@@ -100,6 +112,7 @@ public class StuBaseInfo extends BaseEntity {
                 ", profession='" + profession + '\'' +
                 ", grade=" + grade +
                 ", classNum=" + classNum +
+                ", classID=" + classId +
                 '}';
     }
 }
