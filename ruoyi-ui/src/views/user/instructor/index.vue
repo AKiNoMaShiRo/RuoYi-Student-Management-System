@@ -46,12 +46,12 @@
             class-name="small-padding fixed-width"
           >
             <template slot-scope="scope">
-              <el-button
+              <!-- <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-edit"
                 @click="handleUpdate(scope.row)"
-              >修改</el-button>
+              >修改</el-button> -->
               <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"

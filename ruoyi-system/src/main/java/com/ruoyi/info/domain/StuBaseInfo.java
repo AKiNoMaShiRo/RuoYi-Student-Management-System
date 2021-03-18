@@ -30,12 +30,12 @@ public class StuBaseInfo extends BaseEntity {
     @Excel(name = "年级")
     private int grade;
 
-    /** 班级 */
-    @Excel(name = "班级")
+    /** 班级序号 */
+    @Excel(name = "班级序号")
     private int classNum;
 
-    /** 班级 */
-    @Excel(name = "班级")
+    /** 班级ID */
+    @Excel(name = "班级ID")
     private int classId;
 
     public Long getUserId() {

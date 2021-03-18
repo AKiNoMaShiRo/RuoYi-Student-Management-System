@@ -10,6 +10,7 @@ export function getClassInfo(param){
     })
 }
 
+//    查询共有哪几种专业 
 export function getProfessionType(){
     return request({
         url: BASEPATH + '/profession/type',

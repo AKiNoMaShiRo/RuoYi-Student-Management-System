@@ -103,33 +103,66 @@
       </div>
     </section>
     <el-dialog title="新增学生用户" :visible.sync="dgAddVisible" @close="handleAddDgClose">
-        <el-form :model="addFormData" :rules="addRules" ref="addForm" label-width="95px" inline>
-          <el-form-item label="学生学号" prop="userName">
-            <el-input v-model="addFormData.userName" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="学生姓名" prop="nickName">
-            <el-input v-model="addFormData.nickName" size="small" clearable></el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input v-model="addFormData.password" size="small" show-password></el-input>
-          </el-form-item>
-          <el-form-item label="班级ID" prop="classId">
-            <el-input v-model.number="addFormData.classId" size="small" clearable></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button size="small" @click="dgAddVisible = false">取消</el-button>
-            <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
-        </div>
-      </el-dialog>
+      <el-form :model="addFormData" :rules="addRules" ref="addForm" label-width="95px" inline>
+        <el-form-item label="学生学号" prop="userName">
+          <el-input v-model="addFormData.userName" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="学生姓名" prop="nickName">
+          <el-input v-model="addFormData.nickName" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="addFormData.password" size="small" show-password></el-input>
+        </el-form-item>
+        <el-form-item label="专业" prop="profession">
+          <el-input v-model="addFormData.profession" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="年级" prop="grade">
+          <el-input v-model.number="addFormData.grade" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="班级序号" prop="classNum">
+          <el-input v-model.number="addFormData.classNum" size="small" clearable></el-input>
+        </el-form-item>
+        <!-- <el-form-item label="班级ID" prop="classId">
+          <el-input v-model.number="addFormData.classId" size="small" clearable></el-input>
+        </el-form-item> -->
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+          <el-button size="small" @click="dgAddVisible = false">取消</el-button>
+          <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="编辑学生用户" :visible.sync="dgEditVisible">
+      <el-form :model="editFormData" :rules="editRules" ref="editForm" label-width="95px" inline>
+        <el-form-item label="学生学号" prop="studentId">
+          <el-input v-model="editFormData.studentId" size="small" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="学生姓名" prop="name">
+          <el-input v-model="editFormData.name" size="small" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="专业" prop="profession">
+          <el-input v-model="editFormData.profession" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="年级" prop="grade">
+          <el-input v-model.number="editFormData.grade" size="small" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="班级序号" prop="classNum">
+          <el-input v-model.number="editFormData.classNum" size="small" clearable></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+          <el-button size="small" @click="dgEditVisible = false">取消</el-button>
+          <el-button size="small" type="primary" @click="handleEditDialog">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Pagination from '../../components/Pagination.vue'
 import * as STUINFO from '@/api/info/stuInfo.js'
+import { getClassInfo } from '@/api/info/classInfo.js'
 import { addUser, delUser } from '@/api/system/user'
-import { resetUserPwd } from "@/api/system/user";
+import { resetUserPwd } from "@/api/system/user"
 
 export default {
   components: {
@@ -138,6 +171,7 @@ export default {
   data () {
     return {
       dgAddVisible: false,
+      dgEditVisible: false,
       total: 0,
       currentPage: 1,
       pageSize: 10,
@@ -151,7 +185,7 @@ export default {
         { label: '年级', prop: 'grade', minWidth: '60' },
         { label: '班级序号', prop: 'classNum', minWidth: '80' }
       ],
-      classOptions: [],
+      classInfos: [],
       searchFormData: {
         studentId: '',
         name: '',
@@ -165,17 +199,46 @@ export default {
         userName: '',
         nickName: '',
         password: '',
+        profession: '',
+        grade: '',
+        classNum: '',
         classId: null
       },
       addRules: {
         userName: [ { required: true, message: '请输入学生学号', trigger: 'blur' } ],
         nickName: [ { required: true, message: '请输入学生姓名', trigger: 'blur' } ],
         password: [ { required: true, message: '请输入密码', trigger: 'blur' } ],
-        classId: [
-          { required: true, message: '请输入学生姓名', trigger: 'blur' },
-          { type: 'number', message: '班级ID必须为数字' }
+        profession: [ { required: true, message: '请输入专业', trigger: 'blur' } ],
+        grade: [
+          { required: true, message: '请输入年级', trigger: 'blur' },
+          { type: 'number', message: '年级必须为数字' }
+        ],
+        classNum: [
+          { required: true, message: '请输入班级序号', trigger: 'blur' },
+          { type: 'number', message: '班级序号必须为数字' }
         ]
-      }
+      },
+      editFormData: {
+        studentId: '',
+        name: '',
+        profession: '',
+        grade: '',
+        classNum: '',
+        classId: null
+      },
+      editRules: {
+        // userName: [ { required: true, message: '请输入学生学号', trigger: 'blur' } ],
+        // nickName: [ { required: true, message: '请输入学生姓名', trigger: 'blur' } ],
+        profession: [ { required: true, message: '请输入专业', trigger: 'blur' } ],
+        grade: [
+          { required: true, message: '请输入年级', trigger: 'blur' },
+          { type: 'number', message: '年级必须为数字' }
+        ],
+        classNum: [
+          { required: true, message: '请输入班级序号', trigger: 'blur' },
+          { type: 'number', message: '班级序号必须为数字' }
+        ]
+      },
     }
   },
   computed: {
@@ -185,6 +248,11 @@ export default {
   },
   created () {
     this.getInfo()
+    getClassInfo({}).then( res => {
+      if (res.rows && res.rows.length !== 0) {
+        this.classInfos = res.rows
+      }
+    })
   },
   methods: {
     getInfo () {
@@ -210,6 +278,16 @@ export default {
         this.tableLoading = false
       })
     },
+    getClassId (param) {
+      let res = 0
+      this.classInfos.forEach( item => {
+        if (param.profession === item.profession && param.grade === item.grade && param.classNum === item.classNum) {
+          res = item.classId
+          return
+        }
+      })
+      return res
+    },
     //    搜索按钮
     handleSearch () {
       this.$refs.searchForm.validate(valid => {
@@ -222,7 +300,15 @@ export default {
     resetSearchForm () {
       this.$refs.searchForm.resetFields()
     },
-    handleUpdate () {},
+    //    TODO 修改学生信息
+    handleUpdate (row) {
+      this.editFormData.studentId = row.studentId
+      this.editFormData.name = row.name
+      this.editFormData.profession = row.profession
+      this.editFormData.grade = row.grade
+      this.editFormData.classNum = row.classNum
+      this.dgEditVisible = true
+    },
     deleteStuUser (stuId) {
       return STUINFO.deleteStuUserInfo(stuId).then( res => {
         if ( !(res.msg && res.msg === '操作成功') ) {
@@ -278,8 +364,11 @@ export default {
       })
     },
     addStuInfo () {
+      // //    获取班级ID
+      // let cId = this.getClassId(this.addFormData)
+      // console.log(cId)
       let param = {
-        classId: this.addFormData.classId,
+        classId: this.addFormData.classId,    //    this.getClassId(this.addFormData),
         studentId: this.addFormData.userName,
         name: this.addFormData.nickName
       }
@@ -290,6 +379,12 @@ export default {
       })
     },
     handleAddDialog () {
+      this.addFormData.classId = this.getClassId(this.addFormData)
+      console.log(this.addFormData.classId)
+      if (this.addFormData.classId === null || this.addFormData.classId === 0) {
+        this.$message.error('班级不存在')
+        return
+      }
       this.$refs.addForm.validate( valid => {
         if (valid) {
           Promise.all([ this.addStuUser(), this.addStuInfo() ]).then( () => {
@@ -308,6 +403,27 @@ export default {
     },
     handleAddDgClose () {
       this.$refs.addForm.resetFields()
+    },
+    handleEditDialog () {
+      this.editFormData.classId = this.getClassId(this.editFormData)
+      console.log(this.editFormData.classId)
+      if (this.editFormData.classId === null || this.editFormData.classId === 0) {
+        this.$message.error('班级不存在')
+        return
+      }
+      this.$refs.editForm.validate( valid => {
+        if (valid) {
+          STUINFO.editStuInfo(this.editFormData).then( res => {
+            if (res.msg && res.msg === '操作成功') {
+              this.$message.success('修改成功')
+              this.getInfo()
+              this.dgEditVisible = false
+            } else {
+              this.$message.error('修改失败')
+            }
+          })
+        }
+      })
     }
   }
 }

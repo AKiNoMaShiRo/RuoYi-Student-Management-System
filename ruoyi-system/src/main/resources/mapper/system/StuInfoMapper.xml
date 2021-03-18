@@ -44,6 +44,7 @@
 
     <resultMap id="StuBaseInfoResult" type="StuBaseInfo">
         <id         property="studentId"            column="student_id"/>
+        <result     property="classId"              column="class_id"/>
         <result     property="name"                 column="stu_name"/>
         <result     property="department"           column="department"/>
         <result     property="profession"           column="profession"/>
@@ -73,7 +74,7 @@
     </sql>
 
     <sql id="selectStuUserVo">
-        select u.user_id, s.student_id, s.stu_name, c.department, c.profession, c.grade, c.class_num
+        select u.user_id, s.class_id, s.student_id, s.stu_name, c.department, c.profession, c.grade, c.class_num
         from stu_info s inner join class_info c inner join sys_user u
         on u.user_name = s.student_id and s.class_id = c.class_id
     </sql>
@@ -112,10 +113,21 @@
     <insert id="insertStuRoleInfo" parameterType="Long">
         insert into sys_user_role(user_id, role_id) values (#{userId},2)
     </insert>
-    
+
+    <update id="updateStuBaseInfo" parameterType="StuBaseInfo">
+        update stu_info
+        <set>
+            <if test="classId != null and classId != 0">class_id = #{classId},</if>
+            <if test="name != null and name != ''">stu_name = #{name},</if>
+        </set>
+        where student_id = #{studentId}
+    </update>
+
     <update id="updateStu" parameterType="StuInfo">
         update stu_info
         <set>
+            <if test="classId != null and classId != 0">class_id = #{classId},</if>
+            <if test="name != null and name != ''">stu_name = #{name},</if>
             <if test="graduIntention != null">gradu_intention = #{graduIntention},</if>
             <if test="registration != null">registration = #{registration},</if>
             <if test="teacher != null">teacher = #{teacher},</if>

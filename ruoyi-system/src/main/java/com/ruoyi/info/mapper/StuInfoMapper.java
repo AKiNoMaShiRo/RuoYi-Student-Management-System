@@ -58,6 +58,14 @@ public interface StuInfoMapper {
     public int insertStuRoleInfo(Long userId);
 
     /**
+     * 修改学生基本信息
+     *
+     * @param stuBaseInfo 学生信息
+     * @return 结果
+     */
+    public int updateStuBaseInfo(StuBaseInfo stuBaseInfo);
+
+    /**
      * 修改学生信息
      *
      * @param stuInfo 学生信息

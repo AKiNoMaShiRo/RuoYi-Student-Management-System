@@ -50,6 +50,16 @@ public class StuInfoServiceImpl implements IStuInfoService {
     }
 
 
+//    /**
+//     * 修改学生基本信息
+//     *
+//     * @param stuBaseInfo 学生信息
+//     * @return 结果
+//     */
+//    public int updateStuBase(StuBaseInfo stuBaseInfo){
+//        return infoMapper.updateStuBaseInfo(stuBaseInfo);
+//    }
+
     /**
      * 根据学生学号查询学生基本信息
      *

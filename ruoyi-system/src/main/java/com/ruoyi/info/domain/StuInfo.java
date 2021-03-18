@@ -8,6 +8,10 @@ import java.util.Date;
 public class StuInfo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
+    /** 班级ID */
+    @Excel(name = "班级ID")
+    private String classId;
+
     /** 学号 */
     @Excel(name = "学号")
     private String studentId;
@@ -146,6 +150,14 @@ public class StuInfo extends BaseEntity {
     /** 信息上报项目 */
     @Excel(name = "信息上报项目")
     private String reportItem;
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
 
     public String getStudentId() {
         return studentId;
@@ -430,23 +442,24 @@ public class StuInfo extends BaseEntity {
     @Override
     public String toString() {
         return "StuInfo{" +
-                "studentId='" + studentId + '\'' +
+                "classId='" + classId + '\'' +
+                ", studentId='" + studentId + '\'' +
                 ", department='" + department + '\'' +
                 ", profession='" + profession + '\'' +
                 ", grade=" + grade +
                 ", classNum=" + classNum +
                 ", name='" + name + '\'' +
-                ", graduIntention=" + graduIntention +
-                ", registration=" + registration +
+                ", graduIntention='" + graduIntention + '\'' +
+                ", registration='" + registration + '\'' +
                 ", teacher='" + teacher + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", qq='" + qq + '\'' +
                 ", weChat='" + weChat + '\'' +
-                ", birthday='" + birthday + '\'' +
+                ", birthday=" + birthday +
                 ", nation='" + nation + '\'' +
-                ", politicsStatus=" + politicsStatus +
-                ", joinTime='" + joinTime + '\'' +
+                ", politicsStatus='" + politicsStatus + '\'' +
+                ", joinTime=" + joinTime +
                 ", studentOriginP='" + studentOriginP + '\'' +
                 ", studentOriginC='" + studentOriginC + '\'' +
                 ", studentOriginA='" + studentOriginA + '\'' +
@@ -464,7 +477,7 @@ public class StuInfo extends BaseEntity {
                 ", cet4=" + cet4 +
                 ", cet6=" + cet6 +
                 ", englishName='" + englishName + '\'' +
-                ", reportItem=" + reportItem +
+                ", reportItem='" + reportItem + '\'' +
                 '}';
     }
 }
