@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.grade.mapper.LevelTestMapper">
+
+    <resultMap id="LevelTestResult" type="LevelTest">
+        <result     property="studentId"    column="student_id"/>
+        <result     property="testType"     column="test_type"/>
+        <result     property="testGrade"    column="test_grade"/>
+        <result     property="passTime"     column="pass_time"/>
+        <result     property="remark"       column="remark"/>
+    </resultMap>
+
+    <resultMap id="LevelTestClassResult" type="LevelTestClass">
+        <result     property="studentId"        column="student_id"/>
+        <result     property="testType"         column="test_type"/>
+        <result     property="testGrade"        column="test_grade"/>
+        <result     property="passTime"         column="pass_time"/>
+        <result     property="classId"          column="class_id"/>
+        <result     property="department"       column="department"/>
+        <result     property="profession"       column="profession"/>
+        <result     property="grade"            column="grade"/>
+        <result     property="classNum"         column="class_num"/>
+        <result     property="instructorId"     column="instructor_id"/>
+        <result     property="instructorName"   column="instructor_name"/>
+    </resultMap>
+
+    <sql id="LevelTestVo">
+        select *
+        from level_test
+    </sql>
+
+    <sql id="LevelTestClassVo">
+        select l.*, c.*
+        from level_test l inner join stu_info si inner join class_info ci
+        on l.student_id = si.student_id and si.class_id = ci.class_id
+    </sql>
+
+    <select id="selectByStuId" parameterType="String" resultMap="LevelTestResult">
+        <include refid="LevelTestVo"></include>
+        where student_id = #{studentId}
+    </select>
+
+    <select id="selectByTest" parameterType="LevelTestClass" resultMap="LevelTestClassResult">
+        <include refid="LevelTestVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''">and l.student_id = #{studentId} </if>
+            <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
+            <if test="testGrade != null and testGrade != ''">and l.test_grade = #{testGrade} </if>
+            <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
+            <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
+            <if test="classNum != null and classNum != 0">and l.class_num = #{classNum} </if>
+        </where>
+    </select>
+
+</mapper>

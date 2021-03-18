@@ -138,7 +138,33 @@ create table no_borad (
 ) engine=innodb auto_increment=1000 comment = '外宿申请表';
 
 -- ----------------------------
--- 8、学业预警信息表
+-- 8、等级考试成绩信息表
+-- ----------------------------
+drop table if exists level_test;
+create table level_test (
+  student_id		varchar(20)		not null				   comment '学号',
+  test_type			varchar(50)		not null				   comment '考试类别',
+  test_grade		varchar(20)		not null				   comment '考试成绩',
+  pass_time			datetime		not null				   comment '获得成绩时间',
+  remark			varchar(500)	default null			   comment '备注'
+) engine=innodb comment = '等级考试成绩信息表';
+
+-- ----------------------------
+-- 9、普通课程成绩信息表
+-- ----------------------------
+drop table if exists course_grade;
+create table course_grade (
+  student_id		varchar(20)		not null				   comment '学号',
+  learn_year		varchar(50)		not null				   comment '学年',
+  learn_term		varchar(50)		not null				   comment '学期',
+  course_type		varchar(50)		not null				   comment '课程类别（必修公共，选修公共，实践，学科……）',
+  course_name		varchar(50)		not null				   comment '课程名称',
+  course_grade		int(20)			not null				   comment '课程成绩',
+  course_point		double			not null				   comment '学分'
+) engine=innodb comment = '普通课程成绩信息表';
+
+-- ----------------------------
+-- 9、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (
