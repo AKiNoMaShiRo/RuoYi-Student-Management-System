@@ -8,7 +8,7 @@
         <result     property="studentId"    column="student_id"/>
         <result     property="testType"     column="test_type"/>
         <result     property="testGrade"    column="test_grade"/>
-        <result     property="passTime"     column="pass_time"/>
+        <result     property="testTime"     column="test_time"/>
         <result     property="remark"       column="remark"/>
     </resultMap>
 
@@ -16,7 +16,8 @@
         <result     property="studentId"        column="student_id"/>
         <result     property="testType"         column="test_type"/>
         <result     property="testGrade"        column="test_grade"/>
-        <result     property="passTime"         column="pass_time"/>
+        <result     property="isPass"           column="is_pass"/>
+        <result     property="testTime"         column="test_time"/>
         <result     property="classId"          column="class_id"/>
         <result     property="department"       column="department"/>
         <result     property="profession"       column="profession"/>
@@ -48,7 +49,7 @@
             1=1
             <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
             <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
-            <if test="testGrade != null and testGrade != ''">and l.test_grade = #{testGrade} </if>
+            <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
             <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
             <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
             <if test="classNum != null and classNum != 0">and l.class_num = #{classNum} </if>

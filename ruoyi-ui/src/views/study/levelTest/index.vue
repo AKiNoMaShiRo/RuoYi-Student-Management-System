@@ -15,10 +15,18 @@
             <el-input v-model="searchFormData.studentId" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item label="考试类别" prop="testType">
-            <el-input v-model="searchFormData.testType" size="small" clearable></el-input>
+            <el-select v-model="searchFormData.testType" size="small" clearable>
+              <el-option label="大学英语CET4" value="大学英语CET4"></el-option>
+              <el-option label="大学英语CET6" value="大学英语CET6"></el-option>
+              <el-option label="普通话等级考试" value="普通话等级考试"></el-option>
+              <el-option label="计算机等级考试二级" value="计算机等级考试二级"></el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="考试成绩" prop="testGrade">
-            <el-input v-model="searchFormData.testGrade" size="small" clearable></el-input>
+          <el-form-item label="是否通过" prop="isPass">
+            <el-select v-model="searchFormData.isPass" size="small" clearable>
+              <el-option label="通过" value="yes"></el-option>
+              <el-option label="未通过" value="no"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="专业" prop="profession">
             <el-input v-model="searchFormData.profession" size="small" clearable></el-input>
@@ -72,7 +80,7 @@ export default {
       searchFormData: {
         studentId: '',
         testType: '',
-        testGrade: '',
+        isPass: '',
         profession: '',
         grade: '',
         classNum: ''
@@ -90,6 +98,7 @@ export default {
         { label: '学号', prop: 'studentId', minWidth: '110' },
         { label: '考试类别', prop: 'testType', minWidth: '110' },
         { label: '考试成绩', prop: 'testGrade', minWidth: '90' },
+        { label: '是否通过', prop: 'isPass', minWidth: '100' },
         { label: '获得成绩时间', prop: 'passTime', minWidth: '100' },
         { label: '备注', prop: 'remark', minWidth: '120' }
       ]
@@ -184,6 +193,8 @@ export default {
         return '--'
       } else if (prop === 'passTime') {
         return moment(val).format('yyyy-MM')
+      } else if (prop === 'isPass') {
+        return val === 'yes' ? '通过' : '未通过'
       } else {
         return val
       }

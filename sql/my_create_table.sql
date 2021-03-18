@@ -145,7 +145,8 @@ create table level_test (
   student_id		varchar(20)		not null				   comment '学号',
   test_type			varchar(50)		not null				   comment '考试类别',
   test_grade		varchar(20)		not null				   comment '考试成绩',
-  pass_time			datetime		not null				   comment '获得成绩时间',
+  is_pass			varchar(10)		not null				   comment '是否通过',
+  test_time			datetime		not null				   comment '获得成绩时间',
   remark			varchar(500)	default null			   comment '备注'
 ) engine=innodb comment = '等级考试成绩信息表';
 

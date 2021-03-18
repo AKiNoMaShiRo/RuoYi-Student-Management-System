@@ -19,10 +19,14 @@ public class LevelTestClass extends BaseEntity {
     @Excel(name = "考试成绩")
     private String testGrade;
 
+    /** 是否通过 */
+    @Excel(name = "是否通过")
+    private String isPass;
+
     /** 获得成绩时间 */
     @Excel(name = "获得成绩时间", dateFormat = "yyyy-MM-dd")
     @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
-    private String passTime;
+    private String testTime;
 
     /** 备注 */
     @Excel(name = "备注")
@@ -80,12 +84,20 @@ public class LevelTestClass extends BaseEntity {
         this.testGrade = testGrade;
     }
 
-    public String getPassTime() {
-        return passTime;
+    public String getIsPass() {
+        return isPass;
     }
 
-    public void setPassTime(String passTime) {
-        this.passTime = passTime;
+    public void setIsPass(String isPass) {
+        this.isPass = isPass;
+    }
+
+    public String getTestTime() {
+        return testTime;
+    }
+
+    public void setTestTime(String testTime) {
+        this.testTime = testTime;
     }
 
     @Override
@@ -160,7 +172,8 @@ public class LevelTestClass extends BaseEntity {
                 "studentId='" + studentId + '\'' +
                 ", testType='" + testType + '\'' +
                 ", testGrade='" + testGrade + '\'' +
-                ", passTime='" + passTime + '\'' +
+                ", isPass='" + isPass + '\'' +
+                ", testTime='" + testTime + '\'' +
                 ", remark='" + remark + '\'' +
                 ", classId=" + classId +
                 ", department='" + department + '\'' +
