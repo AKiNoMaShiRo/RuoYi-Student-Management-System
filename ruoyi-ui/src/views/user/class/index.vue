@@ -126,31 +126,31 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button size="small" @click="dgAddVisible = false">取消</el-button>
-            <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
+          <el-button size="small" @click="dgAddVisible = false">取消</el-button>
+          <el-button size="small" type="primary" @click="handleAddDialog">确定</el-button>
         </div>
       </el-dialog>
       <el-dialog title="修改班级信息" :visible.sync="dgEditVisible">
         <el-form :model="editFormData" :rules="rules" ref="editForm" label-width="95px" inline>
-            <el-form-item label="学院" prop="department">
-              <el-input v-model="editFormData.department" size="small" clearable disabled></el-input>
-            </el-form-item>
-            <el-form-item label="专业" prop="profession">
-              <el-input v-model="editFormData.profession" size="small" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="年级" prop="grade">
-              <el-input v-model.number="editFormData.grade" size="small" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="班级序号" prop="classNum">
-              <el-input v-model.number="editFormData.classNum" size="small" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="辅导员工号" prop="instructorId">
-              <el-input v-model="editFormData.instructorId" size="small" clearable></el-input>
-            </el-form-item>
+          <el-form-item label="学院" prop="department">
+            <el-input v-model="editFormData.department" size="small" clearable disabled></el-input>
+          </el-form-item>
+          <el-form-item label="专业" prop="profession">
+            <el-input v-model="editFormData.profession" size="small" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="年级" prop="grade">
+            <el-input v-model.number="editFormData.grade" size="small" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="班级序号" prop="classNum">
+            <el-input v-model.number="editFormData.classNum" size="small" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="辅导员工号" prop="instructorId">
+            <el-input v-model="editFormData.instructorId" size="small" clearable></el-input>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button size="small" @click="dgEditVisible = false">取消</el-button>
-            <el-button size="small" type="primary" @click="handleEditDialog">确定</el-button>
+          <el-button size="small" @click="dgEditVisible = false">取消</el-button>
+          <el-button size="small" type="primary" @click="handleEditDialog">确定</el-button>
         </div>
       </el-dialog>
     </div>

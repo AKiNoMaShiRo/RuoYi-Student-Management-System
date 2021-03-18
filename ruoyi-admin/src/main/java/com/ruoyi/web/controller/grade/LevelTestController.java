@@ -29,7 +29,7 @@ public class LevelTestController extends BaseController {
     @Autowired
     private ILevelTestService levelTestService;
 
-    @ApiOperation("根据学号查询节假日去向报备")
+    @ApiOperation("根据学号查询学生等级考试成绩")
     @GetMapping("/queryById")
     public TableDataInfo getLevelTest(String studentId) {
         startPage();
@@ -37,7 +37,7 @@ public class LevelTestController extends BaseController {
         return getDataTable(levelTests);
     }
 
-    @ApiOperation("根据学号查询节假日去向报备")
+    @ApiOperation("根据等级考试信息查询学生成绩，含班级信息")
     @GetMapping("/queryByLT")
     public TableDataInfo getLevelTestClass(LevelTestClass levelTestClass) {
         startPage();

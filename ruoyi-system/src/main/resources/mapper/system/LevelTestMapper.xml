@@ -32,7 +32,7 @@
     </sql>
 
     <sql id="LevelTestClassVo">
-        select l.*, c.*
+        select l.*, ci.*
         from level_test l inner join stu_info si inner join class_info ci
         on l.student_id = si.student_id and si.class_id = ci.class_id
     </sql>
@@ -43,10 +43,10 @@
     </select>
 
     <select id="selectByTest" parameterType="LevelTestClass" resultMap="LevelTestClassResult">
-        <include refid="LevelTestVo"></include>
+        <include refid="LevelTestClassVo"></include>
         <where>
             1=1
-            <if test="studentId != null and studentId != ''">and l.student_id = #{studentId} </if>
+            <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
             <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
             <if test="testGrade != null and testGrade != ''">and l.test_grade = #{testGrade} </if>
             <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
