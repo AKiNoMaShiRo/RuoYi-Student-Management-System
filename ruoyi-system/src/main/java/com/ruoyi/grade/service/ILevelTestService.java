@@ -18,9 +18,17 @@ public interface ILevelTestService {
     /**
      * 根据等级考试信息查询学生成绩，含班级信息
      *
-     * @param levelTestClass 学号
+     * @param levelTestClass 等级考试信息
      * @return 结果
      */
     public List<LevelTestClass> selectByTest(LevelTestClass levelTestClass);
+
+    /**
+     * 根据等级考试信息查询学生成绩，含班级信息
+     *
+     * @param levelTestClass 等级考试信息
+     * @return 结果
+     */
+    public double selectRateByTest(LevelTestClass levelTestClass);
 
 }

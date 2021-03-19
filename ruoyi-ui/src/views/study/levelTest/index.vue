@@ -132,6 +132,11 @@ export default {
   },
   created () {
     this.getInfo()
+    LEVELTEST.getPassRateByLT({testType: '大学英语CET6'}).then( res => {
+      if (res && res.data) {
+        console.log(res.data)
+      }
+    })
   },
   methods: {
     getInfo () {

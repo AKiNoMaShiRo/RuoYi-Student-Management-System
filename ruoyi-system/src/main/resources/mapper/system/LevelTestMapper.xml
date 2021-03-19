@@ -40,6 +40,12 @@
         on l.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
     </sql>
 
+    <sql id="LevelTestCountVo">
+        select COUNT(test_grade)
+        from level_test l inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on l.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
+    </sql>
+
     <select id="selectByStuId" parameterType="String" resultMap="LevelTestResult">
         <include refid="LevelTestVo"></include>
         where student_id = #{studentId}
@@ -47,6 +53,34 @@
 
     <select id="selectByTest" parameterType="LevelTestClass" resultMap="LevelTestClassResult">
         <include refid="LevelTestClassVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
+            <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
+            <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
+            <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
+            <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
+            <if test="classNum != null and classNum != 0">and ci.class_num = #{classNum} </if>
+            <if test="instructorId != null and instructorId != ''">and ci.instructor_id = #{instructorId}</if>
+        </where>
+    </select>
+
+    <select id="selectCountByTest" parameterType="LevelTestClass" resultType="int">
+        <include refid="LevelTestCountVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
+            <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
+            <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
+            <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
+            <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
+            <if test="classNum != null and classNum != 0">and ci.class_num = #{classNum} </if>
+            <if test="instructorId != null and instructorId != ''">and ci.instructor_id = #{instructorId}</if>
+        </where>
+    </select>
+
+    <select id="selectPassByTest" parameterType="LevelTestClass" resultType="int">
+        <include refid="LevelTestCountVo"></include>
         <where>
             1=1
             <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>

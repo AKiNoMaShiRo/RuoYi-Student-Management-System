@@ -2,6 +2,7 @@ package com.ruoyi.web.controller.grade;
 
 import com.ruoyi.affair.domain.Holiday;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.grade.domain.LevelTest;
 import com.ruoyi.grade.domain.LevelTestClass;
@@ -43,6 +44,15 @@ public class LevelTestController extends BaseController {
         startPage();
         List<LevelTestClass> levelTests = levelTestService.selectByTest(levelTestClass);
         return getDataTable(levelTests);
+    }
+
+    @ApiOperation("根据等级考试信息查询通过率")
+    @GetMapping("/queryRate")
+    public AjaxResult getLevelTestPassRate(LevelTestClass levelTestClass) {
+        double res = levelTestService.selectRateByTest(levelTestClass);
+        AjaxResult ajaxResult = AjaxResult.success();
+        ajaxResult.put(AjaxResult.DATA_TAG, res);
+        return ajaxResult;
     }
 
 }

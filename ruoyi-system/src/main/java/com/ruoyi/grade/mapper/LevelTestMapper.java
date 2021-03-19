@@ -23,4 +23,12 @@ public interface LevelTestMapper {
      */
     public List<LevelTestClass> selectByTest(LevelTestClass levelTestClass);
 
+    /**
+     * 根据等级考试信息查询总条数
+     *
+     * @param levelTestClass 等级考试信息
+     * @return 结果
+     */
+    public int selectCountByTest(LevelTestClass levelTestClass);
+
 }

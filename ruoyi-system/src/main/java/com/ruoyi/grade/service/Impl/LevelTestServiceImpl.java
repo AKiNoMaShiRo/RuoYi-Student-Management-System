@@ -28,11 +28,24 @@ public class LevelTestServiceImpl implements ILevelTestService {
     /**
      * 根据等级考试信息查询学生成绩，含班级信息
      *
-     * @param levelTestClass 学号
+     * @param levelTestClass 等级考试信息
      * @return 结果
      */
     public List<LevelTestClass> selectByTest(LevelTestClass levelTestClass){
         return levelTestMapper.selectByTest(levelTestClass);
+    }
+
+    /**
+     * 根据等级考试信息查询学生成绩，含班级信息
+     *
+     * @param levelTestClass 等级考试信息
+     * @return 结果
+     */
+    public double selectRateByTest(LevelTestClass levelTestClass){
+        int sum = levelTestMapper.selectCountByTest(levelTestClass);
+        levelTestClass.setIsPass("yes");
+        int passNum = levelTestMapper.selectCountByTest(levelTestClass);
+        return (double) passNum / (double) sum;
     }
 
 }
