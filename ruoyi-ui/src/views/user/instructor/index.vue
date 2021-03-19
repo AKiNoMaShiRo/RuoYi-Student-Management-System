@@ -110,7 +110,7 @@
 <script>
 import Pagination from '../../components/Pagination.vue'
 import * as INSINFO from '@/api/info/instructorInfo.js'
-import { addUser, delUser } from '@/api/system/user'
+import { addUser, resetUserPwd } from '@/api/system/user'
 
 export default {
   components: {

@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 const BASEPATH = '/level/test'
 
-//    根据学号查询学生等级考试成绩
+//    根据学号查询学生等级考试成绩(暂未使用)
 export function getByStuId(query) {
     return request({
         url: BASEPATH + '/queryById',

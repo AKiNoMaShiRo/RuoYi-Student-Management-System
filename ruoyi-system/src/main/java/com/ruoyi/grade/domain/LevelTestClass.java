@@ -32,6 +32,10 @@ public class LevelTestClass extends BaseEntity {
     @Excel(name = "备注")
     private String remark;
 
+    /** 学生姓名 */
+    @Excel(name = "学生姓名")
+    private String stuName;
+
     /** 班级信息编号 */
     @Excel(name = "班级信息编号")
     private Long classId;
@@ -110,6 +114,14 @@ public class LevelTestClass extends BaseEntity {
         this.remark = remark;
     }
 
+    public String getStuName() {
+        return stuName;
+    }
+
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
+    }
+
     public Long getClassId() {
         return classId;
     }
@@ -175,6 +187,7 @@ public class LevelTestClass extends BaseEntity {
                 ", isPass='" + isPass + '\'' +
                 ", testTime='" + testTime + '\'' +
                 ", remark='" + remark + '\'' +
+                ", stuName='" + stuName + '\'' +
                 ", classId=" + classId +
                 ", department='" + department + '\'' +
                 ", profession='" + profession + '\'' +

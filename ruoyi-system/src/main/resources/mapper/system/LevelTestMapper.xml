@@ -18,6 +18,8 @@
         <result     property="testGrade"        column="test_grade"/>
         <result     property="isPass"           column="is_pass"/>
         <result     property="testTime"         column="test_time"/>
+        <result     property="remark"           column="remark"/>
+        <result     property="stuName"          column="stu_name"/>
         <result     property="classId"          column="class_id"/>
         <result     property="department"       column="department"/>
         <result     property="profession"       column="profession"/>
@@ -33,9 +35,9 @@
     </sql>
 
     <sql id="LevelTestClassVo">
-        select l.*, ci.*
-        from level_test l inner join stu_info si inner join class_info ci
-        on l.student_id = si.student_id and si.class_id = ci.class_id
+        select l.*, si.stu_name, ci.*, ii.instructor_name
+        from level_test l inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on l.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
     </sql>
 
     <select id="selectByStuId" parameterType="String" resultMap="LevelTestResult">
@@ -52,7 +54,8 @@
             <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
             <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
             <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
-            <if test="classNum != null and classNum != 0">and l.class_num = #{classNum} </if>
+            <if test="classNum != null and classNum != 0">and ci.class_num = #{classNum} </if>
+            <if test="instructorId != null and instructorId != ''">and ci.instructor_id = #{instructorId}</if>
         </where>
     </select>
 
