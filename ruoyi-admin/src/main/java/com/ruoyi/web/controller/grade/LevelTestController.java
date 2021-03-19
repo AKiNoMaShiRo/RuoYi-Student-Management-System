@@ -11,10 +11,10 @@ import com.ruoyi.info.service.IClassInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,10 +46,24 @@ public class LevelTestController extends BaseController {
         return getDataTable(levelTests);
     }
 
+//    @ApiOperation("根据等级考试信息查询通过率")
+//    @GetMapping("/queryRate")
+//    public AjaxResult getLevelTestPassRate(LevelTestClass levelTestClass) {
+//        double res = levelTestService.selectRateByTest(levelTestClass);
+//        AjaxResult ajaxResult = AjaxResult.success();
+//        ajaxResult.put(AjaxResult.DATA_TAG, res);
+//        return ajaxResult;
+//    }
+
     @ApiOperation("根据等级考试信息查询通过率")
-    @GetMapping("/queryRate")
-    public AjaxResult getLevelTestPassRate(LevelTestClass levelTestClass) {
-        double res = levelTestService.selectRateByTest(levelTestClass);
+    @PostMapping("/queryRate")
+    public AjaxResult getLevelTestPassRate(@Validated @RequestBody LevelTestClass[] levelTestClass) {
+        int len = levelTestClass.length;
+        double[] res = new double[len];
+        for(int i = 0; i < levelTestClass.length ; i ++){
+            res[i] = levelTestService.selectRateByTest(levelTestClass[i]);
+        }
+//        double res = levelTestService.selectRateByTest(levelTestClass);
         AjaxResult ajaxResult = AjaxResult.success();
         ajaxResult.put(AjaxResult.DATA_TAG, res);
         return ajaxResult;

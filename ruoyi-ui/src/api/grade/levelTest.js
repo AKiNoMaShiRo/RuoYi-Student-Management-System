@@ -25,7 +25,7 @@ export function getByLT(query) {
 export function getPassRateByLT(query) {
     return request({
         url: BASEPATH + '/queryRate',
-        method: 'get',
-        params: query
+        method: 'post',
+        data: query
     })
 }

@@ -1,0 +1,32 @@
+.echarts {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden;
+  &-tooltip-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  &-tooltip-val{//！和highcharts保持一致，数值需要加粗，并且加上margin-left，如其他图需要用请自行添加
+    font-weight: 600;
+  }
+  .echarts-tooltip-title,
+  .echarts-tooltip {
+    font-size: 12px;
+  }
+  .ehcarts-lineheight{
+    line-height:18px; // ！为了和highcharts和echarts tooltip 为trigger:'item'的情况保持样式一致，如其他图需要用请自行添加
+  }
+}
+.echarts-wrap {
+  position: relative;
+  .fe-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: none;
+  }
+}

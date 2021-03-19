@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="am-box">
-      <section v-if="roleName !== '学生'" class="am-px am-bd-b">
+      <section v-if="roleName !== '学生'" class="am-bd-b">
         <ol class="am-py am-tabs-inline am-no-shrink">
           <li :class="{ active: activeIndex === 'table' }" @click="handleTabClick('table')">
             <span>成绩列表</span>
@@ -78,6 +78,7 @@
         </div>
       </section>
       <!-- 图表展示 -->
+      <LevelTestChart v-show="activeIndex === 'chart'"></LevelTestChart>
     </div>
   </div>
 </template>
@@ -87,9 +88,10 @@ import { mapState } from 'vuex'
 import * as LEVELTEST from '@/api/grade/levelTest.js'
 import Pagination from '../../components/Pagination.vue'
 import moment from 'moment'
+import LevelTestChart from './components/levelTestChart'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, LevelTestChart },
   data () {
     return {
       activeIndex: 'table',
@@ -132,11 +134,15 @@ export default {
   },
   created () {
     this.getInfo()
-    LEVELTEST.getPassRateByLT({testType: '大学英语CET6'}).then( res => {
-      if (res && res.data) {
-        console.log(res.data)
-      }
-    })
+    // let param = [
+    //   {testType: '大学英语CET4', profession: '软件工程', grade: 17, classNum: 2},
+    //   {testType: '大学英语CET6', profession: '软件工程', grade: 17, classNum: 2},
+    // ]
+    // LEVELTEST.getPassRateByLT(param).then( res => {
+    //   if (res && res.data) {
+    //     console.log(res.data)
+    //   }
+    // })
   },
   methods: {
     getInfo () {

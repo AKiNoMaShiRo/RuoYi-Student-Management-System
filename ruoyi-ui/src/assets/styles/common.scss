@@ -195,10 +195,16 @@
   flex-direction: column;
 }
 
-//水平轴中心对齐
+//垂直居中
 .am-flex-align-center {
   display: flex;
   align-items: center;
+}
+
+//水平居中
+.am-flex-justify-center {
+  display: flex;
+  justify-content: center;
 }
 
 //水平垂直居中
