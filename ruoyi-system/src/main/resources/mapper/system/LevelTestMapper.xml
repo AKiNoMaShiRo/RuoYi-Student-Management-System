@@ -58,6 +58,7 @@
             <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
             <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
             <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
+            <if test="classId != null and classId != 0">and ci.class_id = #{classId} </if>
             <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
             <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
             <if test="classNum != null and classNum != 0">and ci.class_num = #{classNum} </if>
@@ -72,6 +73,7 @@
             <if test="studentId != null and studentId != ''">and l.student_id like concat('%', #{studentId}, '%') </if>
             <if test="testType != null and testType != ''">and l.test_type = #{testType} </if>
             <if test="isPass != null and isPass != ''">and l.is_pass = #{isPass} </if>
+            <if test="classId != null and classId != 0">and ci.class_id = #{classId} </if>
             <if test="profession != null and profession != ''">and ci.profession = #{profession} </if>
             <if test="grade != null and grade != 0">and ci.grade = #{grade} </if>
             <if test="classNum != null and classNum != 0">and ci.class_num = #{classNum} </if>

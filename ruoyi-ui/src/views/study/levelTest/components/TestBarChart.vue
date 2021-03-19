@@ -1,5 +1,5 @@
 <template>
-  <div :class="className" style="height: 280px; width: 100%;" />
+  <div :class="className" :style="{ height:height, width:width }" />
 </template>
 
 <script>
@@ -16,6 +16,14 @@ export default {
       type: String,
       required: false,
       default: 'chart'
+    },
+    width: {
+      type: String,
+      default: '100%'
+    },
+    height: {
+      type: String,
+      default: '280px'
     },
     //    X轴标签
     xAxis: {
@@ -88,15 +96,43 @@ export default {
           type: 'category',
           data: this.xAxis,
           axisTick: {
-            alignWithLabel: true
-          }
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          // axisTick: {
+          //   alignWithLabel: true
+          // }
         }],
         yAxis: [{
           type: 'value',
           axisTick: {
             show: false
-          }
+          },
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            clickable: true,
+            formatter: function (value) {
+              return value + '%'
+            }
+          },
         }],
+        tooltip: {
+          trigger: "axis",
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(0,0,0,0.50)',
+          useHTML: true,
+          padding: [5, 10, 6, 10],
+          axisPointer: {
+            type: "shadow",
+            shadowStyle: {
+              color: 'rgba(204,214,235,0.25)'
+            }
+          }
+        },
         series: this.series
       })
     }

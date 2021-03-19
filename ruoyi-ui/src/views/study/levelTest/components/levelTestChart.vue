@@ -1,72 +1,21 @@
 <template>
   <section>
-    <!-- <div class="am-bd-b am-px" style="margin-top: 6px;">
-      <el-form
-        ref="typeForm"
-        label-width="80px"
-        :model="typeFormData"
-        :rules="typeRules"
-        inline
-      >
-        <el-form-item label="添加考试类别" label-width="100px"></el-form-item>
-        <el-form-item label="考试类别" prop="testType">
-          <el-select v-model="typeFormData.testType" size="small" label-width="60px" clearable multiple collapse-tags>
-            <el-option label="大学英语CET4" value="大学英语CET4"></el-option>
-            <el-option label="大学英语CET6" value="大学英语CET6"></el-option>
-            <el-option label="普通话等级考试" value="普通话等级考试"></el-option>
-            <el-option label="计算机等级考试二级" value="计算机等级考试二级"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label=" ">
-          <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddType">添加</el-button>
-        </el-form-item>
-      </el-form>
-    </div> -->
-    <div v-if="roleName !== '辅导员'" class="am-bd-b am-px" style="margin-top: 6px;">
-      <el-form
-        ref="classForm"
-        label-width="50px"
-        :model="classFormData"
-        :rules="classRules"
-        inline
-      >
-        <el-form-item label="添加班级" label-width="80px"></el-form-item>
-        <el-form-item label="专业" prop="profession">
-          <el-input v-model="classFormData.profession" size="small" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="年级" prop="grade">
-          <el-input v-model.number="classFormData.grade" size="small" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="班级" prop="classNum">
-          <el-input v-model.number="classFormData.classNum" size="small" clearable></el-input>
-        </el-form-item>
-        <el-form-item label=" ">
-          <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAddClass">添加</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <div class="chart am-p am-flex" style="height: 300px;">
-      <!-- 图表区域 -->
-      <section class="left am-flex am-flex-justify-center">
-        <!-- 考试类别 -->
-        <el-checkbox-group v-model="testType" size="medium">
-          <el-checkbox label="大学英语CET4" border></el-checkbox>
-          <el-checkbox label="大学英语CET6" border></el-checkbox>
-          <el-checkbox label="普通话等级考试" border></el-checkbox>
-          <el-checkbox label="计算机等级考试二级" border></el-checkbox>
-        </el-checkbox-group>
-      </section>
-      <section class="right">
-        <test-bar-chart :xAxis="chartOptions.xAxis" :series="chartOptions.series" />
-      </section>
+    <div class="am-p am-flex" style="height: 300px;">
+        <test-bar-chart
+          v-loading="loadingChart"
+          v-if="showChart"
+          :xAxis="chartOptions.xAxis"
+          :series="chartOptions.series"
+          :width="chartOptions.width" />
     </div>
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { getClassInfo } from '@/api/info/classInfo.js'
-import TestBarChart from './TestBarChart'
+import { getClassInfo, getProfessionType } from '@/api/info/classInfo.js'
+import TestBarChart from './testBarChart'
+import * as LEVELTEST from '@/api/grade/levelTest.js'
 
 const animationDuration = 6000
 
@@ -76,41 +25,40 @@ export default {
   },
   data () {
     return {
-      testType: [], //    选中的复选框的值，一个数组
-      classFormData: {
-        profession: '',
-        grade: '',
-        classNum: ''
-      },
-      classRules: {
-        profession: [ { required: true, message: '请输入专业名称', trigger: 'blur' } ],
-        grade: [
-          { required: true, message: '请输入年级', trigger: 'blur' },
-          { type: 'number', message: '年级必须为数字值'}
-        ],
-        classNum: [
-          { required: true, message: '请输入班级序号', trigger: 'blur' },
-          { type: 'number', message: '班级序号必须为数字值'}
-        ],
-      },
-      authClass: [],
+      showChart: false,
+      loadingChart: false,
+      authedClass: [ ], //    有权限的所有班级{classId, profession, grade, classNum}
+      classList: [], //    √班级信息{classId: null, label: ''}  X复选框的值
+      testTypeList: [ '大学英语CET4', '大学英语CET6', '计算机等级考试二级', '普通话等级考试' ],
       chartOptions: {
-        xAxis: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        width: '1100px',
+        xAxis: [],
         series: [{
-          name: 'pageA',
+          name: '大学英语CET4',
           type: 'bar',
-          // stack: 'vistors',
-          barWidth: '18',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          barWidth: '12',
+          data: [],
           animationDuration
-        },{
-          name: 'pageB',
+        }, {
+          name: '大学英语CET6',
           type: 'bar',
-          // stack: 'vistors',
-          barWidth: '18',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          stack: 'vistors',
+          barWidth: '12',
+          data: [],
           animationDuration
-        },]
+        }, {
+          name: '计算机等级考试二级',
+          type: 'bar',
+          barWidth: '12',
+          data: [],
+          animationDuration
+        }, {
+          name: '普通话等级考试',
+          type: 'bar',
+          barWidth: '12',
+          data: [],
+          animationDuration
+        }]
       }
     }
   },
@@ -120,39 +68,81 @@ export default {
       roleName: state => state.user.roleName
     })
   },
-  watch: {
-    testType (value) {
-      // console.log(value)
-    }
-  },
   created () {
-    let param = {}
-    if (this.roleName === '辅导员') {
-      param.instructorId = this.userName
-    }
-    getClassInfo(param).then( res => {
-      if (res.rows && res.rows.length !== 0) {
-        this.authClass = res.rows
-        console.log(this.authClass)
-      }
-    })
+    this.getInfo()
   },
   methods: {
-    // handleAddType () {
-    //   this.$refs.typeForm.validate ( valid => {
-    //     if (valid) {
-    //       console.log(this.typeFormData)
-    //     }
-    //   })
-    // },
-    handleAddClass () {
-      this.$refs.classForm.validate ( valid => {
-        if (valid) {
-          console.log(this.classFormData)
-        }
+    getChartData (type) {  //参数为考试种类
+      let param = new Array()  //对象数组
+      this.authedClass.forEach( item => {
+        param.push({
+          testType: type,
+          ...item
+        })
+      })
+      return LEVELTEST.getPassRateByLT(param).then( res => {
+        this.chartOptions.series.forEach( item => {
+          if (item.name === type) {
+            if (res.data && res.data.length !== 0){
+              item.data = res.data
+            }
+          }
+        })
       })
     },
-    handleSearch () {}
+    getInfo () {
+      this.loadingChart = true
+      let param = {}
+      if (this.roleName === '辅导员') {
+        param.instructorId = this.userName
+        getClassInfo(param).then( res => {
+          if (res.rows && res.rows.length !== 0) {
+            this.authedClass = res.rows
+            this.authedClass.forEach( item =>{
+              let str = item.grade + item.profession + item.classNum + '班'
+              this.chartOptions.xAxis.push(str)
+              this.classList.push({ classId: item.classId, label: str })
+            })
+            let promises = new Array(4)
+            this.testTypeList.forEach( (typeItem, index) => {
+              promises[index] = this.getChartData(typeItem)
+            })
+            Promise.all(promises).then( () => {
+              this.showChart = true
+              this.loadingChart = false
+            })
+          } else {
+            this.$message.error(('暂无权限'));
+          }
+        }).catch( () => {
+          this.$message.error(('获取查看权限失败'));
+        })
+      } else {
+        getProfessionType().then( res => {
+          if (res.data && res.data.length !== 0) {
+            res.data.forEach( item => {
+              this.authedClass.push({ profession : item })
+            })
+            console.log(this.authedClass)
+            this.authedClass.forEach( item =>{
+              this.chartOptions.xAxis.push(item.profession)
+              this.classList.push({ classId: '', label: item.profession })
+            })
+            console.log(this.chartOptions.xAxis)
+            let promises = new Array(4)
+            this.testTypeList.forEach( (typeItem, index) => {
+              promises[index] = this.getChartData(typeItem)
+            })
+            Promise.all(promises).then( () => {
+              this.showChart = true
+              this.loadingChart = false
+            })
+          }
+        }).catch( () => {
+          this.$message.error(('获取查看权限失败'));
+        })
+      }
+    }
   }
 }
 </script>

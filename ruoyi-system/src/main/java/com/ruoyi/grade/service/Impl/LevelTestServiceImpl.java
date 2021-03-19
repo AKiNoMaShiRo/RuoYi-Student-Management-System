@@ -45,7 +45,7 @@ public class LevelTestServiceImpl implements ILevelTestService {
         int sum = levelTestMapper.selectCountByTest(levelTestClass);
         levelTestClass.setIsPass("yes");
         int passNum = levelTestMapper.selectCountByTest(levelTestClass);
-        return (double) passNum / (double) sum;
+        return ((double) passNum / (double) sum) * 100;
     }
 
 }

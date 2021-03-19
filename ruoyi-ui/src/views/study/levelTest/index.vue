@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
-    <div class="am-box">
-      <section v-if="roleName !== '学生'" class="am-bd-b">
+    <div v-if="roleName !== '学生'" class="am-box am-mb">
+      <section class="am-bd-b">
         <ol class="am-py am-tabs-inline am-no-shrink">
           <li :class="{ active: activeIndex === 'table' }" @click="handleTabClick('table')">
-            <span>成绩列表</span>
+            <span>成绩查询</span>
           </li>
           <li :class="{ active: activeIndex === 'chart' }" @click="handleTabClick('chart')">
-            <span>通过率图表</span>
+            <span>图表分析</span>
           </li>
         </ol>
       </section>
@@ -30,8 +30,8 @@
               <el-select v-model="searchFormData.testType" size="small" clearable>
                 <el-option label="大学英语CET4" value="大学英语CET4"></el-option>
                 <el-option label="大学英语CET6" value="大学英语CET6"></el-option>
-                <el-option label="普通话等级考试" value="普通话等级考试"></el-option>
                 <el-option label="计算机等级考试二级" value="计算机等级考试二级"></el-option>
+                <el-option label="普通话等级考试" value="普通话等级考试"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否通过" prop="isPass">
@@ -57,7 +57,7 @@
           <el-table
             v-loading="tableLoading"
             :data="tableData"
-            height="382px"
+            :height="tableHeight"
             class="am-mt"
             highlight-current-row
           >
@@ -79,6 +79,10 @@
       </section>
       <!-- 图表展示 -->
       <LevelTestChart v-show="activeIndex === 'chart'"></LevelTestChart>
+       <!-- :chartOptions="chartOptions" -->
+    </div>
+    <div class="am-box">
+      <TestRate v-if="roleName === '超级管理员'" v-show="activeIndex === 'table'"></TestRate>
     </div>
   </div>
 </template>
@@ -89,9 +93,10 @@ import * as LEVELTEST from '@/api/grade/levelTest.js'
 import Pagination from '../../components/Pagination.vue'
 import moment from 'moment'
 import LevelTestChart from './components/levelTestChart'
+import TestRate from './components/testRate'
 
 export default {
-  components: { Pagination, LevelTestChart },
+  components: { Pagination, LevelTestChart, TestRate },
   data () {
     return {
       activeIndex: 'table',
@@ -123,26 +128,21 @@ export default {
         { label: '是否通过', prop: 'isPass', minWidth: '100' },
         { label: '获得成绩时间', prop: 'testTime', minWidth: '100' },
         { label: '备注', prop: 'remark', minWidth: '120' }
-      ]
+      ],
+      chartOptions: {}
     }
   },
   computed: {
     ...mapState({
       userName: state => state.user.name,
       roleName: state => state.user.roleName
-    })
+    }),
+    tableHeight () {
+      return this.total > this.pageSize ? 'calc(264px + 40px)' : '264px'
+    }
   },
   created () {
     this.getInfo()
-    // let param = [
-    //   {testType: '大学英语CET4', profession: '软件工程', grade: 17, classNum: 2},
-    //   {testType: '大学英语CET6', profession: '软件工程', grade: 17, classNum: 2},
-    // ]
-    // LEVELTEST.getPassRateByLT(param).then( res => {
-    //   if (res && res.data) {
-    //     console.log(res.data)
-    //   }
-    // })
   },
   methods: {
     getInfo () {
@@ -160,7 +160,7 @@ export default {
           this.total = res.total
         } else {
           this.tableData = []
-          this.total = res.total
+          this.total = 0
         }
       }).finally( () => {
         this.tableLoading = false

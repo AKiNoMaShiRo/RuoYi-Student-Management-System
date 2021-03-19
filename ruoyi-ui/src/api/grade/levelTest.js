@@ -21,7 +21,7 @@ export function getByLT(query) {
 }
 
 
-//    根据等级考试信息查询学生成绩，含班级信息
+//    根据等级考试信息查询通过率，含班级信息，可查多个结果
 export function getPassRateByLT(query) {
     return request({
         url: BASEPATH + '/queryRate',
