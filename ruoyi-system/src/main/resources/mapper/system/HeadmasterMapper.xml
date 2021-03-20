@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.HeadmasterInfoMapper">
+
+    <resultMap id="HeadmasterInfoResult" type="HeadmasterInfo">
+        <id         property="userId"           column="user_id"/>
+        <result     property="headmasterId"     column="headmaster_id"/>
+        <result     property="headmasterName"   column="headmaster_name"/>
+    </resultMap>
+
+    <sql id="HeadmasterInfoVo">
+        select su.user_id, hi.*
+        from headmaster_info hi inner join sys_user su
+        on hi.headmaster_id = su.user_name
+    </sql>
+
+    <select id="selectHeadmaster" parameterType="string" resultMap="HeadmasterInfoResult">
+        <include refid="HeadmasterInfoVo"></include>
+        where hi.headmaster_id = #{headmasterId}
+    </select>
+
+    <select id="selectAllHeadmaster" parameterType="HeadmasterInfo" resultMap="HeadmasterInfoResult">
+        <include refid="HeadmasterInfoVo"></include>
+        <where>
+            1=1
+            <if test="headmasterId != null and headmasterId != ''">
+                and hi.headmaster_id like concat('%', #{headmasterId}, '%')
+            </if>
+            <if test="headmasterName != null and headmasterName != ''">
+                and hi.headmaster_name like concat('%', #{headmasterName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertHeadmaster" parameterType="HeadmasterInfo">
+        insert into headmaster_info values ( #{headmasterId}, #{headmasterName} )
+    </insert>
+
+    <insert id="insertHeadmasterRole" parameterType="Long">
+        insert into sys_user_role(user_id, role_id) values (#{userId},3)
+    </insert>
+
+    <delete id="deleteHeadmaster" parameterType="String">
+        delete from headmaster_info where headmaster_id = #{headmasterId}
+    </delete>
+
+</mapper>

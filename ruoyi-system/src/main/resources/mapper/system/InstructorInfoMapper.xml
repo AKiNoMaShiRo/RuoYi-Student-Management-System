@@ -45,9 +45,5 @@
     <delete id="deleteInstructor" parameterType="String">
         delete from instructor_info where instructor_id = #{instructorId}
     </delete>
-
-    <delete id="deleteInstructorUser" parameterType="String">
-        delete from instructor_info where instructor_id = #{instructorId}
-    </delete>
     
 </mapper>

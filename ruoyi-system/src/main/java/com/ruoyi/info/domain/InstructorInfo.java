@@ -14,8 +14,8 @@ public class InstructorInfo extends BaseEntity {
     @Excel(name = "辅导员工号")
     private String instructorId;
 
-    /** 辅导员工号 */
-    @Excel(name = "辅导员工号")
+    /** 辅导员姓名 */
+    @Excel(name = "辅导员姓名")
     private String instructorName;
 
     public Long getUserId() {
