@@ -34,6 +34,14 @@ public class ClassInfo extends BaseEntity {
     @Excel(name = "辅导员姓名")
     private String instructorName;
 
+    /** 班主任工号 */
+    @Excel(name = "班主任工号")
+    private String headmasterId;
+
+    /** 班主任姓名 */
+    @Excel(name = "班主任姓名")
+    private String headmasterName;
+
     public Long getClassId() {
         return classId;
     }
@@ -90,6 +98,22 @@ public class ClassInfo extends BaseEntity {
         this.instructorName = instructorName;
     }
 
+    public String getHeadmasterId() {
+        return headmasterId;
+    }
+
+    public void setHeadmasterId(String headmasterId) {
+        this.headmasterId = headmasterId;
+    }
+
+    public String getHeadmasterName() {
+        return headmasterName;
+    }
+
+    public void setHeadmasterName(String headmasterName) {
+        this.headmasterName = headmasterName;
+    }
+
     @Override
     public String toString() {
         return "ClassInfo{" +
@@ -100,6 +124,8 @@ public class ClassInfo extends BaseEntity {
                 ", classNum=" + classNum +
                 ", instructorId='" + instructorId + '\'' +
                 ", instructorName='" + instructorName + '\'' +
+                ", headmasterId='" + headmasterId + '\'' +
+                ", headmasterName='" + headmasterName + '\'' +
                 '}';
     }
 }

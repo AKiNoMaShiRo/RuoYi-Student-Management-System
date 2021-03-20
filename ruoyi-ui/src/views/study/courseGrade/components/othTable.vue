@@ -7,6 +7,9 @@
       :rules="searchRules"
       inline
     >
+      <el-form-item label="学号" prop="studentId">
+        <el-input v-model="searchFormData.studentId" clearable></el-input>
+      </el-form-item>
       <el-form-item label="学年" prop="learnYear">
         <el-select v-model="searchFormData.learnYear">
           <el-option
@@ -66,8 +69,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import Pagination from '@/views/components/Pagination'
 import { learnYearOptions, COURSETYPE } from '@/libs/utils.js'
+import { getClassInfo } from '@/api/info/classInfo.js'
+import * as COURSEGRADE from '@/api/grade/courseGrade.js';
+import Pagination from '@/views/components/Pagination'
 import moment from 'moment'
 
 export default {
@@ -75,12 +80,18 @@ export default {
   data () {
     return {
       courseTypeOpts: COURSETYPE,
+      authClass: [],
       searchFormData: {
+        studentId: '',
         learnYear: '',
         learnTerm: '',
         courseType: '',
       },
-      searchRules: {},
+      searchRules: {
+        studentId: [ {required: true, message: '请输入学生学号', trigger: 'blur'} ],
+        // learnYear: [ {required: true, message: '请选择学期', trigger: 'blur'} ],
+        // learnTerm: [ {required: true, message: '请选择学年', trigger: 'blur'} ],
+      },
       total: 0,
       currentPage: 1,
       pageSize: 10,
@@ -119,13 +130,37 @@ export default {
     }
   },
   created () {
-    this.initSearchForm()
+    getClassInfo({ instructorId: this.userName }).then( res => {
+      if (res.rows && res.rows.length != 0) {
+        this.authClass = res.rows
+        console.log(this.authClass)
+      }
+    })
   },
   methods: {
-    initSearchForm () {
-      this.searchFormData.learnYear = this.termOpts[0]
+    getStuInfo () {
+      this.tableLoading = true
+      let param = { studentId: this.userName }
+      param = Object.assign(param, {...this.searchFormData})
+      COURSEGRADE.getAllGrade(param).then( res => {
+        if (res.rows && res.rows.length != 0) {
+          this.tableData = res.rows
+          this.total = res.total
+        } else {
+          this.tableData = []
+          this.total = 0
+        }
+      }).finally( () => {
+        this.tableData = false
+      })
     },
-    handleSearch () {},
+    handleSearch () {
+      this.$refs.searchForm.validate( valid => {
+        if (valid) {
+          this.getStuInfo()
+        }
+      })
+    },
     resetSearchForm () {
       this.$refs.searchForm.resetFields()
     },

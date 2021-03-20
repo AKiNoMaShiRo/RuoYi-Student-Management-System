@@ -12,6 +12,8 @@
         <result     property="classNum"         column="class_num"/>
         <result     property="instructorId"     column="instructor_id"/>
         <result     property="instructorName"     column="instructor_name"/>
+        <result     property="headmasterId"     column="headmaster_id"/>
+        <result     property="headmasterName"     column="headmaster_name"/>
     </resultMap>
 
     <resultMap id="ProfessionTypeResult" type="String">
@@ -19,9 +21,9 @@
     </resultMap>
 
     <sql id="ClassInfoVo">
-        select class_info.*, instructor_info.instructor_name
-        from class_info left join instructor_info
-        on class_info.instructor_id = instructor_info.instructor_id
+        select class_info.*, instructor_info.*, headmaster_info.*
+        from class_info inner join instructor_info inner join headmaster_info
+        on class_info.instructor_id = instructor_info.instructor_id and class_info.headmaster_id = headmaster_info.headmaster_id
     </sql>
 
     <select id="selectClassInfo" parameterType="ClassInfo" resultMap="ClassInfoResult">
@@ -33,6 +35,8 @@
             <if test="grade != null and grade != 0">and class_info.grade = #{grade}</if>
             <if test="instructorId != null and instructorId != ''">and class_info.instructor_id = #{instructorId}</if>
             <if test="instructorName != null and instructorName != ''">and instructor_info.instructor_name = #{instructorName}</if>
+            <if test="headmasterId != null and headmasterId != ''">and headmaster_id = #{headmasterId} </if>
+            <if test="headmasterName != null and headmasterName != ''">and headmaster_name = #{headmasterName} </if>
         </where>
     </select>
 
@@ -42,9 +46,9 @@
 
     <insert id="insertClassInfo" parameterType="ClassInfo" useGeneratedKeys="true" keyProperty="classId">
         insert into class_info (
-            department, profession, grade, class_num, instructor_id
+            department, profession, grade, class_num, instructor_id, headmaster_id
         ) values (
-            #{department}, #{profession}, #{grade}, #{classNum}, #{instructorId}
+            #{department}, #{profession}, #{grade}, #{classNum}, #{instructorId}, #{headmasterId}
         )
     </insert>
 
@@ -56,6 +60,7 @@
             <if test="grade != null and grade != 0">grade = #{grade},</if>
             <if test="classNum != null and classNum != 0">class_num = #{classNum},</if>
             <if test="instructorId != null and instructorId != ''">instructor_id = #{instructorId},</if>
+            <if test="headmasterId != null and headmasterId != ''">headmaster_id = #{headmasterId},</if>
         </set>
         where class_id = #{classId}
     </update>

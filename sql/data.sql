@@ -49,10 +49,16 @@ insert into sys_role values('3', '辅导员',    'instructor', 3, 2, 1, 1, '0', 
 insert into sys_role values('4', '班主任',    'headmaster', 4, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '班主任');
 insert into sys_role values('5', '副书记',    'master', 5, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '副书记');
 
-INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 85, NULL, NULL, 6)
-INSERT INTO course_grade VALUES ('20171344050', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 65, NULL, NULL, 6)
+INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 85, NULL, NULL, 6);
+INSERT INTO course_grade VALUES ('20171344050', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 65, NULL, NULL, 6);
+INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '程序设计基础', 84, NULL, NULL, 4);
+INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '通修课', '大学语文', 89, NULL, NULL, 2);
+INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（2）', 87, NULL, NULL, 6);
 
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info
 ON stu_info.class_id = class_info.class_id
 WHERE stu_info.student_id = '20171344054'
+
+INSERT INTO headmaster_info VALUES (1, '');
+INSERT INTO headmaster_info VALUES (2, '2017-2018');

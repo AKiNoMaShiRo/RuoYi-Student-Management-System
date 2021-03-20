@@ -137,7 +137,7 @@ export default {
       tableColumns: [
         { label: '辅导员工号', prop: 'instructorId', minWidth: '100' },
         { label: '辅导员姓名', prop: 'instructorName', minWidth: '100' },
-        { label: '管理班级', prop: 'manageClass' }
+        // { label: '管理班级', prop: 'manageClass' }
       ],
       classOptions: [],
       searchFormData: {

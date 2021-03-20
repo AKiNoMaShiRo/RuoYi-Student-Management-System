@@ -33,10 +33,14 @@
                 size="small" 
                 clearable
               ></el-input>
-                        <!-- <el-select v-model="searchFormData.instructorId" size="small" clearable>
-                            <el-option label="张学会" value="1001"></el-option>
-                            <el-option v-for="opt in instructorOptions" :key="opt.v" :label="opt.l" :value="opt.v"></el-option>
-                        </el-select> -->
+            </el-form-item>
+            <el-form-item label="班主任" prop="headmasterName">
+              <el-input
+                v-model="searchFormData.headmasterName"
+                placeholder="请输入班主任姓名"
+                size="small" 
+                clearable
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
@@ -124,6 +128,9 @@
             <el-form-item label="辅导员工号" prop="instructorId">
               <el-input v-model="addFormData.instructorId" size="small" clearable></el-input>
             </el-form-item>
+            <el-form-item label="班主任工号" prop="headmasterId">
+              <el-input v-model="addFormData.headmasterId" size="small" clearable></el-input>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button size="small" @click="dgAddVisible = false">取消</el-button>
@@ -146,6 +153,9 @@
           </el-form-item>
           <el-form-item label="辅导员工号" prop="instructorId">
             <el-input v-model="editFormData.instructorId" size="small" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="班主任工号" prop="headmasterId">
+            <el-input v-model="editFormData.headmasterId" size="small" clearable></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -177,27 +187,31 @@ export default {
         { label: '专业', prop: 'profession' },
         { label: '年级', prop: 'grade' },
         { label: '班级序号', prop: 'classNum' },
-        { label: '辅导员', prop: 'instructorName' }
+        { label: '辅导员', prop: 'instructorName' },
+        { label: '班主任', prop: 'headmasterName' }
       ],
       tableData: [],
       searchFormData: {
         profession: '',
         grade: null,
-        instructorName: ''
+        instructorName: '',
+        headmasterName: ''
       },
       addFormData: {
         department: '计算机与软件学院',
         profession: '',
         grade: null,
         classNum: null,
-        instructorId: ''
+        instructorId: '',
+        headmasterId: ''
       },
       editFormData: {
         department: '计算机与软件学院',
         profession: '',
         grade: null,
         classNum: null,
-        instructorId: ''
+        instructorId: '',
+        headmasterId: ''
       },
       rules: {
         department: [ { required: true, message: '请输入学院', trigger: 'blur' } ],
@@ -210,7 +224,8 @@ export default {
           { required: true, message: '请输入班级序号', trigger: 'blur' },
           { type: 'number', message: '班级序号必须为数字值'}
         ],
-        instructorId: [ { required: true, message: '请输入辅导员工号', trigger: 'blur' } ]
+        instructorId: [ { required: true, message: '请输入辅导员工号', trigger: 'blur' } ],
+        headmasterId: [ { required: true, message: '请输入班主任工号', trigger: 'blur' } ]
       }
     }
   },

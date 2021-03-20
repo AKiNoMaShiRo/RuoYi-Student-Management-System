@@ -167,7 +167,18 @@ create table course_grade (
 ) engine=innodb comment = '普通课程成绩信息表';
 
 -- ----------------------------
--- 9、学业预警信息表
+-- 9、班主任信息表
+-- ----------------------------
+drop table if exists headmaster_info;
+create table headmaster_info (
+  headmaster_id		varchar(20)     not null 			       comment '辅导员工号',
+  headmaster_name	varchar(30)		not null				   comment '辅导员姓名',
+
+  primary key (headmaster_info)
+) engine=innodb comment = '班主任信息表';
+
+-- ----------------------------
+-- 10、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (

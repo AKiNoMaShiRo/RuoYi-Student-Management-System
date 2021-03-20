@@ -27,6 +27,16 @@ export const COURSETYPE = [
     { label: '通修课', value: '通修课' }
 ]
 
+export const PROFESSION = [
+    { label: '软件工程', value: '软件工程' },
+    { label: '计算机科学与技术', value: '计算机科学与技术' },
+    { label: '物联网工程', value: '物联网工程' },
+    { label: '信息安全', value: '信息安全' },
+    { label: '网络工程', value: '网络工程' },
+    { label: '软件工程中外合作办学', value: '软件工程中外合作办学' },
+    { label: '软件工程嵌入式', value: '软件工程嵌入式' }
+]
+
 export function termOptions(stuId) {
     let res = [] 
     let startYear = parseInt( stuId.substring(0, 4) )    //入学年份

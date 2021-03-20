@@ -20,8 +20,8 @@
       </el-form-item>
       <el-form-item label="学期" prop="learnTerm">
         <el-select v-model="searchFormData.learnTerm">
-          <el-option label="上" :value="1"></el-option>
-          <el-option label="下" :value="2"></el-option>
+          <el-option label="1" :value="1"></el-option>
+          <el-option label="2" :value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="课程类别" prop="courseType">
@@ -66,9 +66,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import Pagination from '@/views/components/Pagination';
+import Pagination from '@/views/components/Pagination'
 import { learnYearOptions, COURSETYPE } from '@/libs/utils.js'
-import * as COURSEGRADE from '@/api/grade/courseGrade.js';
+import * as COURSEGRADE from '@/api/grade/courseGrade.js'
 
 export default {
   components: { Pagination },
@@ -81,8 +81,8 @@ export default {
         courseType: '',
       },
       searchRules: {
-        learnYear: [ {required: true, message: '请选择学年', trigger: 'blur'} ],
-        learnTerm: [ {required: true, message: '请选择学期', trigger: 'blur'} ]
+        // learnYear: [ {required: true, message: '请选择学年', trigger: 'blur'} ],
+        // learnTerm: [ {required: true, message: '请选择学期', trigger: 'blur'} ]
       },
       total: 0,
       currentPage: 1,
@@ -120,6 +120,7 @@ export default {
   },
   methods: {
     getInfo () {
+      this.tableLoading = true
       let param = { studentId: this.userName }
       param = Object.assign(param, {...this.searchFormData})
       COURSEGRADE.getAllGrade(param).then( res => {
@@ -130,9 +131,13 @@ export default {
           this.tableData = []
           this.total = 0
         }
+      }).finally( () => {
+        this.tableData = false
       })
     },
-    handleSearch () {},
+    handleSearch () {
+      this.getInfo()
+    },
     resetSearchForm () {
       this.$refs.searchForm.resetFields()
     },
