@@ -16,6 +16,17 @@ export const DESTINATIONOPTS = [
     { label: '留校', value: 'school' }
 ]
 
+export const COURSETYPE = [
+    { label: '学科(必)', value: '学科(必)' },
+    { label: '专业(必)', value: '专业(必)' },
+    { label: '专业(选)', value: '专业(选)' },
+    { label: '实践(必)', value: '实践(必)' },
+    { label: '实践(选)', value: '实践(选)' },
+    { label: '公共(必)', value: '公共(必)' },
+    { label: '方向(选)', value: '方向(选)' },
+    { label: '通修课', value: '通修课' }
+]
+
 export function termOptions(stuId) {
     let res = [] 
     let startYear = parseInt( stuId.substring(0, 4) )    //入学年份
@@ -23,6 +34,16 @@ export function termOptions(stuId) {
         let temp = (startYear + i).toString() + '-' + (startYear + i + 1).toString() + '-1'
         res.push({ label: temp, value: temp })
         temp = (startYear + i).toString() + '-' + (startYear + i + 1).toString() + '-2'
+        res.push({ label: temp, value: temp })
+    }
+    return res
+}
+
+export function learnYearOptions(stuId) {
+    let res = [] 
+    let startYear = parseInt( stuId.substring(0, 4) )    //入学年份
+    for (let i = 0; i < 4; i ++) {
+        let temp = (startYear + i).toString() + '-' + (startYear + i + 1).toString()
         res.push({ label: temp, value: temp })
     }
     return res

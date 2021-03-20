@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <div v-if="roleName !== '学生'" class="am-box am-mb">
-      <section class="am-bd-b">
+    <div class="am-box am-mb">
+      <section v-if="roleName !== '学生'" class="am-bd-b">
         <ol class="am-py am-tabs-inline am-no-shrink">
           <li :class="{ active: activeIndex === 'table' }" @click="handleTabClick('table')">
             <span>成绩查询</span>
@@ -138,7 +138,7 @@ export default {
       roleName: state => state.user.roleName
     }),
     tableHeight () {
-      return this.total > this.pageSize ? 'calc(264px + 40px)' : '264px'
+      return this.total > this.pageSize ? '264px' : 'calc(264px + 40px)'
     }
   },
   created () {

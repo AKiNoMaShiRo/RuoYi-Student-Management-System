@@ -50,7 +50,7 @@
             <if test="grade != null and grade != 0"> and ci.grade = #{grade} </if>
             <if test="classNum != null and classNum != 0"> and ci.class_num = #{classNum} </if>
             <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
-            <if test="instructorName null and instructorName != ''"> and ii.instructor_name = #{instructorName} </if>
+            <if test="instructorName != null and instructorName != ''"> and ii.instructor_name = #{instructorName} </if>
         </where>
     </select>
 
