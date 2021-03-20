@@ -11,8 +11,8 @@
       >
         <el-form-item label="考试类别" prop="testType">
           <el-select v-model="searchFormData.testType" size="small" clearable>
-            <el-option label="大学英语CET4" value="大学英语CET4"></el-option>
-            <el-option label="大学英语CET6" value="大学英语CET6"></el-option>
+            <el-option label="国家英语四级" value="国家英语四级"></el-option>
+            <el-option label="国家英语六级" value="国家英语六级"></el-option>
             <el-option label="计算机等级考试二级" value="计算机等级考试二级"></el-option>
             <el-option label="普通话等级考试" value="普通话等级考试"></el-option>
           </el-select>

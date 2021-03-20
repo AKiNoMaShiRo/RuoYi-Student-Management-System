@@ -29,18 +29,18 @@ export default {
       loadingChart: false,
       authedClass: [ ], //    有权限的所有班级{classId, profession, grade, classNum}
       classList: [], //    √班级信息{classId: null, label: ''}  X复选框的值
-      testTypeList: [ '大学英语CET4', '大学英语CET6', '计算机等级考试二级', '普通话等级考试' ],
+      testTypeList: [ '国家英语四级', '国家英语六级', '计算机等级考试二级', '普通话等级考试' ],
       chartOptions: {
         width: '1100px',
         xAxis: [],
         series: [{
-          name: '大学英语CET4',
+          name: '国家英语四级',
           type: 'bar',
           barWidth: '12',
           data: [],
           animationDuration
         }, {
-          name: '大学英语CET6',
+          name: '国家英语六级',
           type: 'bar',
           stack: 'vistors',
           barWidth: '12',

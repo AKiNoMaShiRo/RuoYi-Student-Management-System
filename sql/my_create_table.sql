@@ -158,9 +158,11 @@ create table course_grade (
   student_id		varchar(20)		not null				   comment '学号',
   learn_year		varchar(50)		not null				   comment '学年',
   learn_term		varchar(50)		not null				   comment '学期',
-  course_type		varchar(50)		not null				   comment '课程类别（必修公共，选修公共，实践，学科……）',
+  course_type		varchar(50)		not null				   comment '课程类别（学科(必);专业(选);实践(必);公共(必);专业(必);方向(选);实践(选);通修课）',
   course_name		varchar(50)		not null				   comment '课程名称',
-  course_grade		int(20)			not null				   comment '课程成绩',
+  course_grade		int(20)			default null			   comment '课程成绩',
+  resit_grade		int(20)			default null			   comment '补考成绩',
+  retest_grade		int(20)			default null			   comment '重新学习成绩',
   course_point		double			not null				   comment '学分'
 ) engine=innodb comment = '普通课程成绩信息表';
 

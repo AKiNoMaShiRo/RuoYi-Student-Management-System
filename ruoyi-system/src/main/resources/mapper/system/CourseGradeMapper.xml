@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.grade.mapper.CourseGradeMapper">
+
+    <resultMap id="CourseGradeClassResult" type="CourseGradeClass">
+        <result     property="studentId"        column="student_id"/>
+        <result     property="learnYear"        column="learn_year"/>
+        <result     property="learnTerm"        column="learn_term"/>
+        <result     property="courseType"       column="course_type"/>
+        <result     property="courseName"       column="course_name"/>
+        <result     property="courseGrade"      column="course_grade"/>
+        <result     property="resitGrade"       column="resit_grade"/>
+        <result     property="coursePoint"      column="course_point"/>
+        <result     property="stuName"          column="stu_name"/>
+        <result     property="classId"          column="class_id"/>
+        <result     property="department"       column="department"/>
+        <result     property="profession"       column="profession"/>
+        <result     property="grade"            column="grade"/>
+        <result     property="classNum"         column="class_num"/>
+        <result     property="instructorId"     column="instructor_id"/>
+        <result     property="instructorName"   column="instructor_name"/>
+    </resultMap>
+
+    <sql id="CourseGradeClassVo">
+        select cg.*, si.stu_name, ci.*, ii.instructor_name
+        from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on cg.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
+    </sql>
+
+    <select id="selectByStuId" parameterType="string" resultMap="CourseGradeClassResult">
+        <include refid="CourseGradeClassVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and cg.student_id = #{studentId} </if>
+        </where>
+    </select>
+
+    <select id="selectByGradeId" parameterType="CourseGradeClass" resultMap="CourseGradeClassResult">
+        <include refid="CourseGradeClassVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and cg.student_id = #{studentId} </if>
+            <if test="learnYear != null and learnYear != ''"> and cg.learn_year = #{learnYear} </if>
+            <if test="learnTerm != null and learnTerm != ''"> and cg.learn_term = #{learnTerm} </if>
+            <if test="courseType != null and courseType != ''"> and cg.course_type = #{courseType} </if>
+            <if test="classId != null and classId != 0"> and ci.class_id = #{classId} </if>
+            <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
+            <if test="grade != null and grade != 0"> and ci.grade = #{grade} </if>
+            <if test="classNum != null and classNum != 0"> and ci.class_num = #{classNum} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
+            <if test="instructorName null and instructorName != ''"> and ii.instructor_name = #{instructorName} </if>
+        </where>
+    </select>
+
+</mapper>
