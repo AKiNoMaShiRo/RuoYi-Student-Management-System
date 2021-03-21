@@ -41,6 +41,7 @@ insert into sys_menu values('504',  '辅导员管理', '5',   '2', 'instructor',
 insert into sys_menu values('505',  '班主任管理', '5',   '4', 'headmaster', 'user/headmaster/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班主任信息管理菜单');
 insert into sys_menu values('701', '等级考试', '7', '2', 'levelTest', 'study/levelTest/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '学生等级考试管理');
 insert into sys_menu values('702', '普通课程', '7', '3', 'courseGrade', 'study/courseGrade/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '学生普通课程成绩管理');
+insert into sys_menu values('703', '综合测评', '7', '4', 'multipGrade', 'study/multip/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '综合测评成绩管理');
 
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');

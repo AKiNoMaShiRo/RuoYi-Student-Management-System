@@ -50,6 +50,7 @@ create table class_info (
   grade				int(4)			not null				   comment '年级',
   class_num			int(4)			not null				   comment '班级',
   instructor_id		varchar(20)		not null				   comment '辅导员工号',
+  headmaster_id		varchar(20)		not null				   comment '班主任工号',
 
   primary key (class_id)
 ) engine=innodb comment = '班级信息表';
@@ -178,7 +179,22 @@ create table headmaster_info (
 ) engine=innodb comment = '班主任信息表';
 
 -- ----------------------------
--- 10、学业预警信息表
+-- 10、综合测评信息表
+-- ----------------------------
+drop table if exists multip_info;
+create table multip_info (
+  student_id		varchar(20)		not null				   comment '学号',
+  stu_name			varchar(20)		not null				   comment '姓名',
+  profe_sum			int(4)			not null				   comment '专业人数',
+  grade_sum			double  		not null				   comment '必修与选修折算成绩之和',
+  profe_rank		int				not null				   comment '专业排名',
+  multip_sum		double			not null				   comment '综测总分',
+  multip_rank		int				not null				   comment '综测排名'
+
+) engine=innodb comment = '综合测评信息表';
+
+-- ----------------------------
+-- 11、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (

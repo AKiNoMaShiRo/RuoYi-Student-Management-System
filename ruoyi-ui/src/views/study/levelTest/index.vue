@@ -148,7 +148,14 @@ export default {
     getInfo () {
       this.tableLoading = true
       let param = {}
-      this.roleName === '学生' ? param.studentId = this.userName : this.roleName === '辅导员' ? param.instructorId = this.userName : param.instructorId = ''
+      if (this.roleName === '学生') {
+        param.studentId = this.userName
+      } else if (this.roleName === '辅导员') {
+        param.instructorId = this.userName
+      } else if (this.roleName === '班主任') {
+        param.headmasterId = this.userName
+      }
+      // this.roleName === '学生' ? param.studentId = this.userName : this.roleName === '辅导员' ? param.instructorId = this.userName : param.instructorId = ''
       for (let key in this.searchFormData) {
         if (this.searchFormData[key] !== ''){
           param[key] = this.searchFormData[key]

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.grade.mapper.MultipGradeMapper">
+
+    <resultMap id="MultipGradeResult" type="MultipGrade">
+        <result     property="studentId"        column="student_id"/>
+        <result     property="stuName"          column="stu_name"/>
+        <result     property="classId"          column="class_id"/>
+        <result     property="profession"       column="profession"/>
+        <result     property="grade"            column="grade"/>
+        <result     property="classNum"         column="class_num"/>
+        <result     property="profeSum"         column="profe_sum"/>
+        <result     property="gradeSum"         column="grade_sum"/>
+        <result     property="profeRank"        column="profe_rank"/>
+        <result     property="multipSum"        column="multip_sum"/>
+        <result     property="multipRank"       column="multip_rank"/>
+    </resultMap>
+
+    <sql id="MultipGradeVo">
+        select mi.*, ci.*
+        from multip_info mi inner join stu_info si inner join class_info ci
+        on mi.student_id = si.student_id and si.class_id = ci.class_id
+    </sql>
+
+    <select id="selectInfo" parameterType="MultipGrade" resultMap="MultipGradeResult">
+        <include refid="MultipGradeVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and mi.student_id = #{studentId} </if>
+            <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
+            <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
+            <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
+        </where>
+    </select>
+
+</mapper>
