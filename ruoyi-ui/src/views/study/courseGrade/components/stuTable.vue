@@ -1,66 +1,77 @@
 <template>
   <div class="am-p">
-    <el-form
-      ref="searchForm"
-      label-width="80px"
-      :model="searchFormData"
-      :rules="searchRules"
-      inline
-    >
-      <el-form-item label="学年" prop="learnYear">
-        <el-select v-model="searchFormData.learnYear">
-          <el-option
-            v-for="opt in termOpts"
-            :key="opt.label"
-            :value="opt.value"
-            :label="opt.label"
-            >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="学期" prop="learnTerm">
-        <el-select v-model="searchFormData.learnTerm">
-          <el-option label="1" :value="1"></el-option>
-          <el-option label="2" :value="2"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="课程类别" prop="courseType">
-        <el-select v-model="searchFormData.courseType" clearable>
-          <el-option
-            v-for="opt in courseTypeOpts"
-            :key="opt.label"
-            :value="opt.value"
-            :label="opt.label"
-            >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label=" ">
-        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table
-      v-loading="tableLoading"
-      :data="tableData"
-      :height="tableHeight"
-      class="am-mt"
-      highlight-current-row
-    >
-      <el-table-column v-for="col in tableColumns" v-bind="col" :key="col.prop" show-overflow-tooltip>
-        <template slot-scope="scope">
-          {{ scope.row[col.prop] | tableFormatter(col.prop) }}
-        </template>
-      </el-table-column>
-    </el-table>
-    <Pagination
-      :total="total"
-      :page-range="[10, 15, 20]"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      @onPaginationUpdate="handlePaginationUpdate"
-    >
-    </Pagination>
+    <section>
+      <div class="am-flex-wrap">
+        <section v-for="status in pointGainStatus" :key="status.type" class="info-content am-bd am-p">
+          <div>{{ status.type }}</div>
+          <span>毕业共需学分：{{ status.needed }}</span>
+          <span>已获学分：{{ status.gained }}</span>
+        </section>
+      </div>
+    </section>
+    <section>
+      <el-form
+        ref="searchForm"
+        label-width="80px"
+        :model="searchFormData"
+        :rules="searchRules"
+        inline
+      >
+        <el-form-item label="学年" prop="learnYear">
+          <el-select v-model="searchFormData.learnYear">
+            <el-option
+              v-for="opt in termOpts"
+              :key="opt.label"
+              :value="opt.value"
+              :label="opt.label"
+              >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="学期" prop="learnTerm">
+          <el-select v-model="searchFormData.learnTerm">
+            <el-option label="1" :value="1"></el-option>
+            <el-option label="2" :value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="课程类别" prop="courseType">
+          <el-select v-model="searchFormData.courseType" clearable>
+            <el-option
+              v-for="opt in courseTypeOpts"
+              :key="opt.label"
+              :value="opt.value"
+              :label="opt.label"
+              >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label=" ">
+          <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+      <el-table
+        v-loading="tableLoading"
+        :data="tableData"
+        :height="tableHeight"
+        class="am-mt"
+        highlight-current-row
+      >
+        <el-table-column v-for="col in tableColumns" v-bind="col" :key="col.prop" show-overflow-tooltip>
+          <template slot-scope="scope">
+            {{ scope.row[col.prop] | tableFormatter(col.prop) }}
+          </template>
+        </el-table-column>
+      </el-table>
+      <Pagination
+        :total="total"
+        :page-range="[10, 15, 20]"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        @onPaginationUpdate="handlePaginationUpdate"
+      >
+      </Pagination>
+    </section>
   </div>
 </template>
 
@@ -75,6 +86,16 @@ export default {
   data () {
     return {
       courseTypeOpts: COURSETYPE,
+      pointGainStatus: [
+        { type: '学科(必)', needed: '24', gained: '' },
+        { type: '专业(必)', needed: '18', gained: '' },
+        { type: '专业(选)', needed: '19', gained: '' },
+        { type: '实践(必)', needed: '35.5', gained: '' },
+        { type: '实践(选)', needed: '3', gained: '' },
+        { type: '公共(必)', needed: '63.5', gained: '' },
+        { type: '方向(选)', needed: '11', gained: '' },
+        { type: '通修课', needed: '6', gained: '' },
+      ],
       searchFormData: {
         learnYear: '',
         learnTerm: '',
@@ -116,9 +137,15 @@ export default {
     }
   },
   created () {
+    // this.getPointInfo()
     this.getInfo()
   },
   methods: {
+    getPointInfo () {
+      COURSEGRADE.getStuPoint({studentId: this.userName}).then( res => {
+        if (res) {}
+      })
+    },
     getInfo () {
       this.tableLoading = true
       let param = { studentId: this.userName }
@@ -133,6 +160,25 @@ export default {
         }
       }).finally( () => {
         this.tableLoading = false
+        //  计算已获得学分
+        if (this.tableData.length !== 0) {
+          let pointMap = new Map();
+          this.tableData.forEach( item => {
+            if (pointMap.get(item.courseType)) {
+              pointMap.set(item.courseType, pointMap.get(item.courseType) + parseFloat(item.coursePoint))
+            } else {
+              pointMap.set(item.courseType, parseFloat(item.coursePoint))
+            }
+          })
+          console.log(pointMap)
+          this.pointGainStatus.forEach( item => {
+            if (pointMap.get(item.type)) {
+              item.gained = pointMap.get(item.type)
+            } else {
+              item.gained = 0
+            }
+          })
+        }
       })
     },
     handleSearch () {
@@ -157,3 +203,21 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.info-content{
+  margin-bottom: 12px;
+  margin-right: 12px;
+  border-radius: 4px;
+  width: 160px;
+  div {
+    color: #606266;
+    margin-bottom: 8px;
+  }
+  span {
+    display: inline-block;
+    color: #606266;
+    font-size: 14px;
+  }
+}
+</style>

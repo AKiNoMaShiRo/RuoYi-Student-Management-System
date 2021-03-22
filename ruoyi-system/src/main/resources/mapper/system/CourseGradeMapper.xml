@@ -23,6 +23,11 @@
         <result     property="instructorName"   column="instructor_name"/>
     </resultMap>
 
+    <resultMap id="GainedPointResult" type="GainedPoint">
+        <result     property="courseType"       column="course_type"/>
+        <result     property="gainedPoint"       column="course_point"/>
+    </resultMap>
+
     <sql id="CourseGradeClassVo">
         select cg.*, si.stu_name, ci.*, ii.instructor_name
         from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii
@@ -51,6 +56,17 @@
             <if test="classNum != null and classNum != 0"> and ci.class_num = #{classNum} </if>
             <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
             <if test="instructorName != null and instructorName != ''"> and ii.instructor_name = #{instructorName} </if>
+        </where>
+    </select>
+
+    <select id="selectPassPoint" parameterType="CourseGradeClass" resultType="String">
+        select SUM(cg.course_point)
+        from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on cg.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
+        <where>
+            ( cg.course_grade > 59 or cg.resit_grade > 59 or cg.retest_grade > 59 )
+            <if test="studentId != null and studentId != ''"> and cg.student_id = #{studentId} </if>
+            <if test="courseType != null and courseType != ''"> and cg.course_type = #{courseType} </if>
         </where>
     </select>
 

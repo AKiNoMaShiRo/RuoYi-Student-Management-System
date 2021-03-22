@@ -31,6 +31,7 @@
             <if test="studentId != null and studentId != ''"> and mi.student_id = #{studentId} </if>
             <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
             <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
             <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
         </where>
     </select>

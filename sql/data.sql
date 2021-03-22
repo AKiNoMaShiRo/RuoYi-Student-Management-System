@@ -44,6 +44,7 @@ insert into sys_menu values('702', '普通课程', '7', '3', 'courseGrade', 'stu
 insert into sys_menu values('703', '综合测评', '7', '4', 'multipGrade', 'study/multip/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '综合测评成绩管理');
 insert into sys_menu values('9', '评奖评优', '0', '9', 'scholarship',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '评奖评优事项管理');
 insert into sys_menu values('901', '国家奖学金', '9', '1', 'national', 'scholarship/national/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '国家奖学金管理');
+insert into sys_menu values('902', '励志奖学金', '9', '2', 'endeavor', 'scholarship/endeavor/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '国家励志奖学金管理');
 
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');

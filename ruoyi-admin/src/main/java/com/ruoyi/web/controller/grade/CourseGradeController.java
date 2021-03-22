@@ -1,16 +1,15 @@
 package com.ruoyi.web.controller.grade;
 
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.grade.domain.CourseGradeClass;
 import com.ruoyi.grade.service.ICourseGradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,16 @@ public class CourseGradeController extends BaseController {
         startPage();
         List<CourseGradeClass> courseGradeClasses = courseGradeService.selectByGrade(courseGradeClass);
         return getDataTable(courseGradeClasses);
+    }
+
+    @ApiOperation("根据学号查询学生学分")
+    @PostMapping("/queryPoint")
+    public AjaxResult getStuPoint(@Validated @RequestBody CourseGradeClass courseGradeClass){
+        AjaxResult ajaxResult = AjaxResult.success();
+        if (courseGradeClass.getStudentId() != null){
+            ajaxResult.put(AjaxResult.DATA_TAG, courseGradeService.selectPointByStuId(courseGradeClass));
+        }
+        return ajaxResult;
     }
 
 }
