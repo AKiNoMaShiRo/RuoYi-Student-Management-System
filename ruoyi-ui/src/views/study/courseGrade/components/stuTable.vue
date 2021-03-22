@@ -132,7 +132,7 @@ export default {
           this.total = 0
         }
       }).finally( () => {
-        this.tableData = false
+        this.tableLoading = false
       })
     },
     handleSearch () {

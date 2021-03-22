@@ -143,7 +143,7 @@ export default {
       let param = { studentId: this.userName }
       param = Object.assign(param, {...this.searchFormData})
       COURSEGRADE.getAllGrade(param).then( res => {
-        if (res.rows && res.rows.length != 0) {
+        if (res.rows && res.rows.length !== 0) {
           this.tableData = res.rows
           this.total = res.total
         } else {
@@ -151,7 +151,7 @@ export default {
           this.total = 0
         }
       }).finally( () => {
-        this.tableData = false
+        this.tableLoading = false
       })
     },
     handleSearch () {
