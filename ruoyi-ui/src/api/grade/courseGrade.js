@@ -10,3 +10,21 @@ export function getAllGrade(query) {
         params: query
     })
 }
+
+//    查询课程名称
+export function getGradeName(query) {
+    return request({
+        url: BASEPATH + '/course/type',
+        method: 'get',
+        params: query
+    })
+}
+
+//    查询课程平均分
+export function getGradeAvg(query) {
+    return request({
+        url: BASEPATH + '/course/avg',
+        method: 'get',
+        params: query
+    })
+}

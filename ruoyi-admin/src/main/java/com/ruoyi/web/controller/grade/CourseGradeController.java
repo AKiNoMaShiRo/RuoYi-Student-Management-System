@@ -4,9 +4,11 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.grade.domain.CourseGradeClass;
+import com.ruoyi.grade.domain.GainedPoint;
 import com.ruoyi.grade.service.ICourseGradeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,21 @@ public class CourseGradeController extends BaseController {
         if (courseGradeClass.getStudentId() != null){
             ajaxResult.put(AjaxResult.DATA_TAG, courseGradeService.selectPointByStuId(courseGradeClass));
         }
+        return ajaxResult;
+    }
+
+    @ApiOperation("查询课程名称")
+    @GetMapping("/course/type")
+    public AjaxResult queryCourseName(GainedPoint gainedPoint){
+        List<CourseGradeClass> points = courseGradeService.selectCourseName(gainedPoint.getCourseType());
+        return AjaxResult.success(points);
+    }
+
+    @ApiOperation("查询课程平均分")
+    @GetMapping("/course/avg")
+    public AjaxResult queryCourseAvg(CourseGradeClass courseGradeClass){
+        AjaxResult ajaxResult = AjaxResult.success();
+        ajaxResult.put(AjaxResult.DATA_TAG, courseGradeService.selectCourseAvgByClass(courseGradeClass));
         return ajaxResult;
     }
 

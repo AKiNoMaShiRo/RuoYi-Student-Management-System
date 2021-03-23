@@ -2,7 +2,7 @@
   <div class="am-p">
     <el-form
       ref="searchForm"
-      label-width="70px"
+      label-width="85px"
       :model="searchFormData"
       :rules="searchRules"
       inline
@@ -11,7 +11,7 @@
         <el-input v-model="searchFormData.studentId" clearable></el-input>
       </el-form-item>
       <el-form-item label="学年" prop="learnYear">
-        <el-select v-model="searchFormData.learnYear">
+        <el-select v-model="searchFormData.learnYear" clearable>
           <el-option
             v-for="opt in termOpts"
             :key="opt.label"
@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="学期" prop="learnTerm">
-        <el-select v-model="searchFormData.learnTerm">
+        <el-select v-model="searchFormData.learnTerm" clearable>
           <el-option label="上" :value="1"></el-option>
           <el-option label="下" :value="2"></el-option>
         </el-select>
@@ -133,7 +133,7 @@ export default {
     getClassInfo({ instructorId: this.userName }).then( res => {
       if (res.rows && res.rows.length != 0) {
         this.authClass = res.rows
-        console.log(this.authClass)
+        // console.log(this.authClass)
       }
     })
   },

@@ -19,7 +19,7 @@ import java.util.List;
 @Api("综合测评信息")
 @RestController
 @RequestMapping("/multip/grade")
-public class MultipGradeClass extends BaseController {
+public class MultipGradeController extends BaseController {
 
     @Autowired
     private IMultipGradeService multipGradeService;

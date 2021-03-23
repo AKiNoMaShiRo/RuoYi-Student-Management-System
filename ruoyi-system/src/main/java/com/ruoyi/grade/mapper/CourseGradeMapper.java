@@ -31,4 +31,20 @@ public interface CourseGradeMapper {
      */
     public String selectPassPoint(CourseGradeClass courseGradeClass);
 
+    /**
+     * 查询有哪些课程名称
+     *
+     * @param courseName
+     * @return 课程名称
+     */
+    public List<CourseGradeClass> selectCourseName(String courseName);
+
+    /**
+     * 查询某一个班级某一课程的平均分
+     *
+     * @param courseGradeClass 课程名称和班级信息
+     * @return 平均分
+     */
+    public Double selectCourseAvgByClass(CourseGradeClass courseGradeClass);
+
 }

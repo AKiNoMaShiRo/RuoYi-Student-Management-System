@@ -141,11 +141,11 @@ export default {
     this.getInfo()
   },
   methods: {
-    getPointInfo () {
-      COURSEGRADE.getStuPoint({studentId: this.userName}).then( res => {
-        if (res) {}
-      })
-    },
+    // getPointInfo () {
+    //   COURSEGRADE.getStuPoint({studentId: this.userName}).then( res => {
+    //     if (res) {}
+    //   })
+    // },
     getInfo () {
       this.tableLoading = true
       let param = { studentId: this.userName }
