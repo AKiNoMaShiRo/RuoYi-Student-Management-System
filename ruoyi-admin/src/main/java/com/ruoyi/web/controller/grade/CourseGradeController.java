@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api("普通课程成绩")
@@ -53,6 +54,18 @@ public class CourseGradeController extends BaseController {
     public AjaxResult queryCourseAvg(CourseGradeClass courseGradeClass){
         AjaxResult ajaxResult = AjaxResult.success();
         ajaxResult.put(AjaxResult.DATA_TAG, courseGradeService.selectCourseAvgByClass(courseGradeClass));
+        return ajaxResult;
+    }
+
+    @ApiOperation("批量查询课程平均分")
+    @GetMapping("/course/allAvg")
+    public AjaxResult queryCourseAllAvg(CourseGradeClass[] courseGradeClasses){
+        AjaxResult ajaxResult = AjaxResult.success();
+        List<String> res = new ArrayList<>();
+        for (int i=0 ; i<courseGradeClasses.length ; i++) {
+            res.add(courseGradeService.selectCourseAvgByClass(courseGradeClasses[i]));
+        }
+        ajaxResult.put(AjaxResult.DATA_TAG, res);
         return ajaxResult;
     }
 

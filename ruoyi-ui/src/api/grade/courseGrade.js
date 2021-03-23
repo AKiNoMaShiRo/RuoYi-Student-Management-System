@@ -28,3 +28,11 @@ export function getGradeAvg(query) {
         params: query
     })
 }
+//    批量查询课程平均分
+export function getAllGradeAvg(query) {
+    return request({
+        url: BASEPATH + '/course/allAvg',
+        method: 'get',
+        params: query
+    })
+}

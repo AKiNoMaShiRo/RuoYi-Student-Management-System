@@ -76,7 +76,7 @@
         where course_grade.course_name like concat('%', #{courseName}, '%')
     </select>
 
-    <select id="selectCourseAvgByClass" parameterType="CourseGradeClass" resultType="Double">
+    <select id="selectCourseAvgByClass" parameterType="CourseGradeClass" resultType="String">
         select AVG(cg.course_grade)
         from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii
         on cg.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id

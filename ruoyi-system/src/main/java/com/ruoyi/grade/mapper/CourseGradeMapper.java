@@ -45,6 +45,6 @@ public interface CourseGradeMapper {
      * @param courseGradeClass 课程名称和班级信息
      * @return 平均分
      */
-    public Double selectCourseAvgByClass(CourseGradeClass courseGradeClass);
+    public String selectCourseAvgByClass(CourseGradeClass courseGradeClass);
 
 }

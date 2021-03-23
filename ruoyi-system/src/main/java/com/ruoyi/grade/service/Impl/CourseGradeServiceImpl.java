@@ -83,7 +83,7 @@ public class CourseGradeServiceImpl implements ICourseGradeService {
      * @param courseGradeClass 课程名称和班级信息
      * @return 平均分
      */
-    public double selectCourseAvgByClass(CourseGradeClass courseGradeClass){
+    public String selectCourseAvgByClass(CourseGradeClass courseGradeClass){
         return courseGradeMapper.selectCourseAvgByClass(courseGradeClass);
     }
 

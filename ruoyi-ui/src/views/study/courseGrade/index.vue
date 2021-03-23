@@ -5,15 +5,20 @@
       <div class="am-bd-b">
         <ol class="am-py am-tabs-inline am-no-shrink">
           <li :class="{ active: activeIndex === 'table' }" @click="handleTabClick('table')">
-            <span>成绩查询</span>
+            <span>学生成绩详情</span>
           </li>
           <li :class="{ active: activeIndex === 'chart' }" @click="handleTabClick('chart')">
-            <span>图表分析</span>
+            <span>班级成绩分析</span>
           </li>
         </ol>
       </div>
       <section v-show="activeIndex === 'table'">
-        <div class="am-p am-title am-bd-b">课程平均分</div>
+        <!-- <div class="am-p am-title am-bd-b">课程成绩</div> -->
+        <StuTable v-if="roleName === '学生'"></StuTable>
+        <OthTable v-else></OthTable>
+      </section>
+      <section v-show="activeIndex === 'chart'">
+        <!-- <div class="am-p am-title am-bd-b">课程平均分</div> -->
         <div class="am-p">
           <el-form
             ref="searchForm"
@@ -50,11 +55,6 @@
           </el-form>
         </div>
       </section>
-    </section>
-    <section class="am-box">
-      <div class="am-p am-title am-bd-b">课程成绩</div>
-      <StuTable v-if="roleName === '学生'"></StuTable>
-      <OthTable v-else></OthTable>
     </section>
   </div>
 </template>
@@ -117,11 +117,11 @@ export default {
       this.$refs.searchForm.resetFields()
     },
     handleSearch () {
-      console.log(this.searchFormData)
+      // console.log(this.searchFormData)
       this.$refs.searchForm.validate( valid => {
         if (valid) {
           COURSEGRADE.getGradeAvg(this.searchFormData).then( res => {
-            
+
           })
         }
       })

@@ -1,8 +1,24 @@
 <template>
   <div class="app-container">
-    <section class="am-box">
-      <div class="am-p am-title am-bd-b">国家励志奖学金申报信息</div>
+    <section class="am-box" v-if="roleName === '学生'">
+      <div class="am-p am-title am-bd-b">国家励志奖学金申请信息</div>
       <div class="am-p">
+        <div class="am-bd-b am-pb am-mb">
+          <el-button
+            size="small"
+            icon="el-icon-refresh"
+            disabsled
+            @click="handleResetAddForm"
+          >重置</el-button>
+          <el-button
+            size="small"
+            icon="el-icon-check"
+            type="primary"
+            :disabled="isDisabled"
+            @click="handleSubmitAddForm"
+          >提交</el-button>
+          <div class="disable-reason">{{ disabledReason }}</div>
+        </div>
         <el-form
           ref="addForm"
           :rules="addRules"
@@ -54,14 +70,18 @@
           </el-form-item>
           </section>
         </el-form>
-        <el-button size="small" style="margin-left: 135px;" disabsled @click="handleResetAddForm">重置</el-button>
-        <el-button size="small" type="primary" :disabled="isDisabled" @click="handleSubmitAddForm">提交</el-button>
       </div>
+    </section>
+    <section class="am-box">
+      <div class="am-p am-title am-bd-b">国家励志奖学金申请信息</div>
     </section>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import * as MULTIP from '@/api/grade/multipGrade.js'
+
 export default {
   data () {
     return {
@@ -107,7 +127,27 @@ export default {
         // provincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
         // schoolPrize: [ {required: true, message: '请输入校级表彰或成果', trigger: 'blur'} ]
       },
-      isDisabled: false
+      isDisabled: false,
+      disabledReason: ''
+    }
+  },
+  computed: {
+    ...mapState({
+      roleName: state => state.user.roleName,
+      userName: state => state.user.name
+    })
+  },
+  created () {
+    if (this.roleName === '学生') {
+      MULTIP.getAllGrade({ studentId: this.userName }).then( res => {
+        if (res.rows && res.rows.length !== 0) {
+          let temp = res.rows[0].multipRank / res.rows[0].profeSum
+          this.isDisabled = temp >= 0.5 ? true : false
+          if (this.isDisabled) {
+            this.disabledReason = '*您的综测排名不足前30%，无法申请'
+          }
+        }
+      })
     }
   },
   methods: {
