@@ -194,7 +194,32 @@ create table multip_info (
 ) engine=innodb comment = '综合测评信息表';
 
 -- ----------------------------
--- 11、学业预警信息表
+-- 11、困难生名单表
+-- ----------------------------
+drop table if exists difficult_stu;
+create table difficult_stu (
+  student_id		varchar(20)		not null				   comment '学号',
+  stu_name			varchar(20)		not null				   comment '姓名',
+  diff_level		varchar(20)		not null				   comment '困难等级'
+
+) engine=innodb comment = '困难生名单表'
+
+-- ----------------------------
+-- 11、国家奖学金申请表
+-- ----------------------------
+drop table if exists difficult_stu;
+create table difficult_stu (
+  student_id		varchar(20)		not null				   comment '学号',
+  is_fit			int				not null				   comment '是否破格（1：是，0：否）',
+  profe_sum			int				not null				   comment '专业人数',
+  sport_grade		double			not null				   comment '体测成绩',
+  grade_sum			double  		not null				   comment '必修与选修折算成绩之和排名',
+  profe_rank_rate	double			not null				   comment '必修与选修折算成绩之和排名百分比',
+
+) engine=innodb comment = '困难生名单表'
+
+-- ----------------------------
+-- 12、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (

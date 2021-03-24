@@ -67,3 +67,6 @@ WHERE stu_info.student_id = '20171344054'
 
 INSERT INTO headmaster_info VALUES (1, '');
 INSERT INTO headmaster_info VALUES (2, '2017-2018');
+
+
+INSERT INTO difficult_stu VALUES ('20171344054', '王圣滋', '一般困难');

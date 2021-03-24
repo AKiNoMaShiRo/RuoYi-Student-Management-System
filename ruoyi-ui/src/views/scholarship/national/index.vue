@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <section class="am-box" v-if="roleName === '学生'">
+    <section class="am-box am-mb" v-if="roleName === '学生'">
       <div class="am-p am-title am-bd-b">国家奖学金申请信息</div>
       <div class="am-p">
         <div class="am-bd-b am-pb am-mb">
@@ -13,10 +13,10 @@
           :rules="addRules"
           :model="addData"
           label-position="right"
-          label-width="135px"
+          label-width="100px"
           inline
         >
-          <el-form-item label="是否符合评选条件" prop="isFit">
+          <el-form-item label="是否破格" prop="isFit">
             <el-radio-group size="small" v-model="addData.isFit">
               <el-radio :label="1">是</el-radio>
               <el-radio :label="0">否</el-radio>
@@ -77,7 +77,7 @@ export default {
   data () {
     return {
       addData: {
-        isFit: 1,
+        isFit: null,
         profeSum: '',
         sport: '',
         gradeRank: '',

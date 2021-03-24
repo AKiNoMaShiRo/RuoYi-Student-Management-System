@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <section class="am-box" v-if="roleName === '学生'">
+    <section class="am-box am-mb" v-if="roleName === '学生'">
       <div class="am-p am-title am-bd-b">国家励志奖学金申请信息</div>
       <div class="am-p">
         <div class="am-bd-b am-pb am-mb">
@@ -24,10 +24,10 @@
           :rules="addRules"
           :model="addData"
           label-position="right"
-          label-width="135px"
+          label-width="110px"
           inline
         >
-          <el-form-item label="是否符合评选条件" prop="isFit">
+          <el-form-item label="是否破格" prop="isFit">
             <el-radio-group size="small" v-model="addData.isFit">
               <el-radio :label="1">是</el-radio>
               <el-radio :label="0">否</el-radio>
@@ -81,12 +81,13 @@
 <script>
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
+import * as DIFFSTU from '@/api/scholarship/difficlutStu.js'
 
 export default {
   data () {
     return {
       addData: {
-        isFit: 1,
+        isFit: null,
         diffRank: '',
         profeSum: '',
         sport: '',
@@ -139,18 +140,29 @@ export default {
   },
   created () {
     if (this.roleName === '学生') {
-      MULTIP.getAllGrade({ studentId: this.userName }).then( res => {
+      DIFFSTU.getIsDifficult({ studentId: this.userName }).then( res => {
+        if (res.data && res.data.length != 0) {
+          this.getMultipGrade()
+        } else {
+          this.isDisabled = true
+          this.disabledReason = '*您不是困难生，无法申请'
+        }
+      })
+      
+    }
+  },
+  methods: {
+    getMultipGrade () {
+      return MULTIP.getAllGrade({ studentId: this.userName }).then( res => {
         if (res.rows && res.rows.length !== 0) {
           let temp = res.rows[0].multipRank / res.rows[0].profeSum
           this.isDisabled = temp >= 0.5 ? true : false
           if (this.isDisabled) {
-            this.disabledReason = '*您的综测排名不足前30%，无法申请'
+            this.disabledReason = '*您的综测排名不足前50%，无法申请'
           }
         }
       })
-    }
-  },
-  methods: {
+    },
     handleResetAddForm () {
       this.$refs.addForm.resetFields()
     },
@@ -181,5 +193,13 @@ export default {
 }
 ::v-deep .el-textarea__inner {
   width: 505px;
+}
+.disable-reason {
+  color: #ff4949;
+  font-size: 12px;
+  margin-top: 8px;
+  margin-left: 16px;
+  // margin-left: 135px;
+  display: inline-block;
 }
 </style>
