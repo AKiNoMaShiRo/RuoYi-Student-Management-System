@@ -17,22 +17,22 @@ public class HolidayServiceImpl implements IHolidayService {
     /**
      * 根据学号查询节假日去向信息
      *
-     * @param studentId 学号
+     * @param holiday 学号
      * @return 结果
      */
     @Override
-    public List<Holiday> selectHolidayById(String studentId){
-        return holidayMapper.selectHolidayById(studentId);
+    public List<Holiday> selectHolidayById(Holiday holiday){
+        return holidayMapper.selectHolidayById(holiday);
     }
 
     /**
      * 根据辅导员查询节假日去向信息
      *
-     * @param instructorId 学号
+     * @param holiday 学号
      * @return 结果
      */
-    public List<Holiday> selectHolidayByInsId(String instructorId){
-        return holidayMapper.selectHolidayByInsId(instructorId);
+    public List<Holiday> selectHolidayByInsId(Holiday holiday){
+        return holidayMapper.selectHolidayByInsId(holiday);
     }
 
     /**

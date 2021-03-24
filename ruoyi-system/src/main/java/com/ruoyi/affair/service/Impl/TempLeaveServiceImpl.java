@@ -17,22 +17,22 @@ public class TempLeaveServiceImpl implements ITempLeaveService {
     /**
      * 根据学号查询请假信息
      *
-     * @param studentId 学号
+     * @param tempLeave 学号
      * @return 结果
      */
     @Override
-    public List<TempLeave> selectLeaveById(String studentId){
-        return tempLeaveMapper.selectLeaveByStuId(studentId);
+    public List<TempLeave> selectLeaveById(TempLeave tempLeave){
+        return tempLeaveMapper.selectLeaveByStuId(tempLeave);
     }
 
     /**
      * 根据辅导员工号查询请假信息
      *
-     * @param instructorId 学号
+     * @param tempLeave 学号
      * @return 结果
      */
-    public List<TempLeave> selectLeaveByInstructor(String instructorId){
-        return tempLeaveMapper.selectLeaveByInstructor(instructorId);
+    public List<TempLeave> selectLeaveByInstructor(TempLeave tempLeave){
+        return tempLeaveMapper.selectLeaveByInstructor(tempLeave);
     }
 
     /**

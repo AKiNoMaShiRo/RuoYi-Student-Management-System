@@ -17,6 +17,10 @@ public class TempLeave extends BaseEntity {
     @Excel(name = "学号")
     private String studentId;
 
+    /** 姓名 */
+    @Excel(name = "姓名")
+    private String stuName;
+
     /** 请假原因 */
     @Excel(name = "请假原因")
     private String reason;
@@ -65,6 +69,14 @@ public class TempLeave extends BaseEntity {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getStuName() {
+        return stuName;
+    }
+
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
     }
 
     public String getReason() {
@@ -136,6 +148,7 @@ public class TempLeave extends BaseEntity {
         return "TempLeave{" +
                 "leaveId=" + leaveId +
                 ", studentId='" + studentId + '\'' +
+                ", stuName='" + stuName + '\'' +
                 ", reason='" + reason + '\'' +
                 ", startTime=" + leaveStartTime +
                 ", leaveEndTime=" + leaveEndTime +

@@ -7,39 +7,52 @@
     <resultMap id="HolidayResult" type="Holiday">
         <id         property="goId"                 column="go_id"/>
         <result     property="studentId"            column="student_id"/>
+        <result     property="stuName"              column="stu_name"/>
         <result     property="term"                 column="term"/>
         <result     property="holidayType"          column="holiday_type"/>
         <result     property="destination"          column="destination"/>
-        <result     property="holidayStartTime"       column="start_time"/>
-        <result     property="holidayEndTime"         column="end_time"/>
+        <result     property="holidayStartTime"     column="start_time"/>
+        <result     property="holidayEndTime"       column="end_time"/>
         <result     property="address"              column="address"/>
         <result     property="remark"               column="remark"/>
         <result     property="status"               column="status"/>
     </resultMap>
 
     <sql id="HolidayVo">
-        select h.*
+        select h.*, s.stu_name
         from holiday_go h inner join stu_info s inner join class_info c inner join instructor_info i
         on h.student_id = s.student_id and s.class_id = c.class_id and c.instructor_id = i.instructor_id
     </sql>
 
-    <select id="selectHolidayById" parameterType="String" resultMap="HolidayResult">
+    <select id="selectHolidayById" parameterType="Holiday" resultMap="HolidayResult">
         <include refid="HolidayVo"></include>
         <where>
             1=1
             <if test="studentId != null and studentId != ''">
-                and h.student_id = #{studentId}
+                and h.student_id like concat('%', #{studentId}, '%')
+            </if>
+            <if test="status != null and status != 0">
+                and h.status = #{status}
             </if>
         </where>
         order by h.go_id desc
     </select>
 
-    <select id="selectHolidayByInsId" parameterType="String" resultMap="HolidayResult">
+    <select id="selectHolidayByInsId" parameterType="Holiday" resultMap="HolidayResult">
         <include refid="HolidayVo"></include>
         <where>
             1=1
             <if test="instructorId != null and instructorId != ''">
                 and i.instructor_id = #{instructorId}
+            </if>
+            <if test="studentId != null and studentId != ''">
+                and h.student_id like concat('%', #{studentId}, '%')
+            </if>
+            <if test="stuName != null and stuName != ''">
+                and s.stu_name like concat('%', #{stuName}, '%')
+            </if>
+            <if test="status != null and status != 0">
+                and h.status = #{status}
             </if>
         </where>
         order by h.go_id desc

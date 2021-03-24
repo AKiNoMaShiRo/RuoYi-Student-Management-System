@@ -43,6 +43,32 @@
     <section class="am-box">
       <div class="am-p am-title am-bd-b" v-if="roleName === '学生'">历史外宿申请记录</div>
       <div class="am-p am-title am-bd-b" v-else>外宿申请记录</div>
+      <div class="am-px am-pt">
+        <el-form
+          ref="searchForm"
+          :model="searchFormData"
+          label-width="80px"
+          inline
+        >
+          <el-form-item label="学号" prop="studentId">
+            <el-input size="small" v-model="searchFormData.studentId" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" prop="stuName">
+            <el-input size="small" v-model="searchFormData.stuName" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="审批状态" prop="status">
+            <el-select size="small" v-model="searchFormData.status" clearable>
+              <el-option label="未审批" :value="1"></el-option>
+              <el-option label="已通过" :value="2"></el-option>
+              <el-option label="未通过" :value="3"></el-option>
+            </el-select>
+          </el-form-item>
+            <el-form-item label=" ">
+              <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+            </el-form-item>
+        </el-form>
+      </div>
       <div class="am-p">
         <el-table v-loading="tableLoading" :data="tableData" height="382px" highlight-current-row>
           <!-- row-key=""
@@ -71,7 +97,7 @@
               <span v-else>--</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" min-width="140" fixed="right">
+          <el-table-column label="操作" min-width="180" fixed="right">
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -205,6 +231,11 @@ export default {
         reason: '',
         connectMethod: ''
       },
+      searchFormData: {
+        studentId: '',
+        stuName: '',
+        status: null
+      },
       tableLoading: false,
       rules: {
         term: [ { required: true, message: '请选择外宿学期', trigger: 'blur' } ],
@@ -213,7 +244,15 @@ export default {
         connectMethod: [ { required: true, message: '请输入家长联系方式', trigger: 'blur' } ]
       },
       tableData: [],
-      tableColumns: [
+      tableColumnsStu: [
+        { prop: 'term', label: '学期', minWidth: '80' },
+        { prop: 'address', label: '外宿地址', minWidth: '80' },
+        { prop: 'reason', label: '外宿原因', minWidth: '120' },
+        { prop: 'connectMethod', label: '家长联系方式', minWidth: '120' }
+      ],
+      tableColumnsIns: [
+        { prop: 'studentId', label: '学号', minWidth: '110' },
+        { prop: 'stuName', label: '姓名', minWidth: '80' },
         { prop: 'term', label: '学期', minWidth: '80' },
         { prop: 'address', label: '外宿地址', minWidth: '80' },
         { prop: 'reason', label: '外宿原因', minWidth: '120' },
@@ -231,6 +270,9 @@ export default {
     }),
     termOpts () {
       return termOptions(this.userName)
+    },
+    tableColumns () {
+      return this.roleName === '学生' ? this.tableColumnsStu : this.tableColumnsIns
     }
   },
   created () {
@@ -242,7 +284,11 @@ export default {
       if (this.roleName === '辅导员') {
         //    辅导员账号
         let param = {
-          instructorId: this.roleName === '超级管理员' ? '' : this.userName
+          instructorId: this.roleName === '超级管理员' ? '' : this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         BOARD.getInsBoard(param).then( res => {
           if (res.data && res.data.length !== 0){
@@ -256,7 +302,11 @@ export default {
       } else{
         //    超管账号、学生账号
         let param = {
-          studentId: this.roleName === '超级管理员' ? '' : this.userName
+          studentId: this.roleName === '超级管理员' ? '' : this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         BOARD.getBoard(param).then( res => {
           if (res.data && res.data.length !== 0){
@@ -351,6 +401,12 @@ export default {
           this.$message.error('撤销失败')
         }
       })
+    },
+    resetSearchForm () {
+      this.$refs.searchForm.resetFields()
+    },
+    handleSearch () {
+      this.getInfo()
     },
     // handlePaginationUpdate (param) {
     //   this.currentPage = param.pageNum

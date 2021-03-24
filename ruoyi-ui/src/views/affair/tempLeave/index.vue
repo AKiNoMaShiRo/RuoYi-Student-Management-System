@@ -19,7 +19,7 @@
               v-model="formData.timeRange"
               type="datetimerange"
               size="small"
-              value-format="yyyy-MM-dd HH:00"
+              value-format="yyyy-MM-dd HH:00:00"
               range-separator="至"
               start-placeholder="请假开始时间"
               end-placeholder="请假结束时间"
@@ -41,6 +41,32 @@
     <section class="am-box">
       <div class="am-p am-title am-bd-b" v-if="roleName === '学生'">历史临时请假申请记录</div>
       <div class="am-p am-title am-bd-b" v-else>临时请假申请记录</div>
+      <div class="am-px am-pt">
+        <el-form
+          ref="searchForm"
+          :model="searchFormData"
+          label-width="80px"
+          inline
+        >
+          <el-form-item label="学号" prop="studentId">
+            <el-input size="small" v-model="searchFormData.studentId" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" prop="stuName">
+            <el-input size="small" v-model="searchFormData.stuName" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="审批状态" prop="status">
+            <el-select size="small" v-model="searchFormData.status" clearable>
+              <el-option label="未审批" :value="1"></el-option>
+              <el-option label="已通过" :value="2"></el-option>
+              <el-option label="未通过" :value="3"></el-option>
+            </el-select>
+          </el-form-item>
+            <el-form-item label=" ">
+              <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+            </el-form-item>
+        </el-form>
+      </div>
       <div class="am-p">
         <el-table v-loading="tableLoading" :data="tableData" :height="tableHeight" highlight-current-row>
           <!-- row-key=""
@@ -69,7 +95,7 @@
               <span v-else>--</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" min-width="140" fixed="right">
+          <el-table-column label="操作" min-width="180" fixed="right">
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -194,6 +220,11 @@ export default {
         timeRange: '',
         teacher: ''
       },
+      searchFormData: {
+        studentId: '',
+        stuName: '',
+        status: null
+      },
       editData: {
         reason: '',
         timeRange: '',
@@ -210,11 +241,21 @@ export default {
         // teacher: [ { required: true, message: '请输入任课教师姓名', trigger: 'blur' } ]
       },
       tableLoading: false,
-      tableColumns: [
-        { prop: 'leaveId', label: '申请编号', minWidth: '90' },
-        { prop: 'leaveStartTime', label: '开始时间', minWidth: '120' },
-        { prop: 'leaveEndTime', label: '结束时间', minWidth: '120' },
+      tableColumnsStu: [
+        { prop: 'leaveId', label: '申请编号', minWidth: '80' },
+        { prop: 'leaveStartTime', label: '开始时间', minWidth: '140' },
+        { prop: 'leaveEndTime', label: '结束时间', minWidth: '140' },
         { prop: 'reason', label: '请假原因', minWidth: '180' },
+        { prop: 'teacher', label: '任课老师', minWidth: '90' }
+        // { prop: 'status', label: '审批状态', minWidth: '90' }
+      ],
+      tableColumnsIns: [
+        { prop: 'studentId', label: '学号', minWidth: '110' },
+        { prop: 'stuName', label: '姓名', minWidth: '80' },
+        { prop: 'leaveId', label: '申请编号', minWidth: '80' },
+        { prop: 'leaveStartTime', label: '开始时间', minWidth: '140' },
+        { prop: 'leaveEndTime', label: '结束时间', minWidth: '140' },
+        { prop: 'reason', label: '请假原因', minWidth: '140' },
         { prop: 'teacher', label: '任课老师', minWidth: '90' }
         // { prop: 'status', label: '审批状态', minWidth: '90' }
       ],
@@ -228,7 +269,10 @@ export default {
     ...mapState({
       userName: state => state.user.name,
       roleName: state => state.user.roleName
-    })
+    }),
+    tableColumns () {
+      return this.roleName === '学生' ? this.tableColumnsStu : this.tableColumnsIns
+    }
   },
   created () {
     this.getInfo()
@@ -241,7 +285,11 @@ export default {
         let param = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          instructorId: this.userName
+          instructorId: this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         TEMPLEAVE.getInsTempLeave(param).then( res => {
           if (res.rows && res.rows.length !== 0){
@@ -259,7 +307,11 @@ export default {
         let param = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          studentId: this.roleName === '超级管理员' ? '' : this.userName
+          studentId: this.roleName === '超级管理员' ? '' : this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         TEMPLEAVE.getTempLeave(param).then( res => {
           if (res.rows && res.rows.length !== 0){
@@ -360,6 +412,12 @@ export default {
     handlePaginationUpdate (param) {
       this.currentPage = param.currentPage
       this.pageSize = param.pageSize
+      this.getInfo()
+    },
+    resetSearchForm () {
+      this.$refs.searchForm.resetFields()
+    },
+    handleSearch () {
       this.getInfo()
     }
   }

@@ -14,18 +14,18 @@ public interface IHolidayService {
     /**
      * 根据学号查询节假日去向信息
      *
-     * @param studentId 学号
+     * @param holiday 学号
      * @return 结果
      */
-    public List<Holiday> selectHolidayById(String studentId);
+    public List<Holiday> selectHolidayById(Holiday holiday);
 
     /**
      * 根据辅导员查询节假日去向信息
      *
-     * @param instructorId 学号
+     * @param holiday 学号
      * @return 结果
      */
-    public List<Holiday> selectHolidayByInsId(String instructorId);
+    public List<Holiday> selectHolidayByInsId(Holiday holiday);
 
     /**
      * 新增节假日去向报备信息

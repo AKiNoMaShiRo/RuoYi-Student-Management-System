@@ -9,18 +9,18 @@ public interface TempLeaveMapper {
     /**
      * 根据学号查询请假信息
      *
-     * @param studentId 学号
+     * @param tempLeave 学号
      * @return 结果
      */
-    public List<TempLeave> selectLeaveByStuId(String studentId);
+    public List<TempLeave> selectLeaveByStuId(TempLeave tempLeave);
 
     /**
      * 根据辅导员工号查询请假信息
      *
-     * @param instructorId 学号
+     * @param tempLeave 学号
      * @return 结果
      */
-    public List<TempLeave> selectLeaveByInstructor(String instructorId);
+    public List<TempLeave> selectLeaveByInstructor(TempLeave tempLeave);
 
     /**
      * 新增请假信息

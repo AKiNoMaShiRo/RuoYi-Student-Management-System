@@ -17,6 +17,10 @@ public class Holiday extends BaseEntity {
     @Excel(name = "学号")
     private String studentId;
 
+    /** 姓名 */
+    @Excel(name = "姓名")
+    private String stuName;
+
     /** 学期 */
     @Excel(name = "学期")
     private String term;
@@ -51,6 +55,14 @@ public class Holiday extends BaseEntity {
     @Excel(name = "申请状态")
     private int status;
 
+    /** 辅导员工号 */
+    @Excel(name = "辅导员工号")
+    private String instructorId;
+
+    /** 辅导员姓名 */
+    @Excel(name = "辅导员姓名")
+    private String instructorName;
+
     public Long getGoId() {
         return goId;
     }
@@ -65,6 +77,14 @@ public class Holiday extends BaseEntity {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getStuName() {
+        return stuName;
+    }
+
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
     }
 
     public String getTerm() {
@@ -131,19 +151,39 @@ public class Holiday extends BaseEntity {
         this.status = status;
     }
 
+    public String getInstructorId() {
+        return instructorId;
+    }
+
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
     @Override
     public String toString() {
         return "Holiday{" +
                 "goId=" + goId +
                 ", studentId='" + studentId + '\'' +
+                ", stuName='" + stuName + '\'' +
                 ", term='" + term + '\'' +
                 ", holidayType='" + holidayType + '\'' +
                 ", destination='" + destination + '\'' +
-                ", leaveStartTime=" + holidayStartTime +
-                ", leaveEndTime=" + holidayEndTime +
+                ", holidayStartTime=" + holidayStartTime +
+                ", holidayEndTime=" + holidayEndTime +
                 ", address='" + address + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status=" + status +
+                ", instructorId='" + instructorId + '\'' +
+                ", instructorName='" + instructorName + '\'' +
                 '}';
     }
+
 }

@@ -29,17 +29,17 @@ public class TempLeaveController extends BaseController {
 
     @ApiOperation("根据学号查询请假单信息")
     @GetMapping("/queryById")
-    public TableDataInfo getTempLeave(String studentId){
+    public TableDataInfo getTempLeave(TempLeave tempLeave){
         startPage();
-        List<TempLeave> tempLeaves = tempLeaveService.selectLeaveById(studentId);
+        List<TempLeave> tempLeaves = tempLeaveService.selectLeaveById(tempLeave);
         return getDataTable(tempLeaves);
     }
 
     @ApiOperation("根据辅导员工号查询请假单信息")
     @GetMapping("/instructor/queryById")
-    public TableDataInfo getInsTempLeave(String instructorId){
+    public TableDataInfo getInsTempLeave(TempLeave tempLeave){
         startPage();
-        List<TempLeave> tempLeaves = tempLeaveService.selectLeaveByInstructor(instructorId);
+        List<TempLeave> tempLeaves = tempLeaveService.selectLeaveByInstructor(tempLeave);
         return getDataTable(tempLeaves);
     }
 

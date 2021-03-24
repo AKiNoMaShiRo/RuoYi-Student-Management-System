@@ -9,18 +9,18 @@ public interface BoardMapper {
     /**
      * 根据学号查询外宿申请
      *
-     * @param studentId 学号
+     * @param board 学号
      * @return 结果
      */
-    public List<Board> selectBoardByStuId(String studentId);
+    public List<Board> selectBoardByStuId(Board board);
 
     /**
      * 根据辅导员查询外宿申请
      *
-     * @param instructorId 工号
+     * @param board 工号
      * @return 结果
      */
-    public List<Board> selectBoardByInsId(String instructorId);
+    public List<Board> selectBoardByInsId(Board board);
 
     /**
      * 新增外宿申请

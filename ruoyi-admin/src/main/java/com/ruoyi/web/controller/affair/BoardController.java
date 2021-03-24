@@ -28,15 +28,15 @@ public class BoardController extends BaseController {
 
     @ApiOperation("根据学号查询外宿申请")
     @GetMapping("/queryById")
-    public AjaxResult getBoard(String studentId){
-        List<Board> boards = boardService.selectBoardByStuId(studentId);
+    public AjaxResult getBoard(Board board){
+        List<Board> boards = boardService.selectBoardByStuId(board);
         return AjaxResult.success(boards);
     }
 
     @ApiOperation("根据辅导员工号查询外宿申请")
     @GetMapping("/instructor/queryById")
-    public AjaxResult getInsBoard(String instructorId){
-        List<Board> boards = boardService.selectBoardByInsId(instructorId);
+    public AjaxResult getInsBoard(Board board){
+        List<Board> boards = boardService.selectBoardByInsId(board);
         return AjaxResult.success(boards);
     }
 

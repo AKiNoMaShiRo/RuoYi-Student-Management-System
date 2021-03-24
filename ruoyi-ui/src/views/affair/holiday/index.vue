@@ -78,6 +78,32 @@
     <section class="am-box">
       <div class="am-p am-title am-bd-b" v-if="roleName === '学生'">历史节假日去向报备记录</div>
       <div class="am-p am-title am-bd-b" v-else>节假日去向报备记录</div>
+      <div class="am-px am-pt">
+        <el-form
+          ref="searchForm"
+          :model="searchFormData"
+          label-width="80px"
+          inline
+        >
+          <el-form-item label="学号" prop="studentId">
+            <el-input size="small" v-model="searchFormData.studentId" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="姓名" prop="stuName">
+            <el-input size="small" v-model="searchFormData.stuName" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="审批状态" prop="status">
+            <el-select size="small" v-model="searchFormData.status" clearable>
+              <el-option label="未审批" :value="1"></el-option>
+              <el-option label="已通过" :value="2"></el-option>
+              <el-option label="未通过" :value="3"></el-option>
+            </el-select>
+          </el-form-item>
+            <el-form-item label=" ">
+              <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+            </el-form-item>
+        </el-form>
+      </div>
       <div class="am-p">
         <el-table v-loading="tableLoading" :data="tableData" :height="tableHeight" highlight-current-row>
           <!-- row-key=""
@@ -106,7 +132,7 @@
               <span v-else>--</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" min-width="140" fixed="right">
+          <el-table-column label="操作" min-width="180" fixed="right">
             <template slot-scope="scope">
               <el-button
                 type="text"
@@ -263,6 +289,11 @@ export default {
         timeRange: ['', ''],
         remark: ''
       },
+      searchFormData: {
+        studentId: '',
+        stuName: '',
+        status: null
+      },
       editData: {
         goId: null,
         holidayType: '',
@@ -285,12 +316,22 @@ export default {
       },
       tableLoading: false,
       tableData: [],
-      tableColumns: [
+      tableColumnsStu: [
         { prop: 'holidayType', label: '节假日', minWidth: '80' },
         { prop: 'destination', label: '去向类别', minWidth: '80' },
         { prop: 'address', label: '外出地址', minWidth: '120' },
         { prop: 'holidayStartTime', label: '离校时间', minWidth: '120' },
         { prop: 'holidayEndTime', label: '拟回校时间', minWidth: '120' },
+        { prop: 'remark', label: '备注', minWidth: '140' }
+      ],
+      tableColumnsIns: [
+        { prop: 'studentId', label: '学号', minWidth: '110' },
+        { prop: 'stuName', label: '姓名', minWidth: '80' },
+        { prop: 'holidayType', label: '节假日', minWidth: '80' },
+        { prop: 'destination', label: '去向类别', minWidth: '80' },
+        { prop: 'address', label: '外出地址', minWidth: '120' },
+        { prop: 'holidayStartTime', label: '离校时间', minWidth: '100' },
+        { prop: 'holidayEndTime', label: '拟回校时间', minWidth: '100' },
         { prop: 'remark', label: '备注', minWidth: '140' }
       ]
     }
@@ -302,7 +343,10 @@ export default {
     ...mapState({
       userName: state => state.user.name,
       roleName: state => state.user.roleName
-    })
+    }),
+    tableColumns () {
+      return this.roleName === '学生' ? this.tableColumnsStu : this.tableColumnsIns
+    }
   },
   watch: {
     'formData.destination': {
@@ -341,7 +385,11 @@ export default {
         let param = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          instructorId: this.userName
+          instructorId: this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         HOLIDAY.getInsHoliday(param).then( res => {
           if (res.rows && res.rows.length !== 0) {
@@ -359,7 +407,11 @@ export default {
         let param = {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          studentId: this.roleName === '超级管理员' ? '' : this.userName
+          studentId: this.roleName === '超级管理员' ? '' : this.userName,
+          ...this.searchFormData
+        }
+        if (param.status === '') {
+          param.status = 0
         }
         HOLIDAY.getHoliday(param).then( res => {
           if (res.rows && res.rows.length !== 0) {
@@ -461,6 +513,12 @@ export default {
     handlePaginationUpdate (param) {
       this.currentPage = param.pageNum
       this.pageSize = param.pageSize
+    },
+    resetSearchForm () {
+      this.$refs.searchForm.resetFields()
+    },
+    handleSearch () {
+      this.getInfo()
     }
   },
   filters: {

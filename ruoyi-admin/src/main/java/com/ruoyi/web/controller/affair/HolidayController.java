@@ -29,17 +29,17 @@ public class HolidayController extends BaseController {
 
     @ApiOperation("根据学号查询节假日去向报备")
     @GetMapping("/queryById")
-    public TableDataInfo getHoliday(String studentId) {
+    public TableDataInfo getHoliday(Holiday holiday) {
         startPage();
-        List<Holiday> holidays = holidayService.selectHolidayById(studentId);
+        List<Holiday> holidays = holidayService.selectHolidayById(holiday);
         return getDataTable(holidays);
     }
 
     @ApiOperation("根据辅导员查询节假日去向报备")
     @GetMapping("/instructor/queryById")
-    public TableDataInfo getInsHoliday(String instructorId) {
+    public TableDataInfo getInsHoliday(Holiday holiday) {
         startPage();
-        List<Holiday> holidays = holidayService.selectHolidayByInsId(instructorId);
+        List<Holiday> holidays = holidayService.selectHolidayByInsId(holiday);
         return getDataTable(holidays);
     }
 
