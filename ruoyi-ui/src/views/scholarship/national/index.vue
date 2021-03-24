@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
-    <section class="am-box am-mb" v-if="roleName === '学生'">
-      <div class="am-p am-title am-bd-b">国家奖学金申请信息</div>
+    <InfoCollapse class="am-mb"></InfoCollapse>
+    <!-- <section class="am-box am-mb">
+      <div class="am-p am-title am-bd-b">国家奖学金申请记录</div>
+    </section> -->
+    <section class="am-box" v-if="roleName === '学生'">
+      <div class="am-p am-title am-bd-b">国家奖学金申请</div>
       <div class="am-p">
         <div class="am-bd-b am-pb am-mb">
           <el-button size="small" icon="el-icon-refresh" disabsled @click="handleResetAddForm">重置</el-button>
@@ -63,17 +67,18 @@
         </el-form>
       </div>
     </section>
-    <section class="am-box">
-      <div class="am-p am-title am-bd-b">国家奖学金申请记录</div>
-    </section>
   </div>
 </template>
 
 <script>
+import InfoCollapse from './components/infoCollapse'
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
 
 export default {
+  components: {
+    InfoCollapse
+  },
   data () {
     return {
       addData: {
@@ -143,7 +148,16 @@ export default {
     handleResetAddForm () {
       this.$refs.addForm.resetFields()
     },
-    handleSubmitAddForm () {}
+    handleSubmitAddForm () {
+      this.$refs.addForm.validate( valid => {
+        if (valid) {
+          let param = {
+            studentId: this.userName,
+            ...this.addData
+          }
+        }
+      })
+    }
   }
 }
 </script>

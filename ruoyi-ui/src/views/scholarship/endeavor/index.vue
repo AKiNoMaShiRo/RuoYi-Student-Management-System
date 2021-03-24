@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
-    <section class="am-box am-mb" v-if="roleName === '学生'">
+    <InfoCollapse class="am-mb"></InfoCollapse>
+    <!-- <section class="am-box">
       <div class="am-p am-title am-bd-b">国家励志奖学金申请信息</div>
+    </section> -->
+    <section class="am-box" v-if="roleName === '学生'">
+      <div class="am-p am-title am-bd-b">国家励志奖学金申请</div>
       <div class="am-p">
         <div class="am-bd-b am-pb am-mb">
           <el-button
@@ -72,18 +76,17 @@
         </el-form>
       </div>
     </section>
-    <section class="am-box">
-      <div class="am-p am-title am-bd-b">国家励志奖学金申请信息</div>
-    </section>
   </div>
 </template>
 
 <script>
+import InfoCollapse from './components/infoCollapse'
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
 import * as DIFFSTU from '@/api/scholarship/difficlutStu.js'
 
 export default {
+  components: { InfoCollapse },
   data () {
     return {
       addData: {
@@ -168,7 +171,12 @@ export default {
     },
     handleSubmitAddForm () {
       this.$refs.addForm.validate( valid => {
-        if (valid) {}
+        if (valid) {
+          let param = {
+            studentId: this.userName,
+            ...this.addData
+          }
+        }
       })
     }
   }
