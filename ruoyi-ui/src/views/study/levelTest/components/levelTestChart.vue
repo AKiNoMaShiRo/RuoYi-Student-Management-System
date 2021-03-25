@@ -84,6 +84,13 @@ export default {
         this.chartOptions.series.forEach( item => {
           if (item.name === type) {
             if (res.data && res.data.length !== 0){
+              // res.data.forEach( resItem => {
+              //   if (resItem !== null || resItem !== 'NaN') {
+              //     item.data.push(item)
+              //   } else {
+              //     item.data.push(0)
+              //   }
+              // })
               item.data = res.data
             }
           }
@@ -95,7 +102,7 @@ export default {
       this.loadingChart = true
       let param = {}
       if (this.roleName === '辅导员' || this.roleName === '班主任') {
-        param.instructorId = this.userName
+        this.roleName === '辅导员' ? param.instructorId = this.userName : param.headmasterId = this.userName
         getClassInfo(param).then( res => {
           if (res.rows && res.rows.length !== 0) {
             this.authedClass = res.rows
@@ -124,12 +131,12 @@ export default {
             res.data.forEach( item => {
               this.authedClass.push({ profession : item })
             })
-            console.log(this.authedClass)
+            // console.log(this.authedClass)
             this.authedClass.forEach( item =>{
               this.chartOptions.xAxis.push(item.profession)
               this.classList.push({ classId: '', label: item.profession })
             })
-            console.log(this.chartOptions.xAxis)
+            // console.log(this.chartOptions.xAxis)
             let promises = new Array(4)
             this.testTypeList.forEach( (typeItem, index) => {
               promises[index] = this.getChartData(typeItem)

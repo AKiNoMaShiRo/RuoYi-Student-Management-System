@@ -35,8 +35,8 @@
             <if test="grade != null and grade != 0">and class_info.grade = #{grade}</if>
             <if test="instructorId != null and instructorId != ''">and class_info.instructor_id = #{instructorId}</if>
             <if test="instructorName != null and instructorName != ''">and instructor_info.instructor_name = #{instructorName}</if>
-            <if test="headmasterId != null and headmasterId != ''">and headmaster_id = #{headmasterId} </if>
-            <if test="headmasterName != null and headmasterName != ''">and headmaster_name = #{headmasterName} </if>
+            <if test="headmasterId != null and headmasterId != ''">and class_info.headmaster_id = #{headmasterId} </if>
+            <if test="headmasterName != null and headmasterName != ''">and headmaster_info.headmaster_name = #{headmasterName} </if>
         </where>
     </select>
 

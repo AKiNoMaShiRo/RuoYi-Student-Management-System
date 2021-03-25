@@ -149,7 +149,7 @@ export default {
     getData (queryRole) {
       let param = new Array()
       this.authedClass.forEach( item => {
-        param.push({ ...queryRole, classId: item.classId })
+        param.push({ ...queryRole, classId: item.classId, profession: item.profession })
       })
       // console.log(param)
       COURSEGRADE.getAllGradeAvg(param).then( res => {
@@ -164,7 +164,7 @@ export default {
           })
         }
       }).finally( () => {
-        console.log(this.chartOptions)
+        // console.log(this.chartOptions)
         setTimeout( () => {
           this.showChart = true
           this.loadingChart = false
@@ -195,12 +195,13 @@ export default {
           if (res.data && res.data.length !== 0) {
             res.data.forEach( item => {
               this.authedClass.push({ profession : item })
+              this.chartOptions.xAxis.push(item)
             })
             // console.log(this.authedClass)
-            this.authedClass.forEach( item =>{
-              this.chartOptions.xAxis.push(item.profession)
-              this.classList.push({ classId: '', label: item.profession })
-            })
+            // this.authedClass.forEach( item =>{
+            //   this.chartOptions.xAxis.push(item.profession)
+            //   // this.classList.push({ classId: '', label: item.profession })
+            // })
             this.getData()
           }
         })

@@ -82,6 +82,15 @@ export default {
           axisLine: {
             show: false
           },
+          axisLabel: {
+            formatter: val => {
+              let txt = val
+              if (val.length > 4) {
+                txt = val.substr(0, 4) + '...'
+              }
+              return txt
+            }
+          }
           // axisTick: {
           //   alignWithLabel: true
           // }
