@@ -91,6 +91,7 @@ export default {
       })
     },
     getInfo () {
+      this.showChart = false
       this.loadingChart = true
       let param = {}
       if (this.roleName === '辅导员' || this.roleName === '班主任') {

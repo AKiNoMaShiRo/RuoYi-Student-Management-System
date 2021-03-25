@@ -173,6 +173,7 @@ export default {
     },
     //    TODO 获取柱状图数据
     getChartData () {
+      this.showChart = false
       this.loadingChart = true
       let param = {}
       this.chartOptions.series[0].name = this.searchFormData.courseName
