@@ -209,7 +209,7 @@ create table difficult_stu (
 -- ----------------------------
 drop table if exists nation_scholarship;
 create table nation_scholarship (
-  scholarship_id	bigint			not null				   comment '申请编号',
+  scholarship_id	bigint			not null auto_increment	   comment '申请编号',
   learn_year		varchar(20)		not null				   comment '学年',
   student_id		varchar(20)		not null				   comment '学号',
   is_fit			int				not null				   comment '是否破格（1：是，0：否）',
@@ -220,8 +220,10 @@ create table nation_scholarship (
   multip_rank		int		  		not null				   comment '综合测评排名',
   multip_rank_rate	double			not null				   comment '综合测评排名百分比',
   porvince_prize	varchar(500)	default null			   comment '省级及以上表彰或成果',
-  school_prize		varchar(500)	default null			   comment '校级表彰或成果'
+  school_prize		varchar(500)	default null			   comment '校级表彰或成果',
+  status			int				default null			   comment '是否通过（1：是，0：否）',
 
+  primary key (scholarship_id)
 ) engine=innodb comment = '国家奖学金申请表'
 
 -- ----------------------------
@@ -229,7 +231,7 @@ create table nation_scholarship (
 -- ----------------------------
 drop table if exists endeavor_scholarship;
 create table endeavor_scholarship (
-  scholarship_id	bigint			not null				   comment '申请编号',
+  scholarship_id	bigint			not null auto_increment	   comment '申请编号',
   learn_year		varchar(20)		not null				   comment '学年',
   student_id		varchar(20)		not null				   comment '学号',
   is_fit			int				not null				   comment '是否破格（1：是，0：否）',
@@ -239,8 +241,10 @@ create table endeavor_scholarship (
   multip_rank		int		  		not null				   comment '综合测评排名',
   multip_rank_rate	double			not null				   comment '综合测评排名百分比',
   porvince_prize	varchar(500)	default null			   comment '省级及以上表彰或成果',
-  school_prize		varchar(500)	default null			   comment '校级表彰或成果'
-  
+  school_prize		varchar(500)	default null			   comment '校级表彰或成果',
+  status			int				default null			   comment '是否通过（1：是，0：否）',
+
+  primary key (scholarship_id)  
 ) engine=innodb comment = '国家励志奖学金申请表'
 
 -- ----------------------------

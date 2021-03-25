@@ -21,6 +21,8 @@
         <result     property="classNum"         column="class_num"/>
         <result     property="instructorId"     column="instructor_id"/>
         <result     property="instructorName"   column="instructor_name"/>
+        <result     property="headmasterId"     column="headmaster_id"/>
+        <result     property="headmasterName"   column="headmaster_name"/>
     </resultMap>
 
     <resultMap id="GainedPointResult" type="GainedPoint">
@@ -30,8 +32,8 @@
 
     <sql id="CourseGradeClassVo">
         select cg.*, si.stu_name, ci.*, ii.instructor_name
-        from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii
-        on cg.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id
+        from course_grade cg inner join stu_info si inner join class_info ci inner join instructor_info ii inner join headmaster_info hi
+        on cg.student_id = si.student_id and si.class_id = ci.class_id and ci.instructor_id = ii.instructor_id and ci.headmaster_id = hi.headmaster_id
     </sql>
 
     <select id="selectByStuId" parameterType="string" resultMap="CourseGradeClassResult">
@@ -56,6 +58,8 @@
             <if test="classNum != null and classNum != 0"> and ci.class_num = #{classNum} </if>
             <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
             <if test="instructorName != null and instructorName != ''"> and ii.instructor_name = #{instructorName} </if>
+            <if test="headmasterId != null and headmasterId != ''"> and hi.headmaster_id = #{headmasterId} </if>
+            <if test="headmasterName != null and headmasterName != ''"> and hi.headmaster_name = #{headmasterName} </if>
         </where>
     </select>
 
@@ -86,6 +90,7 @@
             <if test="grade != null and grade != 0"> and ci.grade = #{grade} </if>
             <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
             <if test="classNum != null and classNum != 0"> and ci.class_num = #{classNum} </if>
+            <if test="classId != null and classId != 0"> and ci.class_id = #{classId} </if>
         </where>
     </select>
 

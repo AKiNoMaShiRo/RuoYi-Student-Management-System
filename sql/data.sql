@@ -59,6 +59,7 @@ INSERT INTO course_grade VALUES ('20171344050', '2017-2018', '1', '公共(必)',
 INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '程序设计基础', 84, NULL, NULL, 4);
 INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '通修课', '大学语文', 89, NULL, NULL, 2);
 INSERT INTO course_grade VALUES ('20171344054', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（2）', 87, NULL, NULL, 6);
+INSERT INTO course_grade VALUES ('20171344105', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 61, NULL, NULL, 6);
 
 SELECT stu_info.student_id, stu_info.name, stu_info.gradu_intention, stu_info.registration, class_info.department, class_info.profession, class_info.grade, class_info.class_num
 FROM stu_info INNER JOIN class_info

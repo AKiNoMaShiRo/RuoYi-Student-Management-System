@@ -40,9 +40,9 @@ public interface CourseGradeMapper {
     public List<CourseGradeClass> selectCourseName(String courseName);
 
     /**
-     * 查询某一个班级某一课程的平均分
+     * 查询某一个班级或某一专业某一课程的平均分
      *
-     * @param courseGradeClass 课程名称和班级信息
+     * @param courseGradeClass 课程名称和班级/专业信息
      * @return 平均分
      */
     public String selectCourseAvgByClass(CourseGradeClass courseGradeClass);

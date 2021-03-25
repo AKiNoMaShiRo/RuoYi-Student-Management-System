@@ -1,12 +1,12 @@
 <template>
   <section>
     <div class="am-p am-flex" style="height: 300px;">
-        <test-bar-chart
-          v-loading="loadingChart"
-          v-if="showChart"
-          :xAxis="chartOptions.xAxis"
-          :series="chartOptions.series"
-          :width="chartOptions.width" />
+      <test-bar-chart
+        v-loading="loadingChart"
+        v-if="showChart"
+        :xAxis="chartOptions.xAxis"
+        :series="chartOptions.series"
+        :width="chartOptions.width" />
     </div>
   </section>
 </template>
@@ -93,7 +93,7 @@ export default {
     getInfo () {
       this.loadingChart = true
       let param = {}
-      if (this.roleName === '辅导员') {
+      if (this.roleName === '辅导员' || this.roleName === '班主任') {
         param.instructorId = this.userName
         getClassInfo(param).then( res => {
           if (res.rows && res.rows.length !== 0) {

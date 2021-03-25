@@ -32,7 +32,7 @@ export function getGradeAvg(query) {
 export function getAllGradeAvg(query) {
     return request({
         url: BASEPATH + '/course/allAvg',
-        method: 'get',
-        params: query
+        method: 'post',
+        data: query
     })
 }

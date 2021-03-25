@@ -58,10 +58,11 @@ public class CourseGradeController extends BaseController {
     }
 
     @ApiOperation("批量查询课程平均分")
-    @GetMapping("/course/allAvg")
-    public AjaxResult queryCourseAllAvg(CourseGradeClass[] courseGradeClasses){
+    @PostMapping("/course/allAvg")
+    public AjaxResult queryCourseAllAvg(@Validated @RequestBody CourseGradeClass[] courseGradeClasses){
         AjaxResult ajaxResult = AjaxResult.success();
         List<String> res = new ArrayList<>();
+        System.out.println(courseGradeClasses.length);
         for (int i=0 ; i<courseGradeClasses.length ; i++) {
             res.add(courseGradeService.selectCourseAvgByClass(courseGradeClasses[i]));
         }

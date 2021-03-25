@@ -7,7 +7,7 @@ import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
-const animationDuration = 6000
+// const animationDuration = 6000
 
 export default {
   mixins: [resize],
@@ -19,43 +19,24 @@ export default {
     },
     width: {
       type: String,
+      required: false,
       default: '100%'
     },
     height: {
       type: String,
+      required: false,
       default: '280px'
     },
     //    X轴标签
     xAxis: {
       type: Array,
       required: false,
-      default: () => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      default: () => []
     },
     series: {
       type: Array,
       required: false,
-      default: () => [{
-          name: 'pageA',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '18',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '18',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '18',
-          data: [30, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }]
+      default: () => []
     },
   },
   data() {
@@ -116,7 +97,7 @@ export default {
           axisLabel: {
             clickable: true,
             formatter: function (value) {
-              return value + '%'
+              return value
             }
           },
         }],
