@@ -94,7 +94,7 @@ export default {
       userName: state => state.user.name
     }),
     tableHeight () {
-      return this.total > this.currentPage ? '289px' : 'calc(289px + 40px)'
+      return this.total > this.currentPage ? '484px' : 'calc(484px + 40px)'
     }
   },
   created () {

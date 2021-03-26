@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.info.mapper.MasterInfoMapper">
+
+    <resultMap id="MasterInfoResult" type="MasterInfo">
+        <result     property="userId"           column="user_id"/>
+        <result     property="masterId"         column="user_name"/>
+        <result     property="masterName"       column="nick_name"/>
+    </resultMap>
+
+    <sql id="MasterInfoVo">
+        select su.user_id, su.user_name, su.nick_name, sur.role_id
+        from sys_user_role sur inner join sys_user su
+        on sur.user_id = su.user_id
+    </sql>
+
+    <select id="selectMasterInfo" parameterType="MasterInfo" resultMap="MasterInfoResult">
+        <include refid="MasterInfoVo"></include>
+        <where>
+            sur.role_id=5 and su.del_flag=0
+        </where>
+    </select>
+
+    <delete id="deleteMasterInfo" parameterType="Long">
+        delete from sys_user where sys_user.user_id = #{userId}
+    </delete>
+
+</mapper>

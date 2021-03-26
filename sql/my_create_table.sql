@@ -175,7 +175,7 @@ create table headmaster_info (
   headmaster_id		varchar(20)     not null 			       comment '辅导员工号',
   headmaster_name	varchar(30)		not null				   comment '辅导员姓名',
 
-  primary key (headmaster_info)
+  primary key (headmaster_id)
 ) engine=innodb comment = '班主任信息表';
 
 -- ----------------------------
@@ -248,7 +248,18 @@ create table endeavor_scholarship (
 ) engine=innodb comment = '国家励志奖学金申请表'
 
 -- ----------------------------
--- 13、学业预警信息表
+-- 13、副书记信息表
+-- ----------------------------
+drop table if exists master_info;
+create table master_info (
+  master_id		varchar(20)     not null 			       comment '副书记工号',
+  master_name	varchar(30)		not null				   comment '副书记姓名',
+
+  primary key (master_id)
+) engine=innodb comment = '副书记信息表';
+
+-- ----------------------------
+-- 14、学业预警信息表
 -- ----------------------------
 drop table if exists saws_info;
 create table saws_info (

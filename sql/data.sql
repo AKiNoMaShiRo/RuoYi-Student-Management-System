@@ -36,15 +36,16 @@ insert into sys_menu values('2003', '审批外宿申请', '802', '1',  '', '', 1
 
 insert into sys_menu values('5', '用户管理', '0', '5', 'users',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '系统用户管理');
 insert into sys_menu values('502',  '学生管理', '5',   '1', 'student', 'user/student/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '学生账号管理菜单');
-insert into sys_menu values('503',  '班级管理', '5',   '3', 'class', 'user/class/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班级信息管理菜单');
+insert into sys_menu values('503',  '班级管理', '5',   '5', 'class', 'user/class/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班级信息管理菜单');
 insert into sys_menu values('504',  '辅导员管理', '5',   '2', 'instructor', 'user/instructor/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '辅导员信息管理菜单');
-insert into sys_menu values('505',  '班主任管理', '5',   '4', 'headmaster', 'user/headmaster/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班主任信息管理菜单');
+insert into sys_menu values('505',  '班主任管理', '5',   '3', 'headmaster', 'user/headmaster/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班主任信息管理菜单');
 insert into sys_menu values('701', '等级考试', '7', '2', 'levelTest', 'study/levelTest/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '学生等级考试管理');
 insert into sys_menu values('702', '普通课程', '7', '3', 'courseGrade', 'study/courseGrade/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '学生普通课程成绩管理');
 insert into sys_menu values('703', '综合测评', '7', '4', 'multipGrade', 'study/multip/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '综合测评成绩管理');
 insert into sys_menu values('9', '评奖评优', '0', '9', 'scholarship',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '评奖评优事项管理');
 insert into sys_menu values('901', '国家奖学金', '9', '1', 'national', 'scholarship/national/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '国家奖学金管理');
 insert into sys_menu values('902', '励志奖学金', '9', '2', 'endeavor', 'scholarship/endeavor/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '国家励志奖学金管理');
+insert into sys_menu values('506', '副书记', '5', '4', 'master', 'user/master/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '副书记信息管理菜单');
 
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');
