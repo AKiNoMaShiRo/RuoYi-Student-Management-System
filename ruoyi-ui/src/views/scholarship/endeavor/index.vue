@@ -85,6 +85,7 @@ import InfoCollapse from './components/infoCollapse'
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
 import * as DIFFSTU from '@/api/scholarship/difficlutStu.js'
+import * as EDV from '@/api/scholarship/edvScholarship.js'
 
 export default {
   components: { InfoCollapse },
