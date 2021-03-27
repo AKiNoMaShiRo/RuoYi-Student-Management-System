@@ -27,6 +27,26 @@
     </section>
     <section class="am-box">
       <div class="am-p am-title am-bd-b">综合测评成绩公示</div>
+      <div class="am-p" v-if="roleName !== '学生'">
+        <el-form
+          ref="searchForm"
+          label-width="60px"
+          :model="searchFormData"
+          :rules="searchRules"
+          inline
+        >
+          <el-form-item label="专业" prop="profession">
+            <el-input v-model="searchFormData.profession" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="年级" prop="grade">
+            <el-input v-model.number="searchFormData.grade" clearable></el-input>
+          </el-form-item>
+          <el-form-item label=" ">
+            <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
       <div class="am-p">
         <el-table
           v-loading="tableLoading"
@@ -85,7 +105,20 @@ export default {
         { prop: 'profeRank', label: '专业排名', minWidth: '80' },
         { prop: 'multipSum', label: '综测总分', minWidth: '80' },
         { prop: 'multipRank', label: '综测排名', minWidth: '80' }
-      ]
+      ],
+      searchFormData: {
+        profession: '',
+        grade: null
+      },
+      searchRules: {
+        profession: [
+          { required: true, message: '请输入专业', trigger: 'blur' }
+        ],
+        grade: [
+          { required: true, message: '请输入年级', trigger: 'blur' },
+          { type: 'number', message: '年级必须为数字值' }
+        ]
+      }
     }
   },
   computed: {
@@ -104,19 +137,21 @@ export default {
     }
     if (this.roleName === '学生') {
       MULTIP.getAllGrade({studentId: this.userName}).then( res => {
+        //页面上方显示本人成绩
         if (res.rows && res.rows.length !== 0) {
           this.stuGrade = res.rows[0]
           param.profession = res.rows[0].profession
           param.grade = res.rows[0].grade
         }
       }).finally( () => {
-        //学生只公示本年级本专业成绩
+        //对学生公示本年级本专业成绩
         this.getInfo(param)
       })
-    } else {
-      //其他角色公示所有成绩
-      this.getInfo(param)
     }
+    // } else {
+    //   //其他角色可查询所有成绩
+    //   this.getInfo(param)
+    // }
   },
   methods: {
     getInfo (param) {
@@ -132,6 +167,17 @@ export default {
       }).finally ( () => {
         this.tableLoading = false
       })
+    },
+    handleSearch () {
+      let param = {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        ...this.searchFormData
+      }
+      this.getInfo(param)
+    },
+    resetSearchForm () {
+      this.$refs.searchForm.resetFields()
     },
     handlePaginationUpdate (param) {
       this.currentPage = param.currentPage
