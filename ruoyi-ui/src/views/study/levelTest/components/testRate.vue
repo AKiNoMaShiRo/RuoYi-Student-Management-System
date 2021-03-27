@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="am-p am-title am-bd-b">查询结果：{{ queryResult }}</div>
+    <div class="am-p am-title am-bd-b">查询结果：<span v-loading="resLoading">{{ queryResult }}</span></div>
   </section>
 </template>
 
@@ -54,6 +54,7 @@ export default {
         grade: [ {type: 'number', message: '年级必须为数字值'} ],
         classNum: [ {type: 'number', message: '班级序号必须为数字值'} ],
       },
+      resLoading: false,
       queryResult: ''
     }
   },
@@ -77,12 +78,17 @@ export default {
               param[key] = this.searchFormData[key]
             }
           }
-          console.log('param')
-          console.log(param)
+          // console.log('param')
+          // console.log(param)
+          this.resLoading = true
           LEVELTEST.getPassRateByLT([param]).then( res => {
             if (res.data && res.data.length !== 0) {
               this.queryResult = res.data[0] + '%'
+            } else {
+              this.queryResult = ''
             }
+          }).finally( () => {
+            this.resLoading = false
           })
         }
       })

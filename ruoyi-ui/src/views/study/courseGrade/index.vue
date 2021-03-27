@@ -8,7 +8,7 @@
             <span>学生成绩详情</span>
           </li>
           <li :class="{ active: activeIndex === 'chart' }" @click="handleTabClick('chart')">
-            <span>班级成绩分析</span>
+            <span>总体成绩分析</span>
           </li>
         </ol>
       </div>

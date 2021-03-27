@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import InfoCollapse from './components/infoCollapse'
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
@@ -139,7 +140,12 @@ export default {
     ...mapState({
       roleName: state => state.user.roleName,
       userName: state => state.user.name
-    })
+    }),
+    learnYear () {
+      let currentYear = parseInt(moment().format('yyyy'))
+      let currentMonth = parseInt(moment().format('MM'))
+      return currentMonth > 7 ? currentYear + '-' + (currentYear + 1) : (currentYear - 1) + '-' + currentYear
+    }
   },
   created () {
     if (this.roleName === '学生') {
@@ -151,7 +157,6 @@ export default {
           this.disabledReason = '*您不是困难生，无法申请'
         }
       })
-      
     }
   },
   methods: {
@@ -174,8 +179,10 @@ export default {
         if (valid) {
           let param = {
             studentId: this.userName,
+            learnYear: this.learnYear,
             ...this.addData
           }
+          // TODO 提交申请接口
         }
       })
     }
