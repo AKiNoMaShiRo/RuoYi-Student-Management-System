@@ -151,6 +151,14 @@ public class StuInfo extends BaseEntity {
     @Excel(name = "信息上报项目")
     private String reportItem;
 
+    /** 辅导员工号 */
+    @Excel(name = "辅导员工号")
+    private String instructorId;
+
+    /** 班主任工号 */
+    @Excel(name = "班主任工号")
+    private String headmasterId;
+
     public String getClassId() {
         return classId;
     }
@@ -439,6 +447,22 @@ public class StuInfo extends BaseEntity {
         this.reportItem = reportItem;
     }
 
+    public String getInstructorId() {
+        return instructorId;
+    }
+
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId;
+    }
+
+    public String getHeadmasterId() {
+        return headmasterId;
+    }
+
+    public void setHeadmasterId(String headmasterId) {
+        this.headmasterId = headmasterId;
+    }
+
     @Override
     public String toString() {
         return "StuInfo{" +
@@ -478,6 +502,8 @@ public class StuInfo extends BaseEntity {
                 ", cet6=" + cet6 +
                 ", englishName='" + englishName + '\'' +
                 ", reportItem='" + reportItem + '\'' +
+                ", instructorId='" + instructorId + '\'' +
+                ", headmasterId='" + headmasterId + '\'' +
                 '}';
     }
 }

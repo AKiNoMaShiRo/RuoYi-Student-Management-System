@@ -21,6 +21,15 @@ export function getStuBaseInfo(stuId){
 //    批量查询学生基本信息
 export function getAllStuUser(query){
     return request({
+        url: '/info/stu/queryAllBase/',
+        method: 'get',
+        params: query
+    })
+}
+
+//    批量查询学生信息
+export function getAllStu(query){
+    return request({
         url: '/info/stu/queryAll/',
         method: 'get',
         params: query

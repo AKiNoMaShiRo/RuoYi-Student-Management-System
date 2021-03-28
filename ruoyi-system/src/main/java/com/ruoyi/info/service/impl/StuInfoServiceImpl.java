@@ -82,6 +82,16 @@ public class StuInfoServiceImpl implements IStuInfoService {
     }
 
     /**
+     * 批量查询学生信息
+     *
+     * @param stuInfo 入参
+     * @return 学生信息
+     */
+    public List<StuBaseInfo> selectAllStu(StuInfo stuInfo){
+        return infoMapper.selectAllStu(stuInfo);
+    }
+
+    /**
      * 添加学生基本信息
      *
      * @param baseInfo 入参

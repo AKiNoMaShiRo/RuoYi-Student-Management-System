@@ -50,11 +50,19 @@ public class StuInfoController extends BaseController {
         return ajaxResult;
     }
 
-    @ApiOperation("批量查询学生信息")
-    @GetMapping(value = { "/queryAll"})
-    public TableDataInfo getAllInfo(StuBaseInfo stuBaseInfo){
+    @ApiOperation("批量查询学生基本信息")
+    @GetMapping(value = { "/queryAllBase"})
+    public TableDataInfo getAllBaseInfo(StuBaseInfo stuBaseInfo){
         startPage();
         List<StuBaseInfo> stuBaseInfos = stuInfoService.selectAllStuBase(stuBaseInfo);
+        return getDataTable(stuBaseInfos);
+    }
+
+    @ApiOperation("批量查询学生信息")
+    @GetMapping(value = { "/queryAll"})
+    public TableDataInfo getAllInfo(StuInfo stuInfo){
+        startPage();
+        List<StuBaseInfo> stuBaseInfos = stuInfoService.selectAllStu(stuInfo);
         return getDataTable(stuBaseInfos);
     }
 

@@ -2,16 +2,16 @@
   <div class="am-p">
     <el-form
       ref="searchForm"
-      label-width="85px"
+      label-width="80px"
       :model="searchFormData"
       :rules="searchRules"
       inline
     >
       <el-form-item label="学号" prop="studentId">
-        <el-input v-model="searchFormData.studentId" clearable></el-input>
+        <el-input size="small" v-model="searchFormData.studentId" clearable></el-input>
       </el-form-item>
       <el-form-item label="学年" prop="learnYear">
-        <el-select v-model="searchFormData.learnYear" clearable>
+        <el-select size="small" v-model="searchFormData.learnYear" clearable>
           <el-option
             v-for="opt in termOpts"
             :key="opt.label"
@@ -22,13 +22,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="学期" prop="learnTerm">
-        <el-select v-model="searchFormData.learnTerm" clearable>
+        <el-select size="small" v-model="searchFormData.learnTerm" clearable>
           <el-option label="上" :value="1"></el-option>
           <el-option label="下" :value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="课程类别" prop="courseType">
-        <el-select v-model="searchFormData.courseType" clearable>
+        <el-select size="small" v-model="searchFormData.courseType" clearable>
           <el-option
             v-for="opt in courseTypeOpts"
             :key="opt.label"

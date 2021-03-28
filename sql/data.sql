@@ -53,6 +53,8 @@ insert into sys_menu values('901', '国家奖学金', '9', '1', 'national', 'sch
 insert into sys_menu values('902', '励志奖学金', '9', '2', 'endeavor', 'scholarship/endeavor/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '国家励志奖学金管理');
 insert into sys_menu values('506', '副书记', '5', '4', 'master', 'user/master/index',   1, 0, 'C', '0', '0', '', '#',     'admin', sysdate(), '', null, '副书记信息管理菜单');
 
+insert into sys_menu values('603',  '学生信息', '6',   '3', 'stuInfoByClass', 'info/stuInfoByClass/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '学生信息查询菜单');
+
 -- insert into sys_role_menu values ('2', '1');
 -- insert into sys_role_menu values ('2', '2');
 -- insert into sys_role_menu values ('2', '3');

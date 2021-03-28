@@ -6,6 +6,7 @@
 
     <resultMap type="StuInfo" id="StuInfoResult">
         <id     property="studentId"            column="student_id"/>
+        <result property="name"                 column="stu_name"/>
         <result property="department"           column="department"/>
         <result property="profession"           column="profession"/>
         <result property="grade"                column="grade"/>
@@ -100,6 +101,19 @@
             1=1
             <if test="studentId != null and studentId != ''"> and s.student_id like concat('%', #{studentId}, '%')</if>
             <if test="name != null and name != ''"> and s.stu_name like concat('%', #{name}, '%')</if>
+            <if test="profession != null and profession != ''"> and c.profession = #{profession}</if>
+            <if test="grade != null and grade != 0"> and c.grade = #{grade}</if>
+        </where>
+    </select>
+
+    <select id="selectAllStu" parameterType="StuInfo" resultMap="StuInfoResult">
+        <include refid="selectStuUserVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and s.student_id = #{studentId} </if>
+            <if test="classId != null and classId != ''"> and c.class_id = #{classId} </if>
+            <if test="instructorId != null and instructorId != ''"> and c.instructor_id = #{instructorId} </if>
+            <if test="headmasterId != null and headmasterId != ''"> and c.headmaster_id = #{headmasterId} </if>
             <if test="profession != null and profession != ''"> and c.profession = #{profession}</if>
             <if test="grade != null and grade != 0"> and c.grade = #{grade}</if>
         </where>

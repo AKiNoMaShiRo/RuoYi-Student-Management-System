@@ -27,7 +27,7 @@
     </section>
     <section class="am-box">
       <div class="am-p am-title am-bd-b">综合测评成绩公示</div>
-      <div class="am-p" v-if="roleName !== '学生'">
+      <div class="am-px am-pt" v-if="roleName !== '学生'">
         <el-form
           ref="searchForm"
           label-width="60px"
@@ -36,10 +36,10 @@
           inline
         >
           <el-form-item label="专业" prop="profession">
-            <el-input v-model="searchFormData.profession" clearable></el-input>
+            <el-input size="small" v-model="searchFormData.profession" clearable></el-input>
           </el-form-item>
           <el-form-item label="年级" prop="grade">
-            <el-input v-model.number="searchFormData.grade" clearable></el-input>
+            <el-input size="small" v-model.number="searchFormData.grade" clearable></el-input>
           </el-form-item>
           <el-form-item label=" ">
             <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
