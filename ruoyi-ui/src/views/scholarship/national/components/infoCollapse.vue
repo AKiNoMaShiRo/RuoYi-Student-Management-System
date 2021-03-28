@@ -1,8 +1,44 @@
 <template>
   <section class="am-box">
     <div class="am-p am-title am-bd-b">国家奖学金申请记录</div>
+    <div class="am-px am-pt" v-if="roleName !== '学生'">
+      <el-form
+        ref="searchForm"
+        :model="searchFormData"
+        label-position="right"
+        label-width="60px"
+        inline
+      >
+        <!-- :rules="searchFormRules" -->
+        <el-form-item label="学年" prop="learnYear">
+          <el-select size="small" v-model="searchFormData.learnYear" clearable>
+            <el-option
+              v-for="opt in termOpts"
+              :key="opt.label"
+              :value="opt.value"
+              :label="opt.label"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item size="small" label="专业" prop="profession">
+          <el-input v-model="searchFormData.profession" clearable></el-input>
+        </el-form-item>
+        <el-form-item size="small" label="状态" prop="status">
+          <el-select v-model="searchFormData.status" clearable>
+            <el-option label="待审批" :value="3"></el-option>
+            <el-option label="已通过" :value="1"></el-option>
+            <el-option label="未通过" :value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label=" ">
+          <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <div class="am-p">
-      <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse v-model="activeNames" @change="handleChange" v-if="showCollapse">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
           <template slot="title">
             <span v-if="item.status === 1" class="status-pass am-mr">
@@ -37,25 +73,43 @@
             <el-button
               size="mini"
               @click="handleUpdStatus({ status: 2, scholarshipId: item.scholarshipId })"
-              v-hasPermi="['scholarship:endeavor:approve']"
+              v-hasPermi="['scholarship:national:approve']"
               plain
             >不同意</el-button>
             <el-button
               size="mini"
               type="success"
               @click="handleUpdStatus({ status: 1, scholarshipId: item.scholarshipId })"
-              v-hasPermi="['scholarship:endeavor:approve']"
+              v-hasPermi="['scholarship:national:approve']"
               plain
             >同意</el-button>
-            <el-button size="mini" type="danger" plain>删除</el-button>
+            <el-popconfirm
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              icon="el-icon-info"
+              icon-color="red"
+              title="确定撤销该申请？"
+              @onConfirm="handleDelete(item.scholarshipId)"
+            >
+              <el-button
+                type="danger"
+                size="mini"
+                slot="reference"
+                style="margin-left: 10px;"
+                plain>删除</el-button>
+            </el-popconfirm>
           </section>
         </el-collapse-item>
       </el-collapse>
+      <div v-else class="am-flex-center" style="height: 100px;color: #6a727a;font-size: 12px;">暂无数据</div>
     </div>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import * as NAT from '@/api/scholarship/nationalScholarship.js'
+
 export default {
   props: {
     refresh: {
@@ -66,6 +120,12 @@ export default {
   },
   data () {
     return {
+      searchFormData: {
+        learnYear: '',
+        profession: '',
+        status: null
+      },
+      showCollapse: true,
       activeNames: [],
       collapseData: [
         { 
@@ -93,8 +153,76 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      roleName: state => state.user.roleName,
+      userName: state => state.user.name
+    })
+  },
+  watch: {
+    refresh () {
+      this.getInfo()
+    }
+  },
+  created () {
+    this.collapseData = []
+    this.getInfo()
+  },
   methods: {
-    handleUpdStatus () {},
+    getInfo (searchData) {
+      this.loading = true
+      let param = {...searchData}
+      if (this.roleName === '学生') {
+        param.studentId = this.userName
+      } else if (this.roleName === '辅导员') {
+        param.instructorId = this.userName
+      } else if (this.roleName === '班主任') {
+        param.headmasterId = this.userName
+      }
+      NAT.getNational(param).then( res => {
+        if (res.data && res.data.length !== 0) {
+          this.collapseData = res.data
+          this.collapseData.forEach( item => {
+            item.title = item.learnYear + ' ' + item.studentId + ' ' + item.grade + item.profession + item.classNum + '班' + item.stuName
+          })
+          this.showCollapse = true
+        } else {
+          this.showCollapse = false
+          this.collapseData = []
+        }
+      }).catch( () => {
+        this.showCollapse = false
+          this.collapseData = []
+      }).finally( () => {
+        this.loading = false
+      })
+    },
+    handleSearch () {
+      this.getInfo(this.searchFormData)
+    },
+    resetSearchForm () {
+      this.$refs.searchForm.resetFields()
+    },
+    handleDelete (param) {
+      NAT.deleteNational({ scholarshipId: param }).then( res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('删除申请成功')
+          this.getInfo()
+        } else {
+          this.$message.error('删除申请失败')
+        }
+      })
+    },
+    handleUpdStatus (param) {
+      NAT.updateNationalStatus(param).then( res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('操作成功')
+          this.getInfo()
+        } else {
+          this.$message.error('操作失败')
+        }
+      })
+    },
     handleChange (val) {
       // console.log(val)
     }

@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-const BASEPATH = '/scholarship/endeavor'
+const BASEPATH = '/scholarship/national'
 
-export function getEdv(query) {
+export function getNational(query) {
     return request({
         url: BASEPATH + '/query',
         method: 'get',
@@ -10,7 +10,7 @@ export function getEdv(query) {
     })
 }
 
-export function addEdv(param) {
+export function addNational(param) {
     return request({
         url: BASEPATH + '/add',
         method: 'post',
@@ -18,7 +18,7 @@ export function addEdv(param) {
     })
 }
 
-export function updateEdvStatus(param) {
+export function updateNationalStatus(param) {
     return request({
         url: BASEPATH + '/updateStatus',
         method: 'post',
@@ -26,7 +26,7 @@ export function updateEdvStatus(param) {
     })
 }
 
-export function deleteEdvStatus(param) {
+export function deleteNational(param) {
     return request({
         url: BASEPATH + '/delete',
         method: 'post',

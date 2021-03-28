@@ -37,8 +37,8 @@
               <el-radio :label="2">否</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="困难认定等级" prop="diffRank">
-            <el-select size="small" v-model="addData.diffRank">
+          <el-form-item label="困难认定等级" prop="diffLevel">
+            <el-select size="small" v-model="addData.diffLevel">
                 <el-option label="一般困难" value="一般困难"></el-option>
                 <el-option label="比较困难" value="比较困难"></el-option>
                 <el-option label="特殊困难" value="特殊困难"></el-option>
@@ -59,7 +59,7 @@
               <el-input size="small" v-model.number="addData.multipRank" clearable></el-input>
             </el-form-item>
             <el-form-item label="排名百分比" prop="multipRange">
-              <el-input size="small" v-model.number="addData.multipRange" clearable>
+              <el-input size="small" v-model="addData.multipRange" clearable>
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -67,8 +67,8 @@
           <section class="am-mb">
             <div class="form-title am-bd-t am-py">表彰或成果：</div>
             <div>
-              <el-form-item label="省级及以上" prop="provincePrize">
-                <el-input size="small" type="textarea" v-model.number="addData.provincePrize" :rows="5" clearable></el-input>
+              <el-form-item label="省级及以上" prop="porvincePrize">
+                <el-input size="small" type="textarea" v-model.number="addData.porvincePrize" :rows="5" clearable></el-input>
               </el-form-item>
             </div>
           <el-form-item label="校级" prop="schoolPrize">
@@ -96,19 +96,19 @@ export default {
       refreshCollapse: false,
       addData: {
         isFit: null,
-        diffRank: '',
+        diffLevel: '',
         profeSum: '',
         sport: '',
         // gradeRank: '',
         // gradeRange: '',
         multipRank: '',
         multipRange: '',
-        provincePrize: '',
+        porvincePrize: '',
         schoolPrize: ''
       },
       addRules: {
         isFit: [ {required: true, message: '请选择是否符合评选条件', trigger: 'blur'} ],
-        diffRank: [ {required: true, message: '请选择困难认定等级', trigger: 'blur'} ],
+        diffLevel: [ {required: true, message: '请选择困难认定等级', trigger: 'blur'} ],
         profeSum: [
           {required: true, message: '请输入专业人数', trigger: 'blur'},
           { type: 'number', message: '专业人数必须为整数值'}
@@ -161,7 +161,7 @@ export default {
           },
           // { type: 'number', message: '排名百分比必须为数字值'}
         ],
-        // provincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
+        // porvincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
         // schoolPrize: [ {required: true, message: '请输入校级表彰或成果', trigger: 'blur'} ]
       },
       isDisabled: false,
@@ -223,11 +223,11 @@ export default {
             learnYear: this.learnYear,
             ...this.addData
           }
-          // TODO 提交申请接口
           EDV.addEdv(param).then( res => {
             if (res.msg === '操作成功') {
               this.$message.success('申请提交成功')
               this.refreshCollapse = !this.refreshCollapse
+              this.handleResetAddForm()
             } else {
               this.$message.error('申请提交失败')
             }

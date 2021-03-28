@@ -40,4 +40,10 @@ public class EdvScholarshipController extends BaseController {
     public AjaxResult updateEdvScholarshipStatus(@Validated @RequestBody EdvScholarship edvScholarship){
         return toAjax(edvScholarshipService.updateEdvStatus(edvScholarship));
     }
+
+    @ApiOperation("删除国励申请")
+    @PostMapping("/delete")
+    public AjaxResult deleteEdvScholarship(@Validated @RequestBody EdvScholarship edvScholarship){
+        return toAjax(edvScholarshipService.deleteEdvStatus(edvScholarship));
+    }
 }

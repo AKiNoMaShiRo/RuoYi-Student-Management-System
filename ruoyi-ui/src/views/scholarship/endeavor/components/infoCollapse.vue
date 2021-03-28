@@ -37,8 +37,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="am-p" v-loading="loading" v-if="showCollapse">
-      <el-collapse v-model="activeNames" @change="handleChange">
+    <div class="am-p" v-loading="loading">
+      <el-collapse v-model="activeNames" @change="handleChange" v-if="showCollapse">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
           <template slot="title">
             <span v-if="item.status === 1" class="status-pass am-mr">
@@ -80,10 +80,25 @@
               v-hasPermi="['scholarship:endeavor:approve']"
               plain
             >同意</el-button>
-            <el-button size="mini" type="danger" plain>删除</el-button>
+            <el-popconfirm
+              confirm-button-text="确定"
+              cancel-button-text="取消"
+              icon="el-icon-info"
+              icon-color="red"
+              title="确定撤销该申请？"
+              @onConfirm="handleDelete(item.scholarshipId)"
+            >
+              <el-button
+                type="danger"
+                size="mini"
+                slot="reference"
+                style="margin-left: 10px;"
+                plain>删除</el-button>
+            </el-popconfirm>
           </section>
         </el-collapse-item>
       </el-collapse>
+      <div v-else class="am-flex-center" style="height: 100px;color: #6a727a;font-size: 12px;">暂无数据</div>
     </div>
   </section>
 </template>
@@ -184,6 +199,7 @@ export default {
         }
       }).catch( () => {
         this.showCollapse = false
+          this.collapseData = []
       }).finally( () => {
         this.loading = false
       })
@@ -195,6 +211,16 @@ export default {
           this.getInfo()
         } else {
           this.$message.error('操作失败')
+        }
+      })
+    },
+    handleDelete (param) {
+      EDV.deleteEdvStatus({ scholarshipId: param }).then( res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('删除申请成功')
+          this.getInfo()
+        } else {
+          this.$message.error('删除申请失败')
         }
       })
     },

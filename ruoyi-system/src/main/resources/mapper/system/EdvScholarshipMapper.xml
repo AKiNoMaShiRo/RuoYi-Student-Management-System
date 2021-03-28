@@ -43,6 +43,7 @@
             <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
             <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
         </where>
+        order by es.scholarship_id desc
     </select>
 
     <insert id="insertEdvApply" parameterType="EdvScholarship" useGeneratedKeys="true" keyProperty="scholarshipId">
@@ -64,5 +65,9 @@
             </set>
         where scholarship_id = #{scholarshipId}
     </update>
+
+    <delete id="deleteEdvStatus" parameterType="EdvScholarship">
+        delete from endeavor_scholarship where scholarship_id = #{scholarshipId}
+    </delete>
 
 </mapper>

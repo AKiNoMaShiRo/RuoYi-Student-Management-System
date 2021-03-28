@@ -29,4 +29,13 @@ public interface IEdvScholarshipService {
      * @return 结果
      */
     public int updateEdvStatus(EdvScholarship edvScholarship);
+
+
+    /**
+     * 删除国励申请状态
+     *
+     * @param edvScholarship 学号
+     * @return 结果
+     */
+    public int deleteEdvStatus(EdvScholarship edvScholarship);
 }

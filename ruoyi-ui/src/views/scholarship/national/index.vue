@@ -31,8 +31,8 @@
           </el-form-item>
           <section class="am-my">
             <div class="form-title am-bd-t am-py">体质测试：</div>
-            <el-form-item label="体测成绩" prop="sport">
-              <el-input size="small" v-model="addData.sport" clearable></el-input>
+            <el-form-item label="体测成绩" prop="sportGrade">
+              <el-input size="small" v-model="addData.sportGrade" clearable></el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -41,7 +41,9 @@
               <el-input size="small" v-model.number="addData.gradeRank" clearable></el-input>
             </el-form-item>
             <el-form-item label="排名百分比" prop="gradeRange">
-              <el-input size="small" v-model="addData.gradeRange" clearable></el-input>
+              <el-input size="small" v-model="addData.gradeRankRate" clearable>
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -50,14 +52,16 @@
               <el-input size="small" v-model.number="addData.multipRank" clearable></el-input>
             </el-form-item>
             <el-form-item label="排名百分比" prop="multipRange">
-              <el-input size="small" v-model="addData.multipRange" clearable></el-input>
+              <el-input size="small" v-model="addData.multipRankRate" clearable>
+                <template slot="append">%</template>
+              </el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
           <div class="form-title am-bd-t am-py">表彰或成果：</div>
             <div>
-              <el-form-item label="省级及以上" prop="provincePrize">
-                <el-input size="small" type="textarea" v-model.number="addData.provincePrize" :rows="5" clearable></el-input>
+              <el-form-item label="省级及以上" prop="porvincePrize">
+                <el-input size="small" type="textarea" v-model.number="addData.porvincePrize" :rows="5" clearable></el-input>
               </el-form-item>
             </div>
             <el-form-item label="校级" prop="schoolPrize">
@@ -75,6 +79,7 @@ import moment from 'moment'
 import InfoCollapse from './components/infoCollapse'
 import { mapState } from 'vuex'
 import * as MULTIP from '@/api/grade/multipGrade.js'
+import * as NAT from '@/api/scholarship/nationalScholarship.js'
 
 export default {
   components: {
@@ -86,12 +91,12 @@ export default {
       addData: {
         isFit: null,
         profeSum: '',
-        sport: '',
+        sportGrade: '',
         gradeRank: '',
-        gradeRange: '',
+        gradeRankRate: '',
         multipRank: '',
-        multipRange: '',
-        provincePrize: '',
+        multipRankRate: '',
+        porvincePrize: '',
         schoolPrize: ''
       },
       addRules: {
@@ -100,7 +105,7 @@ export default {
           {required: true, message: '请输入专业人数', trigger: 'blur'},
           { type: 'number', message: '专业人数必须为数字值'}
         ],
-        sport: [
+        sportGrade: [
           {required: true, message: '请输入体质测试成绩', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {
@@ -122,7 +127,7 @@ export default {
           {required: true, message: '请输入排名', trigger: 'blur'},
           { type: 'number', message: '排名必须为数字值'}
         ],
-        gradeRange: [
+        gradeRankRate: [
           {required: true, message: '请输入排名百分比', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {
@@ -144,7 +149,7 @@ export default {
           {required: true, message: '请输入排名', trigger: 'blur'},
           { type: 'number', message: '排名必须为数字值'}
         ],
-        multipRange: [
+        multipRankRate: [
           {required: true, message: '请输入排名百分比', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {
@@ -162,7 +167,7 @@ export default {
           },
           // { type: 'number', message: '排名百分比必须为数字值'}
         ],
-        // provincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
+        // porvincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
         // schoolPrize: [ {required: true, message: '请输入校级表彰或成果', trigger: 'blur'} ]
       },
       isDisabled: false,
@@ -211,8 +216,18 @@ export default {
         if (valid) {
           let param = {
             studentId: this.userName,
+            learnYear: this.learnYear,
             ...this.addData
           }
+          NAT.addNational(param).then( res => {
+            if (res.msg === '操作成功') {
+              this.$message.success('申请提交成功')
+              this.refreshCollapse = !this.refreshCollapse
+              this.handleResetAddForm()
+            } else {
+              this.$message.error('申请提交失败')
+            }
+          })
         }
       })
     }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.scholarship.mapper.NationalScholarshipMapper">
+
+    <resultMap id="NationalScholarshipResult" type="NationalScholarship">
+        <id         property="scholarshipId"    column="scholarship_id"/>
+        <result     property="learnYear"        column="learn_year"/>
+        <result     property="studentId"        column="student_id"/>
+        <result     property="stuName"          column="stu_name"/>
+        <result     property="isFit"            column="is_fit"/>
+        <result     property="profeSum"         column="profe_sum"/>
+        <result     property="sportGrade"       column="sport_grade"/>
+        <result     property="gradeRank"        column="grade_rank"/>
+        <result     property="gradeRankRate"    column="grade_rank_rate"/>
+        <result     property="multipRank"       column="multip_rank"/>
+        <result     property="multipRankRate"   column="multip_rank_rate"/>
+        <result     property="porvincePrize"    column="porvince_prize"/>
+        <result     property="schoolPrize"      column="school_prize"/>
+        <result     property="status"           column="status"/>
+        <result     property="classId"          column="class_id"/>
+        <result     property="profession"       column="profession"/>
+        <result     property="grade"            column="grade"/>
+        <result     property="classNum"         column="class_num"/>
+        <result     property="instructorId"     column="instructor_id"/>
+        <result     property="headmasterId"     column="headmaster_id"/>
+    </resultMap>
+
+    <sql id="NationalScholarshipVo">
+        select ns.*, si.stu_name, ci.*
+        from nation_scholarship ns inner join stu_info si inner join class_info ci
+        on ns.student_id = si.student_id and si.class_id = ci.class_id
+    </sql>
+
+    <select id="selectNationalApply" parameterType="NationalScholarship" resultMap="NationalScholarshipResult">
+        <include refid="NationalScholarshipVo"></include>
+        <where>
+            1=1
+            <if test="studentId != null and studentId != ''"> and ns.student_id = #{studentId} </if>
+            <if test="learnYear != null and learnYear != ''"> and ns.learn_year = #{learnYear} </if>
+            <if test="status != null and status!= 0"> and ns.status = #{status} </if>
+            <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
+            <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
+            <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
+        </where>
+    </select>
+
+
+    <insert id="insertNationalApply" parameterType="NationalScholarship" useGeneratedKeys="true" keyProperty="scholarshipId">
+        insert into nation_scholarship (
+        <if test="porvincePrize != null and porvincePrize != ''"> porvince_prize, </if>
+        <if test="schoolPrize != null and schoolPrize != ''"> school_prize, </if>
+        student_id, learn_year, is_fit, profe_sum, sport_grade, grade_rank, grade_rank_rate, multip_rank,
+        multip_rank_rate, status
+        ) values (
+        <if test="porvincePrize != null and porvincePrize != ''"> #{porvincePrize}, </if>
+        <if test="schoolPrize != null and schoolPrize != ''"> #{schoolPrize}, </if>
+        #{studentId}, #{learnYear}, #{isFit}, #{profeSum}, #{sportGrade}, #{gradeRank}, #{gradeRankRate}, #{multipRank},
+        #{multipRankRate}, 3
+        )
+    </insert>
+
+    <update id="updateNationStatus" parameterType="EdvScholarship">
+        update nation_scholarship
+        <set>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where scholarship_id = #{scholarshipId}
+    </update>
+
+    <delete id="deleteNation" parameterType="EdvScholarship">
+        delete from nation_scholarship where scholarship_id = #{scholarshipId}
+    </delete>
+
+</mapper>
