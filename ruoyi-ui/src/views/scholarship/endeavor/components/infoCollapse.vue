@@ -1,7 +1,7 @@
 <template>
   <section class="am-box">
     <div class="am-p am-title am-bd-b">国家励志奖学金申请记录</div>
-    <div class="am-p">
+    <div class="am-px am-pt" v-if="roleName !== '学生'">
       <el-form
         ref="searchForm"
         :model="searchFormData"
@@ -11,7 +11,7 @@
       >
         <!-- :rules="searchFormRules" -->
         <el-form-item label="学年" prop="learnYear">
-          <el-select v-model="searchFormData.learnYear" clearable>
+          <el-select size="small" v-model="searchFormData.learnYear" clearable>
             <el-option
               v-for="opt in termOpts"
               :key="opt.label"
@@ -21,8 +21,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="专业" prop="profession">
+        <el-form-item size="small" label="专业" prop="profession">
           <el-input v-model="searchFormData.profession" clearable></el-input>
+        </el-form-item>
+        <el-form-item size="small" label="状态" prop="status">
+          <el-select v-model="searchFormData.status" clearable>
+            <el-option label="待审批" :value="3"></el-option>
+            <el-option label="已通过" :value="1"></el-option>
+            <el-option label="未通过" :value="2"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label=" ">
           <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
@@ -33,6 +40,18 @@
     <div class="am-p" v-loading="loading" v-if="showCollapse">
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
+          <template slot="title">
+            <span v-if="item.status === 1" class="status-pass am-mr">
+              已通过
+            </span>
+            <span v-else-if="item.status === 2" class="status-reject am-mr">
+              未通过
+            </span>
+            <span v-else class="status-pending am-mr">
+              待审批
+            </span>
+            {{ item.title }}
+          </template>
           <section class="am-px">
             <div class="am-flex collapse-item">
               <div>是否破格：{{ item.isFit | collapseFormatter('isFit') }}</div>
@@ -47,6 +66,22 @@
             <div>省级及以上表彰或成果：{{ item.porvincePrize | collapseFormatter('porvincePrize') }}</div>
             <div>校级表彰或成果：{{ item.schoolPrize | collapseFormatter('schoolPrize') }}</div>
           </section>
+          <section class="am-flex am-flex-end am-px am-pt">
+            <el-button
+              size="mini"
+              @click="handleUpdStatus({ status: 2, scholarshipId: item.scholarshipId })"
+              v-hasPermi="['scholarship:endeavor:approve']"
+              plain
+            >不同意</el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="handleUpdStatus({ status: 1, scholarshipId: item.scholarshipId })"
+              v-hasPermi="['scholarship:endeavor:approve']"
+              plain
+            >同意</el-button>
+            <el-button size="mini" type="danger" plain>删除</el-button>
+          </section>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -60,11 +95,19 @@ import * as EDV from '@/api/scholarship/edvScholarship.js'
 import { learnYearOptions } from '@/libs/utils.js'
 
 export default {
+  props: {
+    refresh: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   data () {
     return {
       searchFormData: {
         learnYear: '',
-        profession: ''
+        profession: '',
+        status: null
       },
       loading: false,
       showCollapse: true,
@@ -108,7 +151,13 @@ export default {
       return learnYearOptions(param)
     }
   },
+  watch: {
+    refresh () {
+      this.getInfo()
+    }
+  },
   created () {
+    this.collapseData = []
     this.getInfo()
   },
   methods: {
@@ -137,6 +186,16 @@ export default {
         this.showCollapse = false
       }).finally( () => {
         this.loading = false
+      })
+    },
+    handleUpdStatus (param) {
+      EDV.updateEdvStatus(param).then( res => {
+        if (res.msg === '操作成功') {
+          this.$message.success('操作成功')
+          this.getInfo()
+        } else {
+          this.$message.error('操作失败')
+        }
       })
     },
     handleSearch () {
@@ -174,5 +233,38 @@ export default {
   div {
     width: 250px;
   }
+}
+::v-deep .el-collapse-item__content {
+  padding-bottom: 12px;
+}
+.status-pending {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #8e9cab, $alpha: 0.09);
+  color: #8e9cab;
+  border-radius: 4px;
+}
+.status-pass {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #31cf9a, $alpha: 0.09);
+  color: #31cf9a;
+  border-radius: 4px;
+}
+.status-reject {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #f56c6c, $alpha: 0.09);
+  color: #f56c6c;
+  border-radius: 4px;
 }
 </style>

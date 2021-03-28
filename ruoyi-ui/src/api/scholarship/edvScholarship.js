@@ -17,3 +17,11 @@ export function addEdv(param) {
         data: param
     })
 }
+
+export function updateEdvStatus(param) {
+    return request({
+        url: BASEPATH + '/updateStatus',
+        method: 'post',
+        data: param
+    })
+}

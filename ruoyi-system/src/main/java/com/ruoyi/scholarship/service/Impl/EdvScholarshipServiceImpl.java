@@ -34,4 +34,14 @@ public class EdvScholarshipServiceImpl implements IEdvScholarshipService {
     public int insertEdvApply(EdvScholarship edvScholarship){
         return edvScholarshipMapper.insertEdvApply(edvScholarship);
     }
+
+    /**
+     * 更新国励申请状态
+     *
+     * @param edvScholarship 学号
+     * @return 结果
+     */
+    public int updateEdvStatus(EdvScholarship edvScholarship){
+        return edvScholarshipMapper.updateEdvStatus(edvScholarship);
+    }
 }

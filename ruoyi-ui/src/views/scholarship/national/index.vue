@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <InfoCollapse class="am-mb"></InfoCollapse>
+    <InfoCollapse class="am-mb" :refresh="refreshCollapse"></InfoCollapse>
     <!-- <section class="am-box am-mb">
       <div class="am-p am-title am-bd-b">国家奖学金申请记录</div>
     </section> -->
@@ -23,7 +23,7 @@
           <el-form-item label="是否破格" prop="isFit">
             <el-radio-group size="small" v-model="addData.isFit">
               <el-radio :label="1">是</el-radio>
-              <el-radio :label="0">否</el-radio>
+              <el-radio :label="2">否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="专业人数" prop="profeSum">
@@ -32,7 +32,7 @@
           <section class="am-my">
             <div class="form-title am-bd-t am-py">体质测试：</div>
             <el-form-item label="体测成绩" prop="sport">
-              <el-input size="small" v-model.number="addData.sport" clearable></el-input>
+              <el-input size="small" v-model="addData.sport" clearable></el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -41,7 +41,7 @@
               <el-input size="small" v-model.number="addData.gradeRank" clearable></el-input>
             </el-form-item>
             <el-form-item label="排名百分比" prop="gradeRange">
-              <el-input size="small" v-model.number="addData.gradeRange" clearable></el-input>
+              <el-input size="small" v-model="addData.gradeRange" clearable></el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -50,7 +50,7 @@
               <el-input size="small" v-model.number="addData.multipRank" clearable></el-input>
             </el-form-item>
             <el-form-item label="排名百分比" prop="multipRange">
-              <el-input size="small" v-model.number="addData.multipRange" clearable></el-input>
+              <el-input size="small" v-model="addData.multipRange" clearable></el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -82,6 +82,7 @@ export default {
   },
   data () {
     return {
+      refreshCollapse: false,
       addData: {
         isFit: null,
         profeSum: '',
@@ -101,7 +102,21 @@ export default {
         ],
         sport: [
           {required: true, message: '请输入体质测试成绩', trigger: 'blur'},
-          { type: 'number', message: '成绩必须为数字值'}
+          {
+            validator: (rule, value, callback) => {
+              // if (!value) {
+              //   callback(new Error('请输入体质测试成绩'))
+              // } else {
+                if (!this.isNumber(value)) {
+                  callback(new Error('体质测试成绩必须为数字值'))
+                } else {
+                  callback()
+                }
+              // }
+            },
+            trigger: 'blur'
+          },
+          // { type: 'number', message: '成绩必须为数字值'}
         ],
         gradeRank: [
           {required: true, message: '请输入排名', trigger: 'blur'},
@@ -109,7 +124,21 @@ export default {
         ],
         gradeRange: [
           {required: true, message: '请输入排名百分比', trigger: 'blur'},
-          { type: 'number', message: '排名百分比必须为数字值'}
+          {
+            validator: (rule, value, callback) => {
+              // if (!value) {
+              //   callback(new Error('请输入体质测试成绩'))
+              // } else {
+                if (!this.isNumber(value)) {
+                  callback(new Error('排名百分比必须为数字值'))
+                } else {
+                  callback()
+                }
+              // }
+            },
+            trigger: 'blur'
+          },
+          // { type: 'number', message: '排名百分比必须为数字值'}
         ],
         multipRank: [
           {required: true, message: '请输入排名', trigger: 'blur'},
@@ -117,7 +146,21 @@ export default {
         ],
         multipRange: [
           {required: true, message: '请输入排名百分比', trigger: 'blur'},
-          { type: 'number', message: '排名百分比必须为数字值'}
+          {
+            validator: (rule, value, callback) => {
+              // if (!value) {
+              //   callback(new Error('请输入体质测试成绩'))
+              // } else {
+                if (!this.isNumber(value)) {
+                  callback(new Error('排名百分比必须为数字值'))
+                } else {
+                  callback()
+                }
+              // }
+            },
+            trigger: 'blur'
+          },
+          // { type: 'number', message: '排名百分比必须为数字值'}
         ],
         // provincePrize: [ {required: true, message: '请输入省级及以上表彰或成果', trigger: 'blur'} ],
         // schoolPrize: [ {required: true, message: '请输入校级表彰或成果', trigger: 'blur'} ]
@@ -151,6 +194,15 @@ export default {
     }
   },
   methods: {
+    isNumber (val) {
+      var regPos = /^\d+(\.\d+)?$/
+      var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/
+      if (regPos.test(val) || regNeg.test(val)) {
+        return true
+      } else {
+        return false
+      }
+    },
     handleResetAddForm () {
       this.$refs.addForm.resetFields()
     },

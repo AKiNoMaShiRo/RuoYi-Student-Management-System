@@ -4,6 +4,18 @@
     <div class="am-p">
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
+          <template slot="title">
+            <span v-if="item.status === 1" class="status-pass am-mr">
+              已通过
+            </span>
+            <span v-else-if="item.status === 2" class="status-reject am-mr">
+              未通过
+            </span>
+            <span v-else class="status-pending am-mr">
+              待审批
+            </span>
+            {{ item.title }}
+          </template>
           <section class="am-px">
             <div class="am-flex collapse-item">
               <div>是否破格：{{ item.isFit | collapseFormatter('isFit') }}</div>
@@ -21,6 +33,22 @@
             <div>省级及以上表彰或成果：{{ item.porvincePrize | collapseFormatter('porvincePrize') }}</div>
             <div>校级表彰或成果：{{ item.schoolPrize | collapseFormatter('schoolPrize') }}</div>
           </section>
+          <section class="am-flex am-flex-end am-px am-pt">
+            <el-button
+              size="mini"
+              @click="handleUpdStatus({ status: 2, scholarshipId: item.scholarshipId })"
+              v-hasPermi="['scholarship:endeavor:approve']"
+              plain
+            >不同意</el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="handleUpdStatus({ status: 1, scholarshipId: item.scholarshipId })"
+              v-hasPermi="['scholarship:endeavor:approve']"
+              plain
+            >同意</el-button>
+            <el-button size="mini" type="danger" plain>删除</el-button>
+          </section>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -29,6 +57,13 @@
 
 <script>
 export default {
+  props: {
+    refresh: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   data () {
     return {
       activeNames: [],
@@ -59,8 +94,9 @@ export default {
     }
   },
   methods: {
+    handleUpdStatus () {},
     handleChange (val) {
-      console.log(val)
+      // console.log(val)
     }
   },
   filters: {
@@ -88,5 +124,38 @@ export default {
   div {
     width: 300px;
   }
+}
+::v-deep .el-collapse-item__content {
+  padding-bottom: 12px;
+}
+.status-pending {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #8e9cab, $alpha: 0.09);
+  color: #8e9cab;
+  border-radius: 4px;
+}
+.status-pass {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #31cf9a, $alpha: 0.09);
+  color: #31cf9a;
+  border-radius: 4px;
+}
+.status-reject {
+  display: inline-table;
+  padding: 0 6px;
+  line-height: 20px;
+  font-size: 12px;
+  word-break: keep-all;
+  background-color: rgba($color: #f56c6c, $alpha: 0.09);
+  color: #f56c6c;
+  border-radius: 4px;
 }
 </style>

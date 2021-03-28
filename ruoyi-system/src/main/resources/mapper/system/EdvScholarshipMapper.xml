@@ -38,6 +38,7 @@
             1=1
             <if test="studentId != null and studentId != ''"> and es.student_id = #{studentId} </if>
             <if test="learnYear != null and learnYear != ''"> and es.learn_year = #{learnYear} </if>
+            <if test="status != null and status!= 0"> and es.status = #{status} </if>
             <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
             <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
             <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
@@ -48,12 +49,20 @@
         insert into endeavor_scholarship (
             <if test="porvincePrize != null and porvincePrize != ''"> porvince_prize, </if>
             <if test="schoolPrize != null and schoolPrize != ''"> school_prize, </if>
-            student_id, learn_year, is_fit, diff_level, profe_sum, sport_grade, multip_rank, multip_rank_rate
+            student_id, learn_year, is_fit, diff_level, profe_sum, sport_grade, multip_rank, multip_rank_rate, status
         ) values (
             <if test="porvincePrize != null and porvincePrize != ''"> #{porvincePrize}, </if>
             <if test="schoolPrize != null and schoolPrize != ''"> #{schoolPrize}, </if>
-            #{studentId}, #{learnYear}, #{isFit}, #{diffLevel}, #{profeSum}, #{sportGrade}, #{multipRank}, #{multipRankRate}
+            #{studentId}, #{learnYear}, #{isFit}, #{diffLevel}, #{profeSum}, #{sportGrade}, #{multipRank}, #{multipRankRate}, 3
         )
     </insert>
+
+    <update id="updateEdvStatus" parameterType="EdvScholarship">
+        update endeavor_scholarship
+            <set>
+                <if test="status != null">status = #{status},</if>
+            </set>
+        where scholarship_id = #{scholarshipId}
+    </update>
 
 </mapper>

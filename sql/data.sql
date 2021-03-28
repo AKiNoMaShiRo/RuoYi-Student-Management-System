@@ -34,6 +34,9 @@ insert into sys_menu values('2001', '审批请假', '801', '1',  '', '', 1, 0, '
 insert into sys_menu values('2002', '审批节假日去向报备', '800', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:holiday:approve',       '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('2003', '审批外宿申请', '802', '1',  '', '', 1, 0, 'F', '0', '0', 'affair:noboard:approve',       '#', 'admin', sysdate(), '', null, '');
 
+insert into sys_menu values('9021', '励志奖学金不同意按钮', '902', '1',  '', '', 1, 0, 'F', '0', '0', 'scholarship:endeavor:approve',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('9022', '励志奖学金同意按钮', '902', '2',  '', '', 1, 0, 'F', '0', '0', 'scholarship:endeavor:approve',       '#', 'admin', sysdate(), '', null, '');
+
 insert into sys_menu values('5', '用户管理', '0', '5', 'users',             null,   1, 0, 'M', '0', '0', '', '#',     'admin', sysdate(), '', null, '系统用户管理');
 insert into sys_menu values('502',  '学生管理', '5',   '1', 'student', 'user/student/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '学生账号管理菜单');
 insert into sys_menu values('503',  '班级管理', '5',   '5', 'class', 'user/class/index', 1, 0, 'C', '0', '0', '', '#', 'admin', sysdate(), '', null, '班级信息管理菜单');

@@ -7,6 +7,7 @@ import com.ruoyi.scholarship.service.IEdvScholarshipService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +32,12 @@ public class EdvScholarshipController extends BaseController {
     @PostMapping("/add")
     public AjaxResult addEdvScholarship(@Validated @RequestBody EdvScholarship edvScholarship){
         return toAjax(edvScholarshipService.insertEdvApply(edvScholarship));
+    }
+
+    @ApiOperation("更新申请状态")
+    @PreAuthorize("@ss.hasPermi('scholarship:endeavor:approve')")
+    @PostMapping("/updateStatus")
+    public AjaxResult updateEdvScholarshipStatus(@Validated @RequestBody EdvScholarship edvScholarship){
+        return toAjax(edvScholarshipService.updateEdvStatus(edvScholarship));
     }
 }

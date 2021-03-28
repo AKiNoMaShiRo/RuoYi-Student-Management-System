@@ -21,4 +21,12 @@ public interface EdvScholarshipMapper {
      * @return 结果
      */
     public int insertEdvApply(EdvScholarship edvScholarship);
+
+    /**
+     * 更新国励申请状态
+     *
+     * @param edvScholarship 学号
+     * @return 结果
+     */
+    public int updateEdvStatus(EdvScholarship edvScholarship);
 }
