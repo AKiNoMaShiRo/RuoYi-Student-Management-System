@@ -41,7 +41,16 @@
               </el-select>
             </el-form-item>
             <el-form-item label="专业" prop="profession">
-              <el-input v-model="searchFormData.profession" size="small" clearable></el-input>
+              <el-select size="small" v-model="searchFormData.profession" clearable>
+                <el-option
+                  v-for="pro in professions"
+                  :key="pro.label"
+                  :label="pro.label"
+                  :value="pro.label"
+                >
+                </el-option>
+              </el-select>
+              <!-- <el-input v-model="searchFormData.profession" size="small" clearable></el-input> -->
             </el-form-item>
             <el-form-item label="年级" prop="grade">
               <el-input v-model.number="searchFormData.grade" size="small" clearable></el-input>
@@ -94,11 +103,13 @@ import Pagination from '../../components/Pagination.vue'
 import moment from 'moment'
 import LevelTestChart from './components/levelTestChart'
 import TestRate from './components/testRate'
+import { PROFESSION } from '@/libs/utils.js'
 
 export default {
   components: { Pagination, LevelTestChart, TestRate },
   data () {
     return {
+      professions: PROFESSION,
       activeIndex: 'table',
       searchFormData: {
         studentId: '',

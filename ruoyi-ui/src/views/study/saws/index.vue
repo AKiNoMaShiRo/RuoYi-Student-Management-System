@@ -10,7 +10,7 @@
             <el-form-item label="姓名" prop="name">
               <el-input size="small" v-model="formData.name" clearable></el-input>
             </el-form-item>
-            <el-form-item label="院系" prop="department">
+            <!-- <el-form-item label="院系" prop="department">
               <el-select size="small" v-model="formData.department" filterable clearable>
                 <el-option
                   v-for="(department, index) in departments"
@@ -19,9 +19,18 @@
                   :value="department"
                 ></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="专业" prop="profession">
-              <el-input size="small" v-model="formData.profession" clearable></el-input>
+              <el-select size="small" v-model="formData.profession" clearable>
+                <el-option
+                  v-for="pro in professions"
+                  :key="pro.label"
+                  :label="pro.label"
+                  :value="pro.label"
+                >
+                </el-option>
+              </el-select>
+              <!-- <el-input size="small" v-model="formData.profession" clearable></el-input> -->
             </el-form-item>
             <el-form-item label="班级" prop="class">
               <el-input size="small" v-model.number="formData.class" clearable></el-input>
@@ -54,7 +63,7 @@
             <el-table v-loading="tableLoading" :data="tableData" height="300px">
                 <el-table-column label="学号" prop="studentId" min-width="110" showOverflowTooltip></el-table-column>
                 <el-table-column label="姓名" prop="name" min-width="80" showOverflowTooltip></el-table-column>
-                <el-table-column label="院系" prop="department" min-width="110" showOverflowTooltip></el-table-column>
+                <!-- <el-table-column label="院系" prop="department" min-width="110" showOverflowTooltip></el-table-column> -->
                 <el-table-column label="专业" prop="profession" min-width="100" showOverflowTooltip></el-table-column>
                 <el-table-column label="班级" prop="class" min-width="60" showOverflowTooltip></el-table-column>
                 <el-table-column label="预警等级" prop="alarm_level" min-width="80" showOverflowTooltip>
@@ -85,6 +94,7 @@
 
 <script>
 import Pagination from '@/views/components/Pagination.vue'
+import { PROFESSION } from '@/libs/utils.js'
 
 export default {
   components: {
@@ -92,6 +102,7 @@ export default {
   },
   data () {
     return {
+      professions: PROFESSION,
       total: 1,
       currentPage: 1,
       pageSize: 10,

@@ -21,8 +21,17 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item size="small" label="专业" prop="profession">
-          <el-input v-model="searchFormData.profession" clearable></el-input>
+        <el-form-item label="专业" prop="profession">
+          <el-select size="small" v-model="searchFormData.profession" clearable>
+            <el-option
+              v-for="pro in professions"
+              :key="pro.label"
+              :label="pro.label"
+              :value="pro.label"
+            >
+            </el-option>
+          </el-select>
+          <!-- <el-input v-model="searchFormData.profession" clearable></el-input> -->
         </el-form-item>
         <el-form-item size="small" label="状态" prop="status">
           <el-select v-model="searchFormData.status" clearable>
@@ -93,12 +102,13 @@
                 size="mini"
                 slot="reference"
                 style="margin-left: 10px;"
+                :disabled="item.status === 1"
                 plain>删除</el-button>
             </el-popconfirm>
           </section>
         </el-collapse-item>
       </el-collapse>
-      <div v-else class="am-flex-center" style="height: 100px;color: #6a727a;font-size: 12px;">暂无数据</div>
+      <div v-else class="am-flex-center" style="height: 48px;color: #6a727a;font-size: 12px;">暂无数据</div>
     </div>
   </section>
 </template>
@@ -106,6 +116,7 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
+import { PROFESSION } from '@/libs/utils.js'
 import * as EDV from '@/api/scholarship/edvScholarship.js'
 import { learnYearOptions } from '@/libs/utils.js'
 
@@ -119,6 +130,7 @@ export default {
   },
   data () {
     return {
+      professions: PROFESSION,
       searchFormData: {
         learnYear: '',
         profession: '',

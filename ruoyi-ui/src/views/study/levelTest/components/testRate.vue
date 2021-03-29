@@ -18,7 +18,16 @@
           </el-select>
         </el-form-item>
         <el-form-item label="专业" prop="profession">
-          <el-input v-model="searchFormData.profession" size="small" clearable></el-input>
+          <el-select size="small" v-model="searchFormData.profession" clearable>
+            <el-option
+              v-for="pro in professions"
+              :key="pro.label"
+              :label="pro.label"
+              :value="pro.label"
+            >
+            </el-option>
+          </el-select>
+          <!-- <el-input v-model="searchFormData.profession" size="small" clearable></el-input> -->
         </el-form-item>
         <el-form-item label="年级" prop="grade">
           <el-input v-model.number="searchFormData.grade" size="small" clearable></el-input>
@@ -38,10 +47,12 @@
 
 <script>
 import * as LEVELTEST from '@/api/grade/levelTest.js'
+import { PROFESSION } from '@/libs/utils.js'
 
 export default {
   data () {
     return {
+      professions: PROFESSION,
       searchFormData: {
         testType: '',
         profession: '',
@@ -83,7 +94,8 @@ export default {
           this.resLoading = true
           LEVELTEST.getPassRateByLT([param]).then( res => {
             if (res.data && res.data.length !== 0) {
-              this.queryResult = res.data[0] + '%'
+              this.queryResult = isNaN(res.data[0]) ? '--' : res.data[0] + '%'
+              // this.queryResult = res.data[0] + '%'
             } else {
               this.queryResult = ''
             }

@@ -36,7 +36,16 @@
           inline
         >
           <el-form-item label="专业" prop="profession">
-            <el-input size="small" v-model="searchFormData.profession" clearable></el-input>
+            <el-select size="small" v-model="searchFormData.profession" clearable>
+              <el-option
+                v-for="pro in professions"
+                :key="pro.label"
+                :label="pro.label"
+                :value="pro.label"
+              >
+              </el-option>
+            </el-select>
+            <!-- <el-input size="small" v-model="searchFormData.profession" clearable></el-input> -->
           </el-form-item>
           <el-form-item label="年级" prop="grade">
             <el-input size="small" v-model.number="searchFormData.grade" clearable></el-input>
@@ -74,6 +83,7 @@
 </template>
 
 <script>
+import { PROFESSION } from '@/libs/utils.js'
 import Pagination from '../../components/Pagination.vue'
 import * as MULTIP from '@/api/grade/multipGrade.js'
 import { getStuBaseInfo } from '@/api/info/stuInfo'
@@ -85,6 +95,7 @@ export default {
   },
   data () {
     return {
+      professions: PROFESSION,
       total: 0,
       currentPage: 1,
       pageSize: 20,

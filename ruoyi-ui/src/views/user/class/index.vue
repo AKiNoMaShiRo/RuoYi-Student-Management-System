@@ -11,12 +11,21 @@
             inline
           >
             <el-form-item label="专业" prop="profession">
-              <el-input
+              <el-select size="small" v-model="searchFormData.profession" clearable>
+                <el-option
+                  v-for="pro in professions"
+                  :key="pro.label"
+                  :label="pro.label"
+                  :value="pro.label"
+                >
+                </el-option>
+              </el-select>
+              <!-- <el-input
                 v-model="searchFormData.profession"
                 placeholder="请输入专业"
                 size="small" 
                 clearable
-              ></el-input>
+              ></el-input> -->
             </el-form-item>
             <el-form-item label="年级" prop="grade">
               <el-input
@@ -117,7 +126,16 @@
               <el-input v-model="addFormData.department" size="small" clearable disabled></el-input>
             </el-form-item>
             <el-form-item label="专业" prop="profession">
-              <el-input v-model="addFormData.profession" size="small" clearable></el-input>
+              <el-select size="small" v-model="addFormData.profession" clearable>
+                <el-option
+                  v-for="pro in professions"
+                  :key="pro.label"
+                  :label="pro.label"
+                  :value="pro.label"
+                >
+                </el-option>
+              </el-select>
+              <!-- <el-input v-model="addFormData.profession" size="small" clearable></el-input> -->
             </el-form-item>
             <el-form-item label="年级" prop="grade">
               <el-input v-model.number="addFormData.grade" size="small" clearable></el-input>
@@ -143,7 +161,16 @@
             <el-input v-model="editFormData.department" size="small" clearable disabled></el-input>
           </el-form-item>
           <el-form-item label="专业" prop="profession">
-            <el-input v-model="editFormData.profession" size="small" clearable></el-input>
+            <el-select size="small" v-model="editFormData.profession" clearable>
+              <el-option
+                v-for="pro in professions"
+                :key="pro.label"
+                :label="pro.label"
+                :value="pro.label"
+              >
+              </el-option>
+            </el-select>
+            <!-- <el-input v-model="editFormData.profession" size="small" clearable></el-input> -->
           </el-form-item>
           <el-form-item label="年级" prop="grade">
             <el-input v-model.number="editFormData.grade" size="small" clearable></el-input>
@@ -169,6 +196,7 @@
 <script>
 import * as CLASSINFO from '@/api/info/classInfo.js'
 import Pagination from '../../components/Pagination.vue'
+import { PROFESSION } from '@/libs/utils.js'
 
 export default {
   components: {
@@ -176,6 +204,7 @@ export default {
   },
   data () {
     return {
+      professions: PROFESSION,
       dgAddVisible: false,
       dgEditVisible: false,
       total: 0,
@@ -183,9 +212,9 @@ export default {
       pageSize: 10,
       tableLoading: false,
       tableColumns: [
-        { label: '班级ID', prop: 'classId' },
-        { label: '专业', prop: 'profession' },
+        // { label: '班级ID', prop: 'classId' },
         { label: '年级', prop: 'grade' },
+        { label: '专业', prop: 'profession' },
         { label: '班级序号', prop: 'classNum' },
         { label: '辅导员', prop: 'instructorName' },
         { label: '班主任', prop: 'headmasterName' }

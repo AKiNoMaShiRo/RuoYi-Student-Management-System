@@ -104,6 +104,7 @@
             <if test="profession != null and profession != ''"> and c.profession = #{profession}</if>
             <if test="grade != null and grade != 0"> and c.grade = #{grade}</if>
         </where>
+        order by s.student_id
     </select>
 
     <select id="selectAllStu" parameterType="StuInfo" resultMap="StuInfoResult">

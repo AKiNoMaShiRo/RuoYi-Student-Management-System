@@ -144,15 +144,24 @@ export default {
   flex: 1;
   .left {
     width: 250px;
+    min-height: calc(100vh - 176px);
     // height: calc(100vh - 176px);
     ::v-deep .el-radio--small{
       margin-left: 8px;
       margin-bottom: 6px;
+      width: 180px;
+      display: flex;
+      justify-content: center;
+      .el-radio__input{
+        display: none;
+        // visibility: hidden;
+      }
     }
   }
-  // .right {
-  //   width: 80%;
-  //   // height: calc(100vh - 176px);
-  // }
+  .right {
+    min-height: calc(100vh - 176px);
+    // width: 80%;
+    // height: calc(100vh - 176px);
+  }
 }
 </style>
