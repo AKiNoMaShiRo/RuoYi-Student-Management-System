@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <section v-if="roleName !== '学生'" class="am-box am-mb">
+    <section class="am-box am-mb">
       <!-- 表格/图表切换tab -->
-      <div class="am-bd-b">
+      <div v-if="roleName !== '学生'" class="am-bd-b">
         <ol class="am-py am-tabs-inline am-no-shrink">
           <li :class="{ active: activeIndex === 'table' }" @click="handleTabClick('table')">
             <span>学生成绩详情</span>
@@ -13,12 +13,12 @@
         </ol>
       </div>
       <section v-show="activeIndex === 'table'">
-        <!-- <div class="am-p am-title am-bd-b">课程成绩</div> -->
+        <div class="am-p am-title am-bd-b">课程成绩</div>
         <StuTable v-if="roleName === '学生'"></StuTable>
         <OthTable v-else></OthTable>
       </section>
       <section v-show="activeIndex === 'chart'">
-        <!-- <div class="am-p am-title am-bd-b">课程平均分</div> -->
+        <div class="am-p am-title am-bd-b">课程平均分</div>
         <div class="am-p am-page">
           <el-form
             ref="searchForm"

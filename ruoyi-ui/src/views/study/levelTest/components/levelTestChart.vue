@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div class="am-p am-title am-bd-b">等级考试通过率</div>
     <div class="am-p am-flex" style="height: 300px;">
       <test-bar-chart
         v-loading="loadingChart"
