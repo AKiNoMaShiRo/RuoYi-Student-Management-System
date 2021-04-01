@@ -78,6 +78,10 @@ public class EdvScholarship extends BaseEntity {
     @Excel(name = "辅导员工号")
     private String instructorId;
 
+    /** 辅导员姓名 */
+    @Excel(name = "辅导员姓名")
+    private String instructorName;
+
     /** 班主任工号 */
     @Excel(name = "班主任工号")
     private String headmasterId;
@@ -226,6 +230,14 @@ public class EdvScholarship extends BaseEntity {
         this.instructorId = instructorId;
     }
 
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
     public String getHeadmasterId() {
         return headmasterId;
     }
@@ -255,6 +267,7 @@ public class EdvScholarship extends BaseEntity {
                 ", grade=" + grade +
                 ", classNum=" + classNum +
                 ", instructorId='" + instructorId + '\'' +
+                ", instructorName='" + instructorName + '\'' +
                 ", headmasterId='" + headmasterId + '\'' +
                 '}';
     }

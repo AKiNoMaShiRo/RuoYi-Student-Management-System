@@ -23,13 +23,14 @@
         <result     property="grade"            column="grade"/>
         <result     property="classNum"         column="class_num"/>
         <result     property="instructorId"     column="instructor_id"/>
+        <result     property="instructorName"   column="instructor_name"/>
         <result     property="headmasterId"     column="headmaster_id"/>
     </resultMap>
 
     <sql id="EdvScholarshipVo">
-        select es.*, si.stu_name, ci.*
-        from endeavor_scholarship es inner join stu_info si inner join class_info ci
-        on es.student_id = si.student_id and si.class_id = ci.class_id
+        select es.*, si.stu_name, ci.*, ii.instructor_name
+        from endeavor_scholarship es inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on es.student_id = si.student_id and si.class_id = ci.class_id and ii.instructor_id = ci.instructor_id
     </sql>
 
     <select id="selectEdvApply" parameterType="EdvScholarship" resultMap="EdvScholarshipResult">
@@ -54,7 +55,7 @@
         ) values (
             <if test="porvincePrize != null and porvincePrize != ''"> #{porvincePrize}, </if>
             <if test="schoolPrize != null and schoolPrize != ''"> #{schoolPrize}, </if>
-            #{studentId}, #{learnYear}, #{isFit}, #{diffLevel}, #{profeSum}, #{sportGrade}, #{multipRank}, #{multipRankRate}, 3
+            #{studentId}, #{learnYear}, #{isFit}, #{diffLevel}, #{profeSum}, #{sportGrade}, #{multipRank}, #{multipRankRate}, 1
         )
     </insert>
 

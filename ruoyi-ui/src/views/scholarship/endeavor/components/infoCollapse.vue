@@ -35,9 +35,9 @@
         </el-form-item>
         <el-form-item size="small" label="状态" prop="status">
           <el-select v-model="searchFormData.status" clearable>
-            <el-option label="待审批" :value="3"></el-option>
-            <el-option label="已通过" :value="1"></el-option>
-            <el-option label="未通过" :value="2"></el-option>
+            <el-option label="待审批" :value="1"></el-option>
+            <el-option label="已通过初审" :value="2"></el-option>
+            <el-option label="未通过初审" :value="3"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label=" ">
@@ -50,14 +50,14 @@
       <el-collapse v-model="activeNames" @change="handleChange" v-if="showCollapse">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
           <template slot="title">
-            <span v-if="item.status === 1" class="status-pass am-mr">
-              已通过
-            </span>
-            <span v-else-if="item.status === 2" class="status-reject am-mr">
-              未通过
-            </span>
-            <span v-else class="status-pending am-mr">
+            <span v-if="item.status === 1" class="status-pending am-mr">
               待审批
+            </span>
+            <span v-else-if="item.status === 2" class="status-pass am-mr">
+              已通过初审
+            </span>
+            <span v-else-if="item.status === 3" class="status-reject am-mr">
+              未通过初审
             </span>
             {{ item.title }}
           </template>
@@ -75,17 +75,31 @@
             <div>省级及以上表彰或成果：{{ item.porvincePrize | collapseFormatter('porvincePrize') }}</div>
             <div>校级表彰或成果：{{ item.schoolPrize | collapseFormatter('schoolPrize') }}</div>
           </section>
+          <section class="am-p">
+            <el-steps :active="stepsActive(item.status)">
+              <el-step title="已提交" description=""></el-step>
+              <el-step
+                title="奖学金申请初审"
+                :description="'审批人：' + item.instructorName"
+              ></el-step>
+              <el-step
+                title="奖学金申请复审"
+                description="审批人：巨传友"
+              ></el-step>
+              <!-- <el-step title="已完成" description=""></el-step> -->
+            </el-steps>
+          </section>
           <section class="am-flex am-flex-end am-px am-pt">
             <el-button
               size="mini"
-              @click="handleUpdStatus({ status: 2, scholarshipId: item.scholarshipId })"
+              @click="handleUpdStatus({ approve: false, scholarshipId: item.scholarshipId })"
               v-hasPermi="['scholarship:endeavor:approve']"
               plain
             >不同意</el-button>
             <el-button
               size="mini"
               type="success"
-              @click="handleUpdStatus({ status: 1, scholarshipId: item.scholarshipId })"
+              @click="handleUpdStatus({ approve: true, scholarshipId: item.scholarshipId })"
               v-hasPermi="['scholarship:endeavor:approve']"
               plain
             >同意</el-button>
@@ -217,6 +231,12 @@ export default {
       })
     },
     handleUpdStatus (param) {
+      let query = Object.assign(query, param)
+      if (this.roleName === '辅导员') {
+        param.approve ? query.status = 2 : query.status = 3
+      } else {
+        param.approve ? query.status = 4 : query.status = 5
+      }
       EDV.updateEdvStatus(param).then( res => {
         if (res.msg === '操作成功') {
           this.$message.success('操作成功')
@@ -244,6 +264,16 @@ export default {
     },
     handleChange (val) {
       // console.log(val)
+    },
+    //判断步骤条显示步骤
+    stepsActive (param) {
+      if (param === 1) {
+        return 1
+      } else if (param <= 3) {
+        return 2
+      } else if (param <= 5) {
+        return 3
+      }
     }
   },
   filters: {
@@ -274,6 +304,10 @@ export default {
 }
 ::v-deep .el-collapse-item__content {
   padding-bottom: 12px;
+}
+::v-deep .el-step__title {
+  font-size: 14px;
+  font-weight: 700;
 }
 .status-pending {
   display: inline-table;
