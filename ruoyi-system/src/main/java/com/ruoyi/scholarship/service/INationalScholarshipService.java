@@ -15,6 +15,14 @@ public interface INationalScholarshipService {
     public List<NationalScholarship> selectNationalApply(NationalScholarship nationalScholarship);
 
     /**
+     * 查询通过初审的国奖申请
+     *
+     * @param nationalScholarship 查询信息
+     * @return 结果
+     */
+    public List<NationalScholarship> selectNationRecheck(NationalScholarship nationalScholarship);
+
+    /**
      * 新增国奖申请
      *
      * @param nationalScholarship 学号

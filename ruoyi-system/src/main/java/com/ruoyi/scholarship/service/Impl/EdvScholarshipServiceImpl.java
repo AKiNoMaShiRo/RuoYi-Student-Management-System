@@ -26,6 +26,16 @@ public class EdvScholarshipServiceImpl implements IEdvScholarshipService {
     }
 
     /**
+     * 查询通过初审的国励申请
+     *
+     * @param edvScholarship 查询信息
+     * @return 结果
+     */
+    public List<EdvScholarship> selectEdvRecheck(EdvScholarship edvScholarship){
+        return edvScholarshipMapper.selectEdvRecheck(edvScholarship);
+    }
+
+    /**
      * 新增国励申请
      *
      * @param edvScholarship 新增信息

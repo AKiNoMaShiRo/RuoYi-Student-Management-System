@@ -15,6 +15,14 @@ public interface EdvScholarshipMapper {
     public List<EdvScholarship> selectEdvApply(EdvScholarship edvScholarship);
 
     /**
+     * 查询通过初审的国励申请
+     *
+     * @param edvScholarship 查询信息
+     * @return 结果
+     */
+    public List<EdvScholarship> selectEdvRecheck(EdvScholarship edvScholarship);
+
+    /**
      * 新增国励申请
      *
      * @param edvScholarship 学号

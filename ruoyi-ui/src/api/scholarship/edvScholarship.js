@@ -10,6 +10,14 @@ export function getEdv(query) {
     })
 }
 
+export function getRecheck(query) {
+    return request({
+        url: BASEPATH + '/queryRecheck',
+        method: 'get',
+        params: query
+    })
+}
+
 export function addEdv(param) {
     return request({
         url: BASEPATH + '/add',

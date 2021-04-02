@@ -28,6 +28,13 @@ public class NationalScholarshipController extends BaseController {
         return AjaxResult.success(nationalScholarships);
     }
 
+    @ApiOperation("查询已通过初审的国奖申请信息")
+    @GetMapping("/queryRecheck")
+    public AjaxResult getRecheckApply(NationalScholarship nationalScholarship){
+        List<NationalScholarship> nationalScholarships = nationalScholarshipService.selectNationRecheck(nationalScholarship);
+        return AjaxResult.success(nationalScholarships);
+    }
+
     @ApiOperation("新增国奖申请")
     @PostMapping("/add")
     public AjaxResult addNationalScholarship(@Validated @RequestBody NationalScholarship nationalScholarship){

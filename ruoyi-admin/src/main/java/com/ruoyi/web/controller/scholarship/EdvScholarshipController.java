@@ -28,6 +28,13 @@ public class EdvScholarshipController extends BaseController {
         return AjaxResult.success(edvScholarships);
     }
 
+    @ApiOperation("查询国励申请信息")
+    @GetMapping("/queryRecheck")
+    public AjaxResult getRecheckApply(EdvScholarship edvScholarship){
+        List<EdvScholarship> edvScholarships = edvScholarshipService.selectEdvRecheck(edvScholarship);
+        return AjaxResult.success(edvScholarships);
+    }
+
     @ApiOperation("新增国励申请")
     @PostMapping("/add")
     public AjaxResult addEdvScholarship(@Validated @RequestBody EdvScholarship edvScholarship){

@@ -25,6 +25,16 @@ public class NationalScholarshipServiceImpl implements INationalScholarshipServi
     }
 
     /**
+     * 查询通过初审的国奖申请
+     *
+     * @param nationalScholarship 查询信息
+     * @return 结果
+     */
+    public List<NationalScholarship> selectNationRecheck(NationalScholarship nationalScholarship){
+        return nationalScholarshipMapper.selectNationRecheck(nationalScholarship);
+    }
+
+    /**
      * 新增国奖申请
      *
      * @param nationalScholarship 学号

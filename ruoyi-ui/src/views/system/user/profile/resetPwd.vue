@@ -4,14 +4,14 @@
       <el-input v-model="user.oldPassword" placeholder="请输入旧密码" show-password />
     </el-form-item>
     <el-form-item label="新密码" prop="newPassword">
-      <el-input v-model="user.newPassword" placeholder="请输入新密码" show-password />
+      <el-input v-model="user.newPassword" placeholder="请输入新密码" style="margin-top: 6px;" show-password />
     </el-form-item>
     <el-form-item label="确认密码" prop="confirmPassword">
-      <el-input v-model="user.confirmPassword" placeholder="请确认密码" show-password />
+      <el-input v-model="user.confirmPassword" placeholder="请确认密码" style="margin-top: 6px;" show-password />
     </el-form-item>
     <el-form-item>
-      <el-button size="mini" @click="reset">重置</el-button>
-      <el-button type="primary" size="mini" @click="submit">保存</el-button>
+      <el-button size="mini" style="margin-top: 6px;" @click="reset">重置</el-button>
+      <el-button type="primary" size="mini" style="margin-top: 6px;" @click="submit">保存</el-button>
       <!-- <el-button type="danger" size="mini" @click="close">关闭</el-button> -->
     </el-form-item>
   </el-form>

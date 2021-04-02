@@ -13,7 +13,7 @@
           type="password"
           auto-complete="off"
           placeholder="密码"
-          style="width: 100%"
+          style="margin-top: 6px; width: 100%;"
           @keyup.enter.native="handleLogin"
         >
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
@@ -24,7 +24,7 @@
           v-model="loginForm.code"
           auto-complete="off"
           placeholder="验证码"
-          style="width: 63%"
+          style="margin-top: 6px; width: 63%;" 
           @keyup.enter.native="handleLogin"
         >
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />

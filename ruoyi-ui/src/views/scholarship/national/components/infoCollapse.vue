@@ -35,9 +35,11 @@
         </el-form-item>
         <el-form-item size="small" label="状态" prop="status">
           <el-select v-model="searchFormData.status" clearable>
-            <el-option label="待审批" :value="3"></el-option>
-            <el-option label="已通过" :value="1"></el-option>
-            <el-option label="未通过" :value="2"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="待审批" :value="1"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="未通过初审" :value="2"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="已通过初审" :value="3"></el-option>
+            <el-option label="未通过复审" :value="4"></el-option>
+            <el-option label="已通过复审" :value="5"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label=" ">
@@ -50,17 +52,42 @@
       <el-collapse v-model="activeNames" @change="handleChange" v-if="showCollapse">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
           <template slot="title">
-            <span v-if="item.status === 1" class="status-pass am-mr">
-              已通过
-            </span>
-            <span v-else-if="item.status === 2" class="status-reject am-mr">
-              未通过
-            </span>
-            <span v-else class="status-pending am-mr">
-              待审批
-            </span>
             {{ item.title }}
           </template>
+          <section class="am-p">
+            <!-- 未通过初审的步骤条 -->
+            <el-steps
+              v-if="item.status < 3"
+              :space="150"
+              :active="stepsActive(item.status)"
+              :finish-status="item.status === 2 ? 'error' : 'finish'"
+            >
+              <el-step title="已提交" description=""></el-step>
+              <el-step
+                title="奖学金申请初审"
+                :description="'审批人：' + item.instructorName"
+              ></el-step>
+              <el-step title="已完成" description=""></el-step>
+            </el-steps>
+            <el-steps
+              v-else
+              :space="150"
+              :active="stepsActive(item.status)"
+              :finish-status="item.status === 4 ? 'error' : item.status === 5 ? 'success' : 'finish'"
+            >
+              <!-- :finish-status="(item.status / 2) === 0 ? 'error' : 'success'" -->
+              <el-step title="已提交" description=""></el-step>
+              <el-step
+                title="奖学金申请初审"
+                :description="'审批人：' + item.instructorName"
+              ></el-step>
+              <el-step
+                title="奖学金申请复审"
+                description="审批人：巨传友"
+              ></el-step>
+              <el-step title="已完成" description=""></el-step>
+            </el-steps>
+          </section>
           <section class="am-px">
             <div class="am-flex collapse-item">
               <div>是否破格：{{ item.isFit | collapseFormatter('isFit') }}</div>
@@ -81,14 +108,14 @@
           <section class="am-flex am-flex-end am-px am-pt">
             <el-button
               size="mini"
-              @click="handleUpdStatus({ status: 2, scholarshipId: item.scholarshipId })"
+              @click="handleUpdStatus({ approve: false, scholarshipId: item.scholarshipId, currentStatus: item.status })"
               v-hasPermi="['scholarship:national:approve']"
               plain
             >不同意</el-button>
             <el-button
               size="mini"
               type="success"
-              @click="handleUpdStatus({ status: 1, scholarshipId: item.scholarshipId })"
+              @click="handleUpdStatus({ approve: true, scholarshipId: item.scholarshipId, currentStatus: item.status })"
               v-hasPermi="['scholarship:national:approve']"
               plain
             >同意</el-button>
@@ -191,7 +218,28 @@ export default {
   methods: {
     getInfo (searchData) {
       this.loading = true
+      this.showCollapse = false
       let param = {...searchData}
+      if (this.roleName === '副书记') {
+        NAT.getRecheck(param).then( res => {
+          if (res.data && res.data.length !== 0) {
+            this.collapseData = res.data
+            this.collapseData.forEach( item => {
+              item.title = item.learnYear + ' ' + item.studentId + ' ' + item.grade + item.profession + item.classNum + '班' + item.stuName
+            })
+            this.showCollapse = true
+          } else {
+            this.showCollapse = false
+            this.collapseData = []
+          }
+        }).catch( () => {
+          this.showCollapse = false
+          this.collapseData = []
+        }).finally( () => {
+          this.loading = false
+        })
+        return
+      }
       if (this.roleName === '学生') {
         param.studentId = this.userName
       } else if (this.roleName === '辅导员') {
@@ -212,7 +260,7 @@ export default {
         }
       }).catch( () => {
         this.showCollapse = false
-          this.collapseData = []
+        this.collapseData = []
       }).finally( () => {
         this.loading = false
       })
@@ -234,7 +282,18 @@ export default {
       })
     },
     handleUpdStatus (param) {
-      NAT.updateNationalStatus(param).then( res => {
+      let query = {}
+      query.scholarshipId = param.scholarshipId
+      if (this.roleName === '辅导员') {
+        param.approve ? query.status = 3 : query.status = 2
+      } else {
+        if (param.currentStatus < 3) {
+          this.$message.error('该生未通过初审，无法操作')
+          return
+        }
+        param.approve ? query.status = 5 : query.status = 4
+      }
+      NAT.updateNationalStatus(query).then( res => {
         if (res.msg === '操作成功') {
           this.$message.success('操作成功')
           this.getInfo()
@@ -245,6 +304,16 @@ export default {
     },
     handleChange (val) {
       // console.log(val)
+    },
+    //判断步骤条显示步骤
+    stepsActive (param) {
+      if (param === 1) {
+        return 2
+      } else if (param <= 3) {
+        return 3
+      } else if (param <= 5) {
+        return 4
+      }
     }
   },
   filters: {

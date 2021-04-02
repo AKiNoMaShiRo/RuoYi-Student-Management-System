@@ -24,13 +24,14 @@
         <result     property="grade"            column="grade"/>
         <result     property="classNum"         column="class_num"/>
         <result     property="instructorId"     column="instructor_id"/>
+        <result     property="instructorName"     column="instructor_name"/>
         <result     property="headmasterId"     column="headmaster_id"/>
     </resultMap>
 
     <sql id="NationalScholarshipVo">
-        select ns.*, si.stu_name, ci.*
-        from nation_scholarship ns inner join stu_info si inner join class_info ci
-        on ns.student_id = si.student_id and si.class_id = ci.class_id
+        select ns.*, si.stu_name, ci.*, ii.instructor_name
+        from nation_scholarship ns inner join stu_info si inner join class_info ci inner join instructor_info ii
+        on ns.student_id = si.student_id and si.class_id = ci.class_id and ii.instructor_id = ci.instructor_id
     </sql>
 
     <select id="selectNationalApply" parameterType="NationalScholarship" resultMap="NationalScholarshipResult">
@@ -40,6 +41,18 @@
             <if test="studentId != null and studentId != ''"> and ns.student_id = #{studentId} </if>
             <if test="learnYear != null and learnYear != ''"> and ns.learn_year = #{learnYear} </if>
             <if test="status != null and status!= 0"> and ns.status = #{status} </if>
+            <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
+            <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
+            <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
+        </where>
+    </select>
+    
+    <select id="selectNationRecheck" parameterType="NationalScholarship" resultMap="NationalScholarshipResult">
+        <include refid="NationalScholarshipVo"></include>
+        <where>
+            ns.status > 3
+            <if test="studentId != null and studentId != ''"> and ns.student_id = #{studentId} </if>
+            <if test="learnYear != null and learnYear != ''"> and ns.learn_year = #{learnYear} </if>
             <if test="instructorId != null and instructorId != ''"> and ci.instructor_id = #{instructorId} </if>
             <if test="headmasterId != null and headmasterId != ''"> and ci.headmaster_id = #{headmasterId} </if>
             <if test="profession != null and profession != ''"> and ci.profession = #{profession} </if>
@@ -57,7 +70,7 @@
         <if test="porvincePrize != null and porvincePrize != ''"> #{porvincePrize}, </if>
         <if test="schoolPrize != null and schoolPrize != ''"> #{schoolPrize}, </if>
         #{studentId}, #{learnYear}, #{isFit}, #{profeSum}, #{sportGrade}, #{gradeRank}, #{gradeRankRate}, #{multipRank},
-        #{multipRankRate}, 3
+        #{multipRankRate}, 1
         )
     </insert>
 

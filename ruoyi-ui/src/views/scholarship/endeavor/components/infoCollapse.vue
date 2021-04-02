@@ -35,9 +35,9 @@
         </el-form-item>
         <el-form-item size="small" label="状态" prop="status">
           <el-select v-model="searchFormData.status" clearable>
-            <el-option label="待审批" :value="1"></el-option>
-            <el-option label="未通过初审" :value="2"></el-option>
-            <el-option label="已通过初审" :value="3"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="待审批" :value="1"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="未通过初审" :value="2"></el-option>
+            <el-option v-if="roleName === '辅导员'" label="已通过初审" :value="3"></el-option>
             <el-option label="未通过复审" :value="4"></el-option>
             <el-option label="已通过复审" :value="5"></el-option>
           </el-select>
@@ -219,6 +219,26 @@ export default {
       this.loading = true
       this.showCollapse = false
       let param = {...searchData}
+      if (this.roleName === '副书记') {
+        EDV.getRecheck(param).then( res => {
+          if (res.data && res.data.length !== 0) {
+            this.collapseData = res.data
+            this.collapseData.forEach( item => {
+              item.title = item.learnYear + ' ' + item.studentId + ' ' + item.grade + item.profession + item.classNum + '班' + item.stuName
+            })
+            this.showCollapse = true
+          } else {
+            this.showCollapse = false
+            this.collapseData = []
+          }
+        }).catch( () => {
+          this.showCollapse = false
+            this.collapseData = []
+        }).finally( () => {
+          this.loading = false
+        })
+        return
+      }
       if (this.roleName === '学生') {
         param.studentId = this.userName
       } else if (this.roleName === '辅导员') {
@@ -250,6 +270,10 @@ export default {
       if (this.roleName === '辅导员') {
         param.approve ? query.status = 3 : query.status = 2
       } else {
+        if (param.currentStatus < 3) {
+          this.$message.error('该生未通过初审，无法操作')
+          return
+        }
         param.approve ? query.status = 5 : query.status = 4
       }
       EDV.updateEdvStatus(query).then( res => {
