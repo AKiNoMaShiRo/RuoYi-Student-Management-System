@@ -41,7 +41,7 @@
             <el-select size="small" v-model="addData.diffLevel">
                 <el-option label="一般困难" value="一般困难"></el-option>
                 <el-option label="比较困难" value="比较困难"></el-option>
-                <el-option label="特殊困难" value="特殊困难"></el-option>
+                <el-option label="特别困难" value="特别困难"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="专业人数" prop="profeSum">
@@ -49,8 +49,8 @@
           </el-form-item>
           <section class="am-my">
             <div class="form-title am-bd-t am-py">体质测试：</div>
-            <el-form-item label="体测成绩" prop="sport">
-              <el-input size="small" v-model="addData.sport" clearable></el-input>
+            <el-form-item label="体测成绩" prop="sportGrade">
+              <el-input size="small" v-model="addData.sportGrade" clearable></el-input>
             </el-form-item>
           </section>
           <section class="am-mb">
@@ -58,8 +58,8 @@
             <el-form-item label="排名" prop="multipRank">
               <el-input size="small" v-model.number="addData.multipRank" clearable></el-input>
             </el-form-item>
-            <el-form-item label="排名百分比" prop="multipRange">
-              <el-input size="small" v-model="addData.multipRange" clearable>
+            <el-form-item label="排名百分比" prop="multipRankRate">
+              <el-input size="small" v-model="addData.multipRankRate" clearable>
                 <template slot="append">%</template>
               </el-input>
             </el-form-item>
@@ -98,11 +98,11 @@ export default {
         isFit: null,
         diffLevel: '',
         profeSum: '',
-        sport: '',
+        sportGrade: '',
         // gradeRank: '',
         // gradeRange: '',
         multipRank: '',
-        multipRange: '',
+        multipRankRate: '',
         porvincePrize: '',
         schoolPrize: ''
       },
@@ -113,7 +113,7 @@ export default {
           {required: true, message: '请输入专业人数', trigger: 'blur'},
           { type: 'number', message: '专业人数必须为整数值'}
         ],
-        sport: [
+        sportGrade: [
           {required: true, message: '请输入体质测试成绩', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {
@@ -143,7 +143,7 @@ export default {
           {required: true, message: '请输入排名', trigger: 'blur'},
           { type: 'number', message: '排名必须为整数值'}
         ],
-        multipRange: [
+        multipRankRate: [
           {required: true, message: '请输入排名百分比', trigger: 'blur'},
           {
             validator: (rule, value, callback) => {

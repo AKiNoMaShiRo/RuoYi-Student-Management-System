@@ -36,8 +36,10 @@
         <el-form-item size="small" label="状态" prop="status">
           <el-select v-model="searchFormData.status" clearable>
             <el-option label="待审批" :value="1"></el-option>
-            <el-option label="已通过初审" :value="2"></el-option>
-            <el-option label="未通过初审" :value="3"></el-option>
+            <el-option label="未通过初审" :value="2"></el-option>
+            <el-option label="已通过初审" :value="3"></el-option>
+            <el-option label="未通过复审" :value="4"></el-option>
+            <el-option label="已通过复审" :value="5"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label=" ">
@@ -50,17 +52,42 @@
       <el-collapse v-model="activeNames" @change="handleChange" v-if="showCollapse">
         <el-collapse-item v-for="item in collapseData" :key="item.name" v-bind="item">
           <template slot="title">
-            <span v-if="item.status === 1" class="status-pending am-mr">
-              待审批
-            </span>
-            <span v-else-if="item.status === 2" class="status-pass am-mr">
-              已通过初审
-            </span>
-            <span v-else-if="item.status === 3" class="status-reject am-mr">
-              未通过初审
-            </span>
             {{ item.title }}
           </template>
+          <section class="am-p">
+            <!-- 未通过初审的步骤条 -->
+            <el-steps
+              v-if="item.status < 3"
+              :space="150"
+              :active="stepsActive(item.status)"
+              :finish-status="item.status === 2 ? 'error' : 'finish'"
+            >
+              <el-step title="已提交" description=""></el-step>
+              <el-step
+                title="奖学金申请初审"
+                :description="'审批人：' + item.instructorName"
+              ></el-step>
+              <el-step title="已完成" description=""></el-step>
+            </el-steps>
+            <el-steps
+              v-else
+              :space="150"
+              :active="stepsActive(item.status)"
+              :finish-status="item.status === 4 ? 'error' : item.status === 5 ? 'success' : 'finish'"
+            >
+              <!-- :finish-status="(item.status / 2) === 0 ? 'error' : 'success'" -->
+              <el-step title="已提交" description=""></el-step>
+              <el-step
+                title="奖学金申请初审"
+                :description="'审批人：' + item.instructorName"
+              ></el-step>
+              <el-step
+                title="奖学金申请复审"
+                description="审批人：巨传友"
+              ></el-step>
+              <el-step title="已完成" description=""></el-step>
+            </el-steps>
+          </section>
           <section class="am-px">
             <div class="am-flex collapse-item">
               <div>是否破格：{{ item.isFit | collapseFormatter('isFit') }}</div>
@@ -74,20 +101,6 @@
             </div>
             <div>省级及以上表彰或成果：{{ item.porvincePrize | collapseFormatter('porvincePrize') }}</div>
             <div>校级表彰或成果：{{ item.schoolPrize | collapseFormatter('schoolPrize') }}</div>
-          </section>
-          <section class="am-p">
-            <el-steps :active="stepsActive(item.status)">
-              <el-step title="已提交" description=""></el-step>
-              <el-step
-                title="奖学金申请初审"
-                :description="'审批人：' + item.instructorName"
-              ></el-step>
-              <el-step
-                title="奖学金申请复审"
-                description="审批人：巨传友"
-              ></el-step>
-              <!-- <el-step title="已完成" description=""></el-step> -->
-            </el-steps>
           </section>
           <section class="am-flex am-flex-end am-px am-pt">
             <el-button
@@ -116,7 +129,7 @@
                 size="mini"
                 slot="reference"
                 style="margin-left: 10px;"
-                :disabled="item.status === 1"
+                :disabled="item.status !== 1"
                 plain>删除</el-button>
             </el-popconfirm>
           </section>
@@ -204,6 +217,7 @@ export default {
   methods: {
     getInfo (searchData) {
       this.loading = true
+      this.showCollapse = false
       let param = {...searchData}
       if (this.roleName === '学生') {
         param.studentId = this.userName
@@ -225,25 +239,28 @@ export default {
         }
       }).catch( () => {
         this.showCollapse = false
-          this.collapseData = []
+        this.collapseData = []
       }).finally( () => {
         this.loading = false
       })
     },
     handleUpdStatus (param) {
-      let query = Object.assign(query, param)
+      let query = {}
+      query.scholarshipId = param.scholarshipId
       if (this.roleName === '辅导员') {
-        param.approve ? query.status = 2 : query.status = 3
+        param.approve ? query.status = 3 : query.status = 2
       } else {
-        param.approve ? query.status = 4 : query.status = 5
+        param.approve ? query.status = 5 : query.status = 4
       }
-      EDV.updateEdvStatus(param).then( res => {
+      EDV.updateEdvStatus(query).then( res => {
         if (res.msg === '操作成功') {
           this.$message.success('操作成功')
           this.getInfo()
         } else {
           this.$message.error('操作失败')
         }
+      }).finally( () => {
+        this.getInfo()
       })
     },
     handleDelete (param) {
@@ -254,6 +271,8 @@ export default {
         } else {
           this.$message.error('删除申请失败')
         }
+      }).finally( () => {
+        this.getInfo()
       })
     },
     handleSearch () {
@@ -268,11 +287,11 @@ export default {
     //判断步骤条显示步骤
     stepsActive (param) {
       if (param === 1) {
-        return 1
-      } else if (param <= 3) {
         return 2
-      } else if (param <= 5) {
+      } else if (param <= 3) {
         return 3
+      } else if (param <= 5) {
+        return 4
       }
     }
   },
