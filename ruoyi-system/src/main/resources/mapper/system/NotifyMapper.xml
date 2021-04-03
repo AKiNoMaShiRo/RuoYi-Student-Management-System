@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.notify.mapper.NotifyMapper">
+
+    <select id="selectTLNum" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM temp_leave tl INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON tl.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        <where>
+            tl.status = 1
+            <if test="studentId != null and studentId != ''"> and tl.studentId = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+        </where>
+    </select>
+
+    <select id="selectHGNum" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM holiday_go hg INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON hg.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        <where>
+            hg.status = 1
+            <if test="studentId != null and studentId != ''"> and hg.studentId = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+        </where>
+    </select>
+
+    <select id="selectNBNum" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM no_borad nb INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON nb.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        <where>
+            nb.status = 1
+            <if test="studentId != null and studentId != ''"> and hg.studentId = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+        </where>
+    </select>
+
+</mapper>

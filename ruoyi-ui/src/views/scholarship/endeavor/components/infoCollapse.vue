@@ -37,7 +37,7 @@
           <el-select v-model="searchFormData.status" clearable>
             <el-option v-if="roleName === '辅导员'" label="待审批" :value="1"></el-option>
             <el-option v-if="roleName === '辅导员'" label="未通过初审" :value="2"></el-option>
-            <el-option v-if="roleName === '辅导员'" label="已通过初审" :value="3"></el-option>
+            <el-option label="已通过初审" :value="3"></el-option>
             <el-option label="未通过复审" :value="4"></el-option>
             <el-option label="已通过复审" :value="5"></el-option>
           </el-select>
