@@ -333,7 +333,7 @@ export default {
         this.editData[key] = row[key]
       }
       this.editData.timeRange = [ row.leaveStartTime, row.leaveEndTime ]
-      console.log(this.editData)
+      // console.log(this.editData)
     },
     //    表格辅导员审批请假申请
     handleDeal (row) {
