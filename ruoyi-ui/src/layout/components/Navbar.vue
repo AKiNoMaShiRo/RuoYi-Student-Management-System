@@ -28,7 +28,9 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <svg-icon class-name="search-icon" icon-class="user" @click.stop="click" />
+            <!-- <svg-icon class-name="search-icon" icon-class="user" @click="handleNotify"></svg-icon> -->
+            <svg-icon class-name="search-icon" icon-class="user" @click.stop="click"></svg-icon>
+          
           <!-- <img :src="avatar" class="user-avatar"> -->
           <i class="el-icon-caret-bottom" />
         </div>
@@ -36,8 +38,14 @@
           <!-- <router-link to="/user/profile">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link> -->
-          <el-dropdown-item @click.native="handleNotify">
-            <span>通知消息</span>
+          <el-dropdown-item
+            v-if="roleName === '辅导员' || roleName === '班主任' || roleName === '副书记'"
+            @click.native="handleNotify"
+          >
+            <span>
+              通知消息
+              <el-badge is-dot :hidden="hiddenBadge"></el-badge>
+            </span>
           </el-dropdown-item>
           <el-dropdown-item @click.native="setting = true">
             <span>布局设置</span>
@@ -86,6 +94,7 @@ export default {
   },
   data () {
     return {
+      hiddenBadge: true,
       showDialog: false,
       notifyMsg: []
     }
@@ -112,6 +121,13 @@ export default {
       }
     }
   },
+  created () {
+    let param = {}
+    if (this.roleName === '辅导员'){
+      param.instructorId = this.userName
+    }
+    this.getNotify(param)
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
@@ -127,13 +143,8 @@ export default {
         })
       })
     },
-    handleNotify() {
-      let param = {}
-      if (this.roleName === '辅导员'){
-        param.instructorId = this.userName
-      }
-      this.notifyMsg = []
-      NOTIFY.getNotify(param).then( res => {
+    getNotify (param) {
+      return NOTIFY.getNotify(param).then( res => {
         // console.log(res)
         if (res.data && res.data.length !== 0) {
           res.data.forEach( item => {
@@ -145,9 +156,33 @@ export default {
         } else {
           this.notifyMsg = []
         }
-      }).finally ( () => {
+        this.notifyMsg.length > 0 ? this.hiddenBadge = false : this.hiddenBadge = true
+      })
+    },
+    handleNotify() {
+      let param = {}
+      if (this.roleName === '辅导员'){
+        param.instructorId = this.userName
+      }
+      this.notifyMsg = []
+      this.getNotify(param).finally( () => {
         this.showDialog = true
       })
+      // NOTIFY.getNotify(param).then( res => {
+      //   // console.log(res)
+      //   if (res.data && res.data.length !== 0) {
+      //     res.data.forEach( item => {
+      //       if (item.num > 0) {
+      //         this.notifyMsg.push(item)
+      //       }
+      //     })
+      //     // this.notifyMsg = res.data
+      //   } else {
+      //     this.notifyMsg = []
+      //   }
+      // }).finally( () => {
+      //   this.showDialog = true
+      // })
     }
   }
 }
