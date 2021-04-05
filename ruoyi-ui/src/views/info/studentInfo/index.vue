@@ -76,7 +76,7 @@
           <el-form-item label="QQ" prop="qq">
             <el-input size="small" v-model="formData.qq" clearable></el-input>
           </el-form-item>
-          <el-form-item label="微信" prop="weChat">
+          <el-form-item label="微信号" prop="weChat">
             <el-input size="small" v-model="formData.weChat" clearable></el-input>
           </el-form-item>
           <el-form-item label="出生日期" prop="birthday">
