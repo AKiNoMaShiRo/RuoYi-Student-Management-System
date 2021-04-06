@@ -28,13 +28,25 @@ public class NotifyServiceImpl implements INotifyService {
      * @return 结果
      */
     public List<Notify> selectNotify(NotifyUserInfo notifyUserInfo){
-        Notify notifyTL = new Notify("临时请假申请",notifyMapper.selectTLNum(notifyUserInfo));
-        Notify notifyHG = new Notify("节假日去向报备", notifyMapper.selectHGNum(notifyUserInfo));
-        Notify notifyNB = new Notify("外宿申请", notifyMapper.selectNBNum(notifyUserInfo));
         List<Notify> notifies = new ArrayList<>();
-        notifies.add(notifyTL);
-        notifies.add(notifyHG);
-        notifies.add(notifyNB);
+        if (notifyUserInfo.getInstructorId() != null && notifyUserInfo.getInstructorId().length() > 0) {
+            Notify notifyTL = new Notify("临时请假申请",notifyMapper.selectTLNum(notifyUserInfo));
+            Notify notifyHG = new Notify("节假日去向报备", notifyMapper.selectHGNum(notifyUserInfo));
+            Notify notifyNB = new Notify("外宿申请", notifyMapper.selectNBNum(notifyUserInfo));
+            notifies.add(notifyTL);
+            notifies.add(notifyHG);
+            notifies.add(notifyNB);
+            Notify notifyEdv = new Notify("待初审国家励志奖学金申请", notifyMapper.selectEdv(notifyUserInfo));
+            Notify notifyNation = new Notify("待初审国家奖学金申请", notifyMapper.selectNation(notifyUserInfo));
+            notifies.add(notifyEdv);
+            notifies.add(notifyNation);
+        }
+        if (notifyUserInfo.getMasterId() != null && notifyUserInfo.getMasterId().length() > 0) {
+            Notify notifyReEdv = new Notify("待复审国家励志奖学金申请", notifyMapper.selectReEdv(notifyUserInfo));
+            Notify notifyReNation = new Notify("待复审国家奖学金申请", notifyMapper.selectReNation(notifyUserInfo));
+            notifies.add(notifyReEdv);
+            notifies.add(notifyReNation);
+        }
         return notifies;
     }
 }

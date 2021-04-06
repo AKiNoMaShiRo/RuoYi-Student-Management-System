@@ -65,7 +65,9 @@
           </section>
         </div>
       </section>
-      <section v-else>暂无待处理事项</section>
+      <section v-else class="am-flex-align-center am-flex-justify-center" style="height: 100px;">
+        暂无待处理事项
+      </section>
     </el-dialog>
   </div>
 </template>
@@ -123,8 +125,10 @@ export default {
   },
   created () {
     let param = {}
-    if (this.roleName === '辅导员'){
+    if (this.roleName === '辅导员') {
       param.instructorId = this.userName
+    } else if (this.roleName === '副书记') {
+      param.masterId = this.userName
     }
     this.getNotify(param)
   },
@@ -161,9 +165,11 @@ export default {
     },
     handleNotify() {
       let param = {}
-      if (this.roleName === '辅导员'){
+      if (this.roleName === '辅导员') {
         param.instructorId = this.userName
-      }
+      } else if (this.roleName === '副书记') {
+      param.masterId = this.userName
+    }
       this.notifyMsg = []
       this.getNotify(param).finally( () => {
         this.showDialog = true

@@ -4,14 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.notify.mapper.NotifyMapper">
 
+    <resultMap id="NotifyUserInfoResult" type="NotifyUserInfo">
+        <result     property="instructorId"     column="instructor_id"/>
+        <result     property="studentId"        column="student_id"/>
+    </resultMap>
+
     <select id="selectTLNum" parameterType="NotifyUserInfo" resultType="int">
         SELECT COUNT(*)
         FROM temp_leave tl INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
         ON tl.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
         <where>
             tl.status = 1
-            <if test="studentId != null and studentId != ''"> and tl.studentId = #{studentId} </if>
-            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+            <if test="studentId != null and studentId != ''"> and tl.student_id = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
         </where>
     </select>
 
@@ -21,8 +26,8 @@
         ON hg.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
         <where>
             hg.status = 1
-            <if test="studentId != null and studentId != ''"> and hg.studentId = #{studentId} </if>
-            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+            <if test="studentId != null and studentId != ''"> and hg.student_id = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
         </where>
     </select>
 
@@ -32,9 +37,45 @@
         ON nb.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
         <where>
             nb.status = 1
-            <if test="studentId != null and studentId != ''"> and hg.studentId = #{studentId} </if>
-            <if test="instructorId != null and instructorId != ''"> and ii.instructorId = #{instructorId} </if>
+            <if test="studentId != null and studentId != ''"> and hg.student_id = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
         </where>
+    </select>
+
+    <select id="selectEdv" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM endeavor_scholarship es INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON es.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        <where>
+            es.status = 1
+            <if test="studentId != null and studentId != ''"> and es.student_id = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
+        </where>
+    </select>
+
+    <select id="selectReEdv" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM endeavor_scholarship es INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON es.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        WHERE es.status = 3
+    </select>
+
+    <select id="selectNation" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM nation_scholarship ns INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON ns.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        <where>
+            ns.status = 1
+            <if test="studentId != null and studentId != ''"> and ns.student_id = #{studentId} </if>
+            <if test="instructorId != null and instructorId != ''"> and ii.instructor_id = #{instructorId} </if>
+        </where>
+    </select>
+
+    <select id="selectReNation" parameterType="NotifyUserInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM nation_scholarship ns INNER JOIN stu_info si INNER JOIN class_info ci INNER JOIN instructor_info ii
+        ON ns.student_id = si.student_id AND si.class_id = ci.class_id AND ci.instructor_id = ii.instructor_id
+        WHERE ns.status = 3
     </select>
 
 </mapper>
