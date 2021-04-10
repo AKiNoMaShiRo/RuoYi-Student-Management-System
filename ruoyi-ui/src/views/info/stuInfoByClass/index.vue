@@ -130,12 +130,12 @@ export default {
       familyTableColumns: Object.freeze([
         { label: '姓名', prop: 'memberName', minWidth: '80', fixed: "left" },
         { label: '称谓', prop: 'appellation', minWidth: '80' },
+        { label: '电话号码', prop: 'phoneNumber', minWidth: '120' },
         { label: '身份证', prop: 'identityCard', minWidth: '120' },
         { label: '健康状况', prop: 'health', minWidth: '80' },
         { label: '单位名称', prop: 'company', minWidth: '110' },
         { label: '职务', prop: 'duty', minWidth: '80' },
         { label: '邮编', prop: 'postCode', minWidth: '70' },
-        { label: '电话号码', prop: 'phoneNumber', minWidth: '120' },
         { label: '政治面貌', prop: 'politicsStatus', minWidth: '120' },
         { label: '备注', prop: 'remark', minWidth: '140' },
       ]),
