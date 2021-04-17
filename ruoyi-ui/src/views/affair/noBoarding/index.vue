@@ -50,15 +50,15 @@
           label-width="80px"
           inline
         >
-          <el-form-item label="学号" prop="studentId">
+          <el-form-item label="学号" prop="studentId" v-if="roleName !== '学生'">
             <el-input size="small" v-model="searchFormData.studentId" clearable></el-input>
           </el-form-item>
-          <el-form-item label="姓名" prop="stuName">
+          <el-form-item label="姓名" prop="stuName" v-if="roleName !== '学生'">
             <el-input size="small" v-model="searchFormData.stuName" clearable></el-input>
           </el-form-item>
           <el-form-item label="审批状态" prop="status">
             <el-select size="small" v-model="searchFormData.status" clearable>
-              <el-option label="未审批" :value="1"></el-option>
+              <el-option label="待审批" :value="1"></el-option>
               <el-option label="已通过" :value="2"></el-option>
               <el-option label="未通过" :value="3"></el-option>
             </el-select>
