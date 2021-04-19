@@ -132,7 +132,7 @@
                 size="mini"
                 slot="reference"
                 style="margin-left: 10px;"
-                :disabled="item.status === 1"
+                :disabled="item.status !== 1"
                 plain>删除</el-button>
             </el-popconfirm>
           </section>
