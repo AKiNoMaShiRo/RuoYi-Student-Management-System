@@ -10,7 +10,7 @@
             </div>
             <ul class="list-group list-group-striped">
               <li class="list-group-item">
-                <svg-icon icon-class="nested" />学号
+                <svg-icon icon-class="nested" />账号
                 <div class="pull-right">{{ userName }}</div>
               </li>
               <li class="list-group-item">

@@ -405,10 +405,10 @@ export default {
       } else {
         //    超管账号、学生账号
         let param = {
+          ...this.searchFormData,
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           studentId: this.roleName === '超级管理员' ? '' : this.userName,
-          ...this.searchFormData
         }
         if (param.status === '') {
           param.status = 0
@@ -446,8 +446,9 @@ export default {
             if (res && res.msg === '操作成功') {
               this.$message.success('提交成功')
               this.getInfo()
-              this.$refs.holidayForm.resetFields()
             }
+          }).finally(() => {
+            this.$refs.holidayForm.resetFields()
           })
         }
       })

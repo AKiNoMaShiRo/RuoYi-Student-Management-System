@@ -283,10 +283,10 @@ export default {
       if (this.roleName === '辅导员') {
         //    辅导员账号
         let param = {
+          ...this.searchFormData,
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           instructorId: this.userName,
-          ...this.searchFormData
         }
         if (param.status === '') {
           param.status = 0
@@ -305,10 +305,10 @@ export default {
       } else {
         //    超管账号、学生账号
         let param = {
+          ...this.searchFormData,
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           studentId: this.roleName === '超级管理员' ? '' : this.userName,
-          ...this.searchFormData
         }
         if (param.status === '') {
           param.status = 0

@@ -55,9 +55,9 @@
             <el-form-item label="年级" prop="grade">
               <el-input v-model.number="searchFormData.grade" size="small" clearable></el-input>
             </el-form-item>
-            <el-form-item label="班级" prop="classNum">
+            <!-- <el-form-item label="班级" prop="classNum">
               <el-input v-model.number="searchFormData.classNum" size="small" clearable></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label=" ">
               <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleSearch">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="resetSearchForm">重置</el-button>
