@@ -80,3 +80,37 @@ INSERT INTO headmaster_info VALUES (2, '2017-2018');
 
 
 INSERT INTO difficult_stu VALUES ('20171344054', '王圣滋', '一般困难');
+INSERT INTO difficult_stu VALUES ('20171344053', '王晶弘', '一般困难');
+
+
+INSERT INTO course_grade VALUES ('20171344042', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 88, NULL, NULL, 6);
+INSERT INTO course_grade VALUES ('20171344043', '2017-2018', '1', '公共(必)', '高等数学Ⅰ（1）', 71, NULL, NULL, 6);
+INSERT INTO course_grade VALUES ('20171344050', '2017-2018', '1', '公共(必)', '程序设计基础', 84, NULL, NULL, 4);
+INSERT INTO course_grade VALUES ('20171344042', '2017-2018', '1', '公共(必)', '程序设计基础', 64, NULL, NULL, 4);
+INSERT INTO course_grade VALUES ('20171344043', '2017-2018', '1', '公共(必)', '程序设计基础', 62, NULL, NULL, 4);
+
+INSERT INTO level_test VALUES ('20171344043', '国家英语四级', '585', 'yes', '2017-12-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344042', '国家英语四级', '531', 'yes', '2017-12-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344049', '国家英语四级', '492', 'yes', '2017-12-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344055', '国家英语四级', '515', 'yes', '2017-12-01 00:00:00', '');
+
+INSERT INTO level_test VALUES ('20171344043', '国家英语六级', '465', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344042', '国家英语六级', '524', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344049', '国家英语六级', '382', 'no', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344051', '国家英语六级', '382', 'no', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344052', '国家英语六级', '515', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344053', '国家英语六级', '482', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344055', '国家英语六级', '515', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344056', '国家英语六级', '585', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344057', '国家英语六级', '515', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344058', '国家英语六级', '585', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344105', '国家英语六级', '392', 'no', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344103', '国家英语六级', '505', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344100', '国家英语六级', '505', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344101', '国家英语六级', '505', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344102', '国家英语六级', '505', 'yes', '2018-07-01 00:00:00', '');
+
+INSERT INTO level_test VALUES ('20171344043', '普通话等级考试', '二级甲等', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344042', '普通话等级考试', '二级甲等', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344049', '普通话等级考试', '二级乙等', 'yes', '2018-07-01 00:00:00', '');
+INSERT INTO level_test VALUES ('20171344055', '普通话等级考试', '二级甲等', 'yes', '2018-07-01 00:00:00', '');

@@ -138,11 +138,11 @@ public class StuInfo extends BaseEntity {
 
     /** 四级成绩 */
     @Excel(name = "四级成绩")
-    private int cet4;
+    private String cet4;
 
     /** 六级成绩 */
     @Excel(name = "六级成绩")
-    private int cet6;
+    private String cet6;
 
     /** 英文名 */
     private String englishName;
@@ -415,19 +415,19 @@ public class StuInfo extends BaseEntity {
         this.healthCard = healthCard;
     }
 
-    public int getCet4() {
+    public String getCet4() {
         return cet4;
     }
 
-    public void setCet4(int cet4) {
+    public void setCet4(String cet4) {
         this.cet4 = cet4;
     }
 
-    public int getCet6() {
+    public String getCet6() {
         return cet6;
     }
 
-    public void setCet6(int cet6) {
+    public void setCet6(String cet6) {
         this.cet6 = cet6;
     }
 

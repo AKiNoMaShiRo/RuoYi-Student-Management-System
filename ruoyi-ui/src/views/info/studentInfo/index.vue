@@ -4,7 +4,9 @@
       <div class="am-p am-title am-bd-b">基本信息</div>
       <div class="am-p base-info am-flex">
         <section class="left am-flex-center">
-          <el-image class="stu-photo" style="width: 110px; height: 150px"></el-image>
+          <el-image class="stu-photo" style="width: 110px; height: 150px">
+            <div slot="error" class="image-slot el-image__error">暂无照片</div>
+          </el-image>
         </section>
         <section class="right am-flex-align-center">
           <div>

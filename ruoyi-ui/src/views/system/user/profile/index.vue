@@ -4,10 +4,10 @@
       <el-col :span="7" :xs="24">
         <div class="am-box">
           <div class="am-p am-title am-bd-b">账号信息</div>
-          <div class="am-p">
-            <div class="text-center">
+          <div class="am-px">
+            <!-- <div class="text-center">
               <userAvatar :user="user" />
-            </div>
+            </div> -->
             <ul class="list-group list-group-striped">
               <li class="list-group-item">
                 <svg-icon icon-class="nested" />账号
